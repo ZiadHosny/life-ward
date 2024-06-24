@@ -49,7 +49,9 @@ export const getAllSubCategoriesByCategoryId = expressAsyncHandler(
 
     // 2- get all subcategories belong to specific category from mongooseDB
     const query = req.query as IQuery;
-    const mongoQuery = SubCategory.find({ category: categoryId });
+    const mongoQuery = SubCategory.find({ category: categoryId.split(",") });
+
+    console.log("What is MongoQuery: ===========================", mongoQuery);
 
     // 3- create pagination
     const { data, paginationResult } = await new ApiFeatures(mongoQuery, query)
@@ -91,7 +93,6 @@ export const createSubCategory = expressAsyncHandler(
     // 1- get data from body
     const { name_en, name_ar, slug_en, slug_ar, image, category } = req.body;
     console.log("category", category);
-    
 
     // // 2- check if category already exist and get number of subcategory that exist in it category
     // const categoryExist = await Category.findById(category);

@@ -336,17 +336,11 @@ export const deleteSubCategoryValidator = [
 
 export const getAllSubCategoriesByCategoryIdValidator = [
   //#region *Start id*
-  param("categoryId")
-    .notEmpty()
-    .withMessage({
-      en: "Category id is required",
-      ar: "معرف الفئة مطلوب",
-    })
-    .isMongoId()
-    .withMessage({
-      en: "Category id is not valid",
-      ar: "معرف الفئة غير صالح",
-    }),
+  param("categoryId").notEmpty().withMessage({
+    en: "Category id is required",
+    ar: "معرف الفئة مطلوب",
+  }),
+
   //#endregion *End id*
   validate,
 ];
