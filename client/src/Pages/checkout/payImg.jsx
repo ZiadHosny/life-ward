@@ -1,0 +1,1 @@
+export const payImg = "https://e7.pngegg.com/pngimages/158/808/png-clipart-apple-pay-google-pay-mobile-payment-apple-text-payment.png"

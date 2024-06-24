@@ -1,0 +1,203 @@
+.slider-homePage .splide__pagination__page {
+  transition: all 0.5 ease-in-out;
+  top: -180px;
+  width: 10px;
+  height: 10px;
+}
+.slider-homePage .splide__pagination__page:hover,
+.doctors-carousel .splide__pagination__page:hover {
+  background-color: #ddd;
+}
+.slider-homePage .splide__pagination__page.is-active,
+.doctors-carousel .splide__pagination__page.is-active {
+  background-color: #fff;
+  width: 40px;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+.doctors-carousel .splide__pagination__page {
+  top: 50px;
+}
+.slider-homePage {
+  position: relative;
+}
+.slider-homePage .splide__arrows {
+  width: 80% !important ;
+  position: relative !important;
+  top: 325px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+.heroSection_slider .splide__pagination {
+  position: absolute !important;
+  bottom: -200px !important;
+}
+.slider-homePage .splide__arrow--next svg,
+.slider-homePage .splide__arrow--prev svg,
+.doctors-carousel .splide__arrow--next svg,
+.doctors-carousel .splide__arrow--prev svg {
+  border: 4px solid #334ea3;
+  padding: 5px;
+  background-color: #334ea3;
+  fill: #fff;
+  border-radius: 50%;
+
+  transition: padding 0.5s;
+}
+
+.slider-homePage .splide__arrow--next svg:active,
+.slider-homePage .splide__arrow--prev svg:active {
+  background-color: #fff;
+  border: 4px solid #fff;
+}
+.doctors-carousel .splide__arrows {
+  width: 35% !important ;
+  position: absolute !important;
+  top: 28vh !important;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 992px) {
+  .slider-homePage .splide__pagination__page {
+    top: -100px;
+  }
+}
+@media (min-width: 768px) {
+  .slider-homePage .splide__arrows,
+  .doctors-carousel .splide__arrows {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .slider-homePage .splide__pagination__page {
+    top: -400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-homePage .splide__arrows,
+  .doctors-carousel .splide__arrows {
+    display: flex;
+    direction: ltr;
+  }
+  .slider-homePage .splide__pagination__page {
+    top: -150px;
+  }
+}
+.slider-homePage .text-wrapper {
+  background-color: rgba(#000, 0.4);
+  border-radius: 10px;
+  color: #fff;
+  padding: 100px 50px;
+  margin: 0 60px;
+}
+
+@media screen and (max-width: 600px) {
+  .home_slider {
+    height: 525px;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 992px) {
+  .home_slider {
+    height: 525px;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  .home_slider {
+    height: 65vh;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .home_slider {
+    height: 80vh;
+  }
+  .home_slider .splide__pagination__page {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .zoomInDown {
+    animation: none !important ;
+  }
+  .slider-homePage .text-wrapper {
+    padding: 10px 5%;
+    margin: 0 auto;
+    height: 150px;
+    overflow: clip;
+    width: 80%;
+  }
+  .heroSection_slider .splide__pagination {
+    position: absolute !important;
+    bottom: 70px !important;
+  }
+}
+
+/* .wrapper-date-picker {
+  width: 100%;
+} */
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+body::-webkit-scrollbar-thumb {
+  background: #334ea3;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: #e4207b;
+}
+
+.shaked-error {
+  -webkit-animation-name: shake;
+  animation-name: shake;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes shake {
+  0%,
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}

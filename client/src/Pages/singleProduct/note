@@ -1,0 +1,80 @@
+      {product.qualities.map((quality, index) => (
+                  <>
+                    <Box
+                      key={index}
+                      sx={{
+                        mb: "15px",
+                      }}
+                    >
+                      <Typography
+                        fontFamily={publicFontFamily}
+                        fontWeight={"bold"}
+                        fontSize={"17px"}
+                        mb="5px"
+                        sx={{
+                          color: colors.main,
+                        }}
+                      >
+                        {quality[`name_${lang}`]}
+                      </Typography>
+                      {/* <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent={"flex-start"}
+                        gap="5px"
+                      >
+                        {quality.values.map((value) => (
+                          <Button
+                            key={value[`title_${lang}`]}
+                            disabled={productInCart}
+                            sx={{
+                              border: 2,
+                              borderColor: allSelectedQualities.find(
+                                (item) =>
+                                  item.key_en === quality?.name_en &&
+                                  item.value_en === value?.title_en
+                              )
+                                ? colors.main
+                                : "transparent",
+                              bgcolor: "#ddd !important",
+                              color: colors.main,
+                              fontFamily: publicFontFamily,
+                              fontWeight: "bold",
+                            }}
+                            onClick={() => {
+                              handleSelectproductQualities(
+                                quality.name_en,
+                                quality.name_ar,
+                                value
+                              );
+                              setSelectedQuality({
+                                name: quality.name_en,
+                                value: value.title_en,
+                              });
+                            }}
+                          >
+                            {value[`title_${lang}`]}
+                          </Button>
+                        ))}
+                      </Stack> */}
+                    </Box>
+                  </>
+                ))}
+                {!productInCart ? (
+                  allSelectedQualities[0] ? (
+                    <Typography
+                      onClick={handleClearAllQuality}
+                      sx={{
+                        color: "grey",
+                        cursor: "pointer",
+                        fontFamily: publicFontFamily,
+                        fontSize: "20px",
+                        color: colors.main,
+                      }}
+                    >
+                      {lang == "en"
+                        ? "Clear All Qualities"
+                        : "إلغاء كل المعايير"}
+                    </Typography>
+                  ) : undefined
+                ) : undefined}
