@@ -4,7 +4,6 @@ import {
   Button,
   CardMedia,
   Grid,
-  Input,
   InputBase,
   Stack,
   Typography,
@@ -33,7 +32,6 @@ import DraftEditor from "../../Components/globals/draftEditor/DraftEditor";
 import UploadFiles from "../../Components/globals/UploadFiles";
 import ProductQualities from "../../Components/product/ProductQualities";
 import ProductQualitiesImages from "../../Components/product/ProductQualitiesImages";
-import { PriorityHigh } from "@mui/icons-material";
 import SelectMultiTag from "../../Components/globals/SelectMultiTag";
 
 const AddProductPage = () => {
@@ -157,17 +155,19 @@ const AddProductPage = () => {
   const { subSubCategories } = useFetchSubSubCategoryBySubId(
     values.subCategory
   );
-  useEffect(() => {
-    if (values.category) {
-      setFieldValue("subCategory", []);
-      setFieldValue("subSubCategory", []);
-    }
-  }, [values.category]);
-  useEffect(() => {
-    if (values.subCategory) {
-      setFieldValue("subSubCategory", []);
-    }
-  }, [values.subCategory]);
+
+  // useEffect(() => {
+  //   if (values.category) {
+  //     setFieldValue("subCategory", []);
+  //     setFieldValue("subSubCategory", []);
+  //   }
+  // }, [values.category]);
+  // useEffect(() => {
+  //   if (values.subCategory) {
+  //     setFieldValue("subSubCategory", []);
+  //   }
+  // }, [values.subCategory]);
+
   const handleUploadMainPicture = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -177,6 +177,9 @@ const AddProductPage = () => {
   };
   console.log("check images from formik", values.images);
   console.log("check images from State", productImages);
+
+  console.log(values.subCategory, 'zzzzzzzzzzz')
+
   return (
     <Box
       sx={{
@@ -773,8 +776,8 @@ const AddProductPage = () => {
               touched={touched.category}
               handleChange={(e) => {
                 handleChange(e);
-                setFieldValue("subSubCategory", []);
-                setFieldValue("subCategory", []);
+                // setFieldValue("subSubCategory", []);
+                // setFieldValue("subCategory", values.subCategory);
               }}
               handleBlur={handleBlur}
               optionsData={categories.data}
@@ -792,7 +795,7 @@ const AddProductPage = () => {
               touched={touched.subCategory}
               handleChange={(e) => {
                 handleChange(e);
-                setFieldTouched("subSubCategory", []);
+                // setFieldTouched("subSubCategory", []);
               }}
               handleBlur={handleBlur}
               optionsData={subCategories.data}

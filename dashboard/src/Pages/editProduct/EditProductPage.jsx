@@ -914,8 +914,8 @@ const EditProductPage = () => {
               touched={touched.category}
               handleChange={(e) => {
                 handleChange(e);
-                setFieldValue("subSubCategory", []);
-                setFieldValue("subCategory", []);
+                // setFieldValue("subSubCategory", []);
+                // setFieldValue("subCategory", []);
               }}
               handleBlur={handleBlur}
               optionsData={categories.data}
@@ -933,7 +933,7 @@ const EditProductPage = () => {
               touched={touched.subCategory}
               handleChange={(e) => {
                 handleChange(e);
-                setFieldTouched("subSubCategory", []);
+                // setFieldTouched("subSubCategory", []);
               }}
               handleBlur={handleBlur}
               optionsData={subCategories.data}
