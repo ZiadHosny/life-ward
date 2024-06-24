@@ -2,3 +2,14 @@ backend/node_modules
 backend/dist
 backend/credentials.json
 backend/config
+backend/utils
+
+
+client/node_modules
+client/dist
+
+
+dashboard/node_modules
+dashboard/dist
+
+
