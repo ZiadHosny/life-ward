@@ -1,0 +1,28 @@
+.item-map {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.item-row {
+  grid-column: span 3;
+  grid-row: auto;
+  font-size: 16px;
+}
+
+.item-column-middle {
+  grid-column: 2;
+  grid-row: auto;
+  font-size: 18px;
+}
+
+.item-column-side {
+  grid-column: 1 / span 2;
+  grid-row: auto;
+  font-size: 14px;
+}
+
+.item-gap {
+  grid-column: auto;
+  grid-row: auto;
+}

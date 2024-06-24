@@ -1,0 +1,136 @@
+html,body{
+  height: 100%;
+  width:100%;
+  overflow-x: hidden;
+}
+
+.quality::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  .quality::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .quality::-webkit-scrollbar-thumb {
+    background: #ddd; 
+  }
+  
+  /* Handle on hover */
+  .quality::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+.GroupedButtons::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  .GroupedButtons::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .GroupedButtons::-webkit-scrollbar-thumb {  
+    background: #ddd; 
+  }
+  
+  /* Handle on hover */
+  .GroupedButtons::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  .chips::-webkit-scrollbar {
+    width: 5px;
+    height:6px;
+    border-radius: 10px ;
+  }
+  
+  /* Track */
+  .chips::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .chips::-webkit-scrollbar-thumb {
+    background: #ddd; 
+  }
+  
+  /* Handle on hover */
+  .chips::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  .couponInput{
+    width: 71%;
+    margin-right: 0px !important;
+    height: 40px;
+    border: 2px solid #69309652 !IMPORTANT;
+    padding: 6px !IMPORTANT;
+
+  }
+  
+
+
+@media(min-width:1500px){
+.ourVideo{
+  width:610px !important;
+  height:610px !important;
+}
+}
+
+@media(min-width:1600px) and (max-width:1700px){
+.ourVideo{
+  width:550px !important;
+  height:550px !important;
+}
+}
+
+@media(min-width:1700px){
+.ourVideo{
+  width:680px !important;
+  height:680px !important;
+}
+}
+@media(min-width:1800px){
+.ourVideo{
+  width:750px !important;
+  height:750px !important;
+}
+}
+
+@media(min-width:1500px)  and (max-width:1650px){
+.bigiiimage{
+  width:510px !important
+}
+}
+.loader {
+  animation: rotate 1s infinite;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+
+.loader:before {
+  animation: ball1 1s infinite;
+  background-color: #6a6a6a;
+  box-shadow: 30px 0 0 #333;
+  margin-bottom: 10px;
+}
+
+.loader:after {
+  animation: ball2 1s infinite;
+  background-color: #333;
+  box-shadow: 30px 0 0 #6a6a6a;
+}
