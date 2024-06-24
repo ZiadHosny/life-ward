@@ -34,8 +34,6 @@ import { imageBaseUrl } from "../../api/baseUrl";
 import { useTranslation } from "react-i18next";
 import { useFetchSubSubCategoryBySubId } from "../../hooks/subSubCategories.hooks";
 import DraftEditor from "../../Components/globals/draftEditor/DraftEditor";
-import { useGetAllReposQuery } from "../../api/repos.api";
-import { toast } from "react-toastify";
 import ProductQualitiesImages from "../../Components/product/ProductQualitiesImages";
 import SelectMultiTag from "../../Components/globals/SelectMultiTag";
 const EditProductPage = () => {
@@ -149,14 +147,12 @@ const EditProductPage = () => {
             case "category":
               return setFieldValue(
                 "category",
-                product.data.category?._id || ""
-                // product.data.category || []
+                product.data.category.map((v) => v._id) || []
               );
             case "subCategory":
               return setFieldValue(
                 "subCategory",
-                product.data.subCategory?._id || ""
-                // product.data.subCategory || []
+                product.data.subCategory.map((v) => v._id) || []
               );
 
             case "attributes":
@@ -216,10 +212,8 @@ const EditProductPage = () => {
         setFieldValue("title_meta", product.data?.metaDataId?.title_meta || "");
         setFieldValue("desc_meta", product.data?.metaDataId?.desc_meta || "");
       });
-      setFieldValue("subCategory", product?.data?.subCategory?._id || "");
-      setFieldValue("subSubCategory", product?.data?.subSubCategory?._id || "");
-      // setFieldValue("subCategory", product?.data?.subCategory || {});
-      // setFieldValue("subSubCategory", product?.data?.subSubCategory || {});
+      setFieldValue("subCategory", product.data.subCategory.map((v) => v._id) || []);
+      setFieldValue("subSubCategory", product.data.subSubCategory.map((v) => v._id) || []);
     }
   }, [product]);
   const { categories } = useFetchAllCategories();
@@ -267,7 +261,9 @@ const EditProductPage = () => {
     }
   };
 
-  console.log(values, 'zx')
+
+  console.log(values.subCategory, 'subCategory')
+
   return (
     <Box
       sx={{
@@ -914,7 +910,7 @@ const EditProductPage = () => {
               label={language === "en" ? "category" : "القسم"}
               name="category"
               error={errors.category}
-              value={[values.category]}
+              value={values.category}
               touched={touched.category}
               handleChange={(e) => {
                 handleChange(e);
@@ -933,7 +929,7 @@ const EditProductPage = () => {
               label={language === "en" ? "sub category" : "القسم الفرعي"}
               name="subCategory"
               error={errors.subCategory}
-              value={[values.subCategory]}
+              value={values.subCategory}
               touched={touched.subCategory}
               handleChange={(e) => {
                 handleChange(e);
@@ -951,7 +947,7 @@ const EditProductPage = () => {
               label={language === "en" ? "Sub Sub category" : "قسم فرعى فرعى"}
               name="subSubCategory"
               error={errors.subSubCategory}
-              value={[values.subSubCategory]}
+              value={values.subSubCategory}
               touched={touched.subSubCategory}
               handleChange={handleChange}
               handleBlur={handleBlur}

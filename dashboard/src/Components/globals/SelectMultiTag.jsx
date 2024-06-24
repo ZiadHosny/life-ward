@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, Typography, FormControl, MenuItem, Select, OutlinedInput, Checkbox, ListItemText } from "@mui/material";
-import React from "react";
+import { useEffect, useState } from "react";
 
 const SelectMultiTag = ({
     label,
@@ -13,7 +13,11 @@ const SelectMultiTag = ({
     optionsData,
 }) => {
     const { colors, customColors } = useTheme();
-    const [list, setList] = React.useState([]);
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        setList(value)
+    }, [value])
 
     return (
         <Box
