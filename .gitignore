@@ -3,6 +3,7 @@ backend/dist
 backend/credentials.json
 backend/config
 backend/utils
+backend/uploads
 
 
 client/node_modules
