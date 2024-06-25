@@ -12,12 +12,62 @@ import { SubSubCategory } from "../models/subSubCategory.model";
 import ApiError from "../utils/ApiError";
 import { ApiFeatures } from "../utils/ApiFeatures";
 import { createMetaData, deleteMetaData } from "../utils/MetaData";
-import { getAllItems, getOneItemById, getOneItemBySlug } from "./factory.controller";
+import {
+  getAllItems,
+  getOneItemById,
+  getOneItemBySlug,
+} from "./factory.controller";
 
 // @desc    Get All SubSubCategories
 // @route   POST /api/v1/subSubCategories
 // @access  Private (Admin)
-export const getAllSubSubCategories = getAllItems(SubSubCategory);
+export const getAllSubSubCategories = expressAsyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // 1- get id from params
+    const { subCategoryIds } = req.params;
+
+    // 2- get all subcategories belong to specific category from mongooseDB
+    const query = req.query as IQuery;
+    const mongoQuery = SubSubCategory.find({
+      subCategory: subCategoryIds.split(","),
+    });
+
+    console.log(
+      "What is SubCategoryMongoQuery: ===========================",
+      mongoQuery
+    );
+
+    // 3- create pagination
+    const { data, paginationResult } = await new ApiFeatures(mongoQuery, query)
+      .populate()
+      .filter()
+      .limitFields()
+      .search()
+      .sort()
+      .paginate();
+    if (data.length === 0) {
+      return next(
+        new ApiError(
+          {
+            en: "not found",
+            ar: "غير موجود",
+          },
+          StatusCodes.NOT_FOUND
+        )
+      );
+    }
+
+    // 5- send response
+    res.status(200).json({
+      status: Status.SUCCESS,
+      length: data.length,
+      paginationResult,
+      data: data,
+      success_en: "Successfully",
+      success_ar: "تم بنجاح",
+    });
+  }
+);
 
 // @desc     Get All SubSubCategories
 // @route    GET/api/v1/subSubCategories/getAllSubSubCategoriesWithProducts
@@ -32,9 +82,10 @@ export const getAllSubSubCategoriesWithProducts = expressAsyncHandler(
     }[] = [];
     await Promise.all(
       subSubCategory.map(async (SubSub) => {
-        const mongoQuery = Product.find({ subSubCategory: SubSub._id.toString() });
+        const mongoQuery = Product.find({
+          subSubCategory: SubSub._id.toString(),
+        });
         const query = req.query as IQuery;
-
 
         const { data } = await new ApiFeatures(mongoQuery, query)
           .populate()
@@ -44,10 +95,9 @@ export const getAllSubSubCategoriesWithProducts = expressAsyncHandler(
           .sort()
           .paginate();
 
-
         // 3- get features
         if (data.length === 0) {
-          return
+          return;
         }
         result.push({
           subSubCategory: SubSub,
@@ -101,12 +151,11 @@ export const createSubSubCategory = expressAsyncHandler(
       );
     }
 
-
     // 3- check if SubSubCategory already exist
     const exist = await SubSubCategory.findOne({
-      $or: [{ name_en }, { name_ar }] ,
+      $or: [{ name_en }, { name_ar }],
     });
-    
+
     if (exist) {
       return next(
         new ApiError(
@@ -118,8 +167,6 @@ export const createSubSubCategory = expressAsyncHandler(
         )
       );
     }
-
-    
 
     // 4- create SubSubCategory inside specific SubCategory in mongooseDB
     const newSubSubCategory = await SubSubCategory.create({
@@ -190,7 +237,7 @@ export const updateSubSubCategory = expressAsyncHandler(
 
     const usedName = await SubSubCategory.findOne({
       $or: [{ name_en: req.body.name_en }, { name_ar: req.body.name_ar }],
-    })
+    });
 
     if (usedName && usedName._id.toString() !== id) {
       return next(
@@ -206,7 +253,7 @@ export const updateSubSubCategory = expressAsyncHandler(
 
     // 3- check if Meta already exist
     const exist = await Meta.findOne({ reference: id });
-    const metaExist=req.body.title_meta && req.body.desc_meta
+    const metaExist = req.body.title_meta && req.body.desc_meta;
     if (!exist && metaExist) {
       const newMeta = await createMetaData(req, id);
       await SubSubCategory.findByIdAndUpdate(
@@ -219,9 +266,17 @@ export const updateSubSubCategory = expressAsyncHandler(
         { reference: id },
         { title_meta: req.body.title_meta, desc_meta: req.body.desc_meta }
       );
-      await SubSubCategory.findByIdAndUpdate(id, { ...req.body }, { new: true });
+      await SubSubCategory.findByIdAndUpdate(
+        id,
+        { ...req.body },
+        { new: true }
+      );
     } else {
-      await SubSubCategory.findByIdAndUpdate(id, { ...req.body }, { new: true });
+      await SubSubCategory.findByIdAndUpdate(
+        id,
+        { ...req.body },
+        { new: true }
+      );
     }
 
     // 4- get updated document and populate it
@@ -273,7 +328,7 @@ export const deleteSubSubCategory = expressAsyncHandler(
       // 3- increment subCategoryCount in Category
       await SubCategory.updateOne(
         { _id: deletedSubSubCategory?.subCategory },
-        { $inc: { subSubCategoriesCount: -1 } },
+        { $inc: { subSubCategoriesCount: -1 } }
       );
     } else {
       return next(

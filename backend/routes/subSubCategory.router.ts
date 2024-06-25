@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { protectedMiddleware } from "../middlewares/protected.middleware";
-import { 
-  postSubSubCategoryValidation ,
-  putSubSubCategoryValidation
- } from "../validations/subSubCategory.validator";
+import {
+  postSubSubCategoryValidation,
+  putSubSubCategoryValidation,
+} from "../validations/subSubCategory.validator";
 // Middleware Import
 import { validate } from "../middlewares/validation.middleware";
 // import {
@@ -27,22 +27,19 @@ import { limitsMiddleware } from "../middlewares/limits.middleware";
 
 const subSubCategoryRouter = Router();
 
+subSubCategoryRouter.route("/").post(
+  protectedMiddleware,
+  allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
+  limitsMiddleware("SubSubCategory"),
+  //createSubSubCategoryValidator,
+  validate(postSubSubCategoryValidation),
+  createSubSubCategory
+); //admin root admina adminb
 
+subSubCategoryRouter.route("/Slug/:slug").get(getSubSubCategoryBySlug); //all
 subSubCategoryRouter
-  .route("/")
-  .get(getAllSubSubCategories) //all
-  .post(
-    protectedMiddleware,
-    allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
-    limitsMiddleware("SubSubCategory"),
-    //createSubSubCategoryValidator,
-    validate(postSubSubCategoryValidation),
-    createSubSubCategory
-  ); //admin root admina adminb
-
-  subSubCategoryRouter
-  .route("/Slug/:slug")
-  .get(getSubSubCategoryBySlug); //all
+  .route("/subCategoryId/:subCategoryIds")
+  .get(getAllSubSubCategories); //all
 
 subSubCategoryRouter
   .route("/getAllSubSubCategoriesWithProducts")
@@ -53,7 +50,7 @@ subSubCategoryRouter
   .get(
     //getSubSubCategoryByIdValidator,
     getSubSubCategoryById
-    ) //all
+  ) //all
   .put(
     protectedMiddleware,
     allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),

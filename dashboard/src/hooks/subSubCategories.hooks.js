@@ -6,7 +6,7 @@ export const useFetchSubSubCategoryBySubId = (subId) => {
   const [state, setState] = useState([]);
   useEffect(() => {
     if (subId) {
-      getSubSubCategories(`?subCategory=${subId}`)
+      getSubSubCategories(`/subCategoryId/${subId}`)
         .unwrap()
         .then((res) => {
           setState(res.data);

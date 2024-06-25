@@ -19,7 +19,7 @@ import {
   getProductByIdValidator,
   createProductValidator,
   updateProductValidator,
-  deleteProductValidator
+  deleteProductValidator,
 } from "../validations/validations/product.validator";
 import { limitsMiddleware } from "../middlewares/limits.middleware";
 
@@ -47,9 +47,7 @@ productRouter
 
 productRouter
   .route("/:id")
-  .get(
-    getProductByIdValidator,
-    getProductById) //all
+  .get(getProductByIdValidator, getProductById) //all
   .put(
     protectedMiddleware,
     allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),

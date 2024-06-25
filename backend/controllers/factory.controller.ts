@@ -20,10 +20,6 @@ export const getAllItems = <T>(
     async (req: Request, res: Response, next: NextFunction) => {
       //  1- find all data
       const query = req.query as IQuery;
-      console.log(
-        "what is the queries: ===============================",
-        req?.query
-      );
       const mongoQuery = Model.find({}).select(fields);
 
       if (populate.length > 0 && populate[0] !== "") {

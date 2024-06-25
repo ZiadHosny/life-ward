@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import OurTarget from "../../Pages/home/OurTarget";
 import VedioPage from "../../Pages/videoPage/VideoPage";
 import SingleTest from "../singleTest/SingleTest";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import BlogsPage from "../../Pages/blogs/BlogsPage";
 import SingleBlogPage from "../../Pages/singleBlog/SingleBlog";
 import CategoryPage from "../../Pages/categoryPage/CategoryPage";
@@ -31,6 +31,9 @@ import ForgetPassword from "../../Pages/ForgetPassword/ForgetPassword";
 import PaymentMoyasar from "../../Pages/PaymentMoyasar/PaymentMoyasar";
 import ThanksPage from "../../Pages/thanksOrder/ThanksPage";
 import About2 from './../../Pages/aboutUs/about2/About2';
+const AnalyticsMetaTags = lazy(() =>
+  import('../../Pages/analyticsMeta/AnalyticsMeta')
+)
 const AppRoutes = () => {
    const { currentUser } = useSelector((state) => state);
   const location = useLocation();
@@ -55,6 +58,7 @@ const AppRoutes = () => {
     currentUser?.phone 
   return (
     <AnimatePresence>
+      <AnalyticsMetaTags/>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<About2 />} />
