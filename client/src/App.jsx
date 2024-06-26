@@ -17,6 +17,7 @@ import { useLazyGetMeQuery } from "./APIs/UserApis";
 import { setCurrentUser } from "./APIs/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateGuestUserMutation } from "./APIs/gestUserApi";
+import { WhatsAppChat } from "./components/WhatsAppChat";
 function App() {
   const { i18n } = useTranslation();
   document.body.dir = i18n.dir();
@@ -28,9 +29,9 @@ function App() {
   const { currentUser } = useSelector((state) => state);
 
 
-  useEffect(()=>{
-    i18n.changeLanguage(i18n.language ||"ar")
-  },[])
+  useEffect(() => {
+    i18n.changeLanguage(i18n.language || "ar")
+  }, [])
   useEffect(() => {
     if (localStorage?.token) {
       getMe()
@@ -59,21 +60,21 @@ function App() {
     getSaved();
     getCarts();
   }, []);
-  
+
   useEffect(() => {
 
     const language = localStorage.getItem("i18nextLng");
 
-    if(language?.includes("en")) {
+    if (language?.includes("en")) {
 
-      i18n.changeLanguage("en"||"en");
+      i18n.changeLanguage("en" || "en");
       return
     }
-    i18n.changeLanguage(language||"en");
+    i18n.changeLanguage(language || "en");
 
   }, []);
 
-   
+
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   if (!token) {
@@ -93,7 +94,7 @@ function App() {
         }
       })
       .catch((e) => {
-         
+
       });
   }, []);
   return (
@@ -113,6 +114,7 @@ function App() {
       <NavTest />
       <AppRoutes />
       <Footer />
+      <WhatsAppChat />
       <ScrollingUpDuringRouting />
     </BrowserRouter>
   );
