@@ -27,6 +27,7 @@ import { webhookApi } from "../APIs/webhookApi";
 import forgetPassApi from "../APIs/forgetPassApi";
 import commentsApi from "../APIs/commentApi";
 import PointsApi from "../APIs/pointsApi";
+import analyticsMetaApi from "../APIs/analyticsMetaApi";
 const RootReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [ProductsApi.reducerPath]: ProductsApi.reducer,
@@ -51,6 +52,7 @@ const RootReducer = combineReducers({
   [webhookApi.reducerPath]: webhookApi.reducer,
   [commentsApi.reducerPath]: commentsApi.reducer,
   [PointsApi.reducerPath]: PointsApi.reducer,
+  [analyticsMetaApi.reducerPath]: analyticsMetaApi.reducer,
  
   saved: savedReducer,
   cart: cartReducer,
@@ -89,7 +91,7 @@ export const store = configureStore({
       webhookApi.middleware,
       commentsApi.middleware,
       PointsApi.middleware,
- 
+      analyticsMetaApi.middleware,
 
     );
   },

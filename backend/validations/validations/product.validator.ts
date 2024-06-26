@@ -978,9 +978,9 @@ export const updateProductValidator = [
       en: "Category is required",
       ar: "الفئة مطلوبة",
     })
-    .isString()
+    .isArray({ min: 1 })
     .withMessage({
-      en: "Category Must be string",
+      en: "Category Must be array[mongoId]",
       ar: "يجب أن تكون الفئة حروف",
     })
     .trim()
@@ -1001,7 +1001,7 @@ export const updateProductValidator = [
 
   body("subCategory")
     .optional()
-    .isString()
+    .isArray({ min: 1 })
     .withMessage({
       en: "Sub Category Must be string",
       ar: "يجب أن تكون الفئة الفرعية حروف",
@@ -1023,7 +1023,7 @@ export const updateProductValidator = [
     }),
   body("subSubCategory")
     .optional()
-    .isString()
+    .isArray({ min: 1 })
     .withMessage({
       en: "Sub Category Must be string",
       ar: "يجب أن تكون الفئة الفرعية حروف",
