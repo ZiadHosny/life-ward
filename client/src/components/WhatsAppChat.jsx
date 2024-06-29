@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import WhatsAppLogo from '../assets/whatsapp.svg'
 import { IconButton, Tooltip } from '@mui/material';
 
-const whatsAppLink = "https://wa.me/+201110146112"
+const whatsAppLink = "https://wa.me/+966599790939"
 const titleWhenHoverEn = 'Chat With Us'
 const titleWhenHoverAr = 'تواصل معانا'
 
