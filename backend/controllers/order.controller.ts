@@ -92,6 +92,7 @@ export const createOrder = expressAsyncHandler(
       phone,
       email,
       name,
+      for: forWhom,
       area,
       address,
       postalCode,
@@ -206,20 +207,20 @@ export const createOrder = expressAsyncHandler(
       // delete order
       await Order.findByIdAndDelete(hasOrder._id);
     }
-    let hashVerificationCode;
-    let verificationCodeExpiresAt;
+
+    const verificationCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+    // const verificationCode = "123456";
+    const verificationCodeExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
+    const hashVerificationCode = crypto
+      .createHash("sha256")
+      .update(verificationCode)
+      .digest("hex");
 
     // check for slef gift or not
-    if (!congratzStatus) {
-      const verificationCode = Math.floor(
-        100000 + Math.random() * 900000
-      ).toString();
-      // const verificationCode = "123456";
-      verificationCodeExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
-      hashVerificationCode = crypto
-        .createHash("sha256")
-        .update(verificationCode)
-        .digest("hex");
+    if (forWhom === 'yourself') {
+
 
       // 3) send the reset code via sms
       try {
@@ -1212,14 +1213,14 @@ export const createShippingOrder = expressAsyncHandler(
     console.log(
       "length :::::: ",
       length ===
-        responseOrder.cashItems.items.length +
-          responseOrder.onlineItems.items.length
+      responseOrder.cashItems.items.length +
+      responseOrder.onlineItems.items.length
     );
 
     if (
       length ===
       responseOrder.cashItems.items.length +
-        responseOrder.onlineItems.items.length
+      responseOrder.onlineItems.items.length
     ) {
       responseOrder.sendToDelivery = true;
       await responseOrder.save();
