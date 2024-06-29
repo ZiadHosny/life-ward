@@ -22,9 +22,9 @@ const SaPhoneInput = ({
         width: fullWidth
           ? 1
           : {
-              md: 0.49,
-              xs: 1,
-            },
+            md: 0.49,
+            xs: 1,
+          },
         pb: "20px",
         position: "relative",
         ...extraStyles,
@@ -69,6 +69,9 @@ const SaPhoneInput = ({
           // }}
           value={value}
           onChange={(e) => {
+            if (e.target.value.length >= 12 & e.target.value.startsWith('966')) {
+              e.target.value = e.target.value.split('966')[1]
+            }
             handleChange(e);
           }}
           onBlur={handleBlur}

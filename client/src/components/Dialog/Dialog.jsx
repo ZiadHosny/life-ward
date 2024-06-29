@@ -76,6 +76,8 @@ export const Dialog = () => {
 
     return (
         <DialogMui
+            maxWidth='xl'
+            sx={{ backgroundColor: "#693096" }}
             open={open}
             PaperProps={{
                 component: 'form',
@@ -91,14 +93,14 @@ export const Dialog = () => {
                     }
                 },
             }}>
-            <DialogTitle>
+            <DialogTitle sx={{ color: "#693096", fontSize: 30 }}>
                 {lng === "en"
                     ? "Who will you send flowers to?"
                     : "لمن سوف ترسل الورد؟"
                 }
             </DialogTitle>
-            <DialogContent>
-                <DialogContentText>
+            <DialogContent >
+                <DialogContentText sx={{ fontSize: 20 }}>
                     {lng === "en"
                         ? "If you are sending flowers to a friend, choose a friend and enter his mobile number."
                         : "اذا كنت سوف ترسل الورد لصديق اختار صديق وادخل رقم الموبايل الخاص به."
@@ -108,10 +110,20 @@ export const Dialog = () => {
                     name="radio-buttons-group"
                     aria-labelledby="demo-radio-buttons-group-label"
                     value={value}
+                    sx={{
+                        fontSize: 20,
+                        paddingTop: 2,
+                        color: "#693096",
+                        '& .Mui-checked': {
+                            color: '#693096',
+                        },
+                    }}
                     onChange={onChange}
                 >
-                    <FormControlLabel value="yourself" control={<Radio />} label="For yourself" />
-                    <FormControlLabel value="friend" control={<Radio />} label="For Friend" />
+                    <FormControlLabel value="yourself" control={<Radio />}
+                        label={lng === "en" ? "For yourself" : "إلي نفسك"} />
+                    <FormControlLabel value="friend" control={<Radio />}
+                        label={lng === "en" ? "For Friend" : "إلي صديق لك"} />
                 </RadioGroup>
                 {value === 'friend' ?
                     <SaPhoneInput
@@ -126,9 +138,31 @@ export const Dialog = () => {
                     /> : <></>
                 }
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">Ok</Button>
+            <DialogActions sx={{ gap: 4 }}>
+                <Button
+                    sx={{
+                        color: "#fff",
+                        backgroundColor: "#693096", fontSize: 20,
+                        '&:hover': {
+                            backgroundColor: '#693096',
+                            color: '#fff',
+                        },
+                    }}
+                    onClick={handleClose}>
+                    {lng === "en" ? "Cancel" : "الغاء"}
+                </Button>
+                <Button
+                    sx={{
+                        color: "#fff",
+                        backgroundColor: "#693096", fontSize: 20,
+                        '&:hover': {
+                            backgroundColor: '#693096',
+                            color: '#fff',
+                        },
+                    }}
+                    type="submit">
+                    {lng === "en" ? "Ok" : "اوافق"}
+                </Button>
             </DialogActions>
         </DialogMui>
     );
