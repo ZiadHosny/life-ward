@@ -238,13 +238,8 @@ const SellingProductCard = ({ item, index }) => {
                   },
                 }}
               >
-                {language === "en"
-                  ? item?.title_en?.length > 15
-                    ? item?.title_en.slice(0, 8) + "..."
-                    : item?.title_en
-                  : item?.title_ar?.length > 15
-                  ? item?.title_ar.slice(0, 8) + "..."
-                  : item?.title_ar}
+                {`${language === "en"
+            ? item?.title_en:item?.title_ar}`.slice(0,50)}
               </Typography>
               <Typography
                 variant="h5"

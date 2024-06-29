@@ -69,7 +69,7 @@ export const register = expressAsyncHandler(
     }
 
     if (registrationType === "email") {
-      const existingUser = await User.findOne({ email,  });
+      const existingUser = await User.findOne({ email });
 
       if (req?.body?.phone) delete req.body.phone;
 
@@ -118,7 +118,13 @@ export const register = expressAsyncHandler(
       if (req?.body?.email) delete req.body.email;
 
       if (!existingUser) {
-        const user = await User.create({ registrationType, phone, name, gender: req.body.gender, birthDate: req.body.birthDate});
+        const user = await User.create({
+          registrationType,
+          phone,
+          name,
+          gender: req.body.gender,
+          birthDate: req.body.birthDate,
+        });
         if (userId) {
           await Cart.updateMany(
             {
@@ -147,11 +153,11 @@ export const register = expressAsyncHandler(
         // Add Expiration Time For Code Reset Password (15 min)
         user.passwordResetExpires = new Date(Date.now() + 10 * 60 * 1000);
         user.passwordResetVerified = false;
-        
+
         await user.save();
         console.log(process.env.MessageSMS);
         console.log(`${process.env.MessageSMS} : ${verifiedCode}`);
-        console.log( `مرحبا بكم في متاجر صاري رمز الدخول هو : ${verifiedCode}` );
+        console.log(`مرحبا بكم في متاجر صاري رمز الدخول هو : ${verifiedCode}`);
 
         // 3) send the reset code via email
         try {
@@ -163,8 +169,12 @@ export const register = expressAsyncHandler(
           user.verificationCode = undefined;
           user.passwordResetExpires = undefined;
           user.passwordResetVerified = undefined;
-          console.log("message_error ==> ", (err as any)?.response?.data?.message,"  status_code_error ==> ", (err as any)?.response?.data?.statusCode);
-          
+          console.log(
+            "message_error ==> ",
+            (err as any)?.response?.data?.message,
+            "  status_code_error ==> ",
+            (err as any)?.response?.data?.statusCode
+          );
 
           await user.save();
           return next(
@@ -208,7 +218,7 @@ export const register = expressAsyncHandler(
         await existingUser.save();
         console.log(process.env.MessageSMS);
         console.log(`${process.env.MessageSMS} : ${verifiedCode}`);
-        console.log( `مرحبا بكم في متاجر صاري رمز الدخول هو : ${verifiedCode}` );
+        console.log(`مرحبا بكم في متاجر صاري رمز الدخول هو : ${verifiedCode}`);
 
         // 3) send the reset code via email
         try {
@@ -223,12 +233,19 @@ export const register = expressAsyncHandler(
           existingUser.passwordResetVerified = undefined;
 
           await existingUser.save();
-          console.log("message_error ==> ", (err as any)?.response?.data?.message,"  status_code_error ==> ", (err as any)?.response?.data?.statusCode);
+          console.log(
+            "message_error ==> ",
+            (err as any)?.response?.data?.message,
+            "  status_code_error ==> ",
+            (err as any)?.response?.data?.statusCode
+          );
 
           return next(
             new ApiError(
               {
-                en: "There Is An Error In Sending SMS",
+                en: `There Is An Error In Sending SMS===message_error:  ${
+                  (err as Error).message
+                }`,
                 ar: "هناك خطأ في إرسال الرسالة القصيرة",
               },
               StatusCodes.INTERNAL_SERVER_ERROR
@@ -340,8 +357,8 @@ export const login = expressAsyncHandler(
 
       console.log(process.env.MessageSMS);
       console.log(`${process.env.MessageSMS} : ${verifiedCode}`);
-      console.log( `مرحبا بكم في متاجر صاري رمز الدخول هو : ${verifiedCode}` );
-      
+      console.log(`مرحبا بكم في متاجر صاري رمز الدخول هو : ${verifiedCode}`);
+
       // 3) send the reset code via email
       try {
         await sendSMSTaqnyat({
@@ -355,12 +372,17 @@ export const login = expressAsyncHandler(
         user.passwordResetVerified = undefined;
 
         await user.save();
-        console.log("message_error ==> ", (err as any)?.response?.data?.message,"  status_code_error ==> ", (err as any)?.response?.data?.statusCode);
+        console.log(
+          "message_error ==> ",
+          (err as any)?.response?.data?.message,
+          "  status_code_error ==> ",
+          (err as any)?.response?.data?.statusCode
+        );
 
         return next(
           new ApiError(
             {
-              en: "There Is An Error In Sending SMS",
+              en: `There Is An Error In Sending SMS ${(err as Error).message}`,
               ar: "هناك خطأ في إرسال الرسالة القصيرة",
             },
             StatusCodes.INTERNAL_SERVER_ERROR

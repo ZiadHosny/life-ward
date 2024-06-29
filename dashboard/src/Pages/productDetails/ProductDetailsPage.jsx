@@ -21,7 +21,10 @@ const ProductDetailsPage = () => {
     }
   }, [product.data]);
   return (
-    <Box
+    <Box 
+
+    
+
       sx={{
         py: {
           lg: 3,
@@ -234,7 +237,7 @@ const ProductDetailsPage = () => {
                     mt: 2,
                   }}
                 />
-                <Box
+                <Box class="productDetails"
                   dangerouslySetInnerHTML={{
                     __html: product.data[`description_${language}`],
                   }}
