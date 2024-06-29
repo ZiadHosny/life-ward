@@ -28,7 +28,7 @@ import {
 } from "../interfaces/order/order.interface";
 import { sendEmail } from "../utils/mailer/sendEmail";
 
-const getProductPrice = ({ 
+const getProductPrice = ({
   priceBeforeDiscount,
   priceAfterDiscount,
 }: {
@@ -82,7 +82,7 @@ interface addressInterface {
 // @desc    Create Order
 // @route   POST /api/v1/orders
 // @access  Private (User)
- export const createOrder = expressAsyncHandler(
+export const createOrder = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1- get user
     const { _id } = req.user! as any;
@@ -92,6 +92,7 @@ interface addressInterface {
       phone,
       email,
       name,
+      for: forWhom,
       area,
       address,
       postalCode,
@@ -218,22 +219,24 @@ interface addressInterface {
       .update(verificationCode)
       .digest("hex");
 
-    // 3) send the reset code via email
-    try {
-      await sendSMSTaqnyat({
-        recipient: parseInt(req.body.phone),
-        message: `${process.env.MessageOrderSMS} : ${verificationCode}`,
-      });
-    } catch (err) {
-      return next(
-        new ApiError(
-          {
-            en: "There Is An Error In Sending SMS",
-            ar: "هناك خطأ في إرسال الرسالة القصيرة",
-          },
-          StatusCodes.INTERNAL_SERVER_ERROR
-        )
-      );
+    if (forWhom === 'yourself') {
+      // 3) send the reset code via email
+      try {
+        await sendSMSTaqnyat({
+          recipient: parseInt(req.body.phone),
+          message: `${process.env.MessageOrderSMS} : ${verificationCode}`,
+        });
+      } catch (err) {
+        return next(
+          new ApiError(
+            {
+              en: "There Is An Error In Sending SMS",
+              ar: "هناك خطأ في إرسال الرسالة القصيرة",
+            },
+            StatusCodes.INTERNAL_SERVER_ERROR
+          )
+        );
+      }
     }
 
     // 6- calculate total price and quantity
@@ -472,9 +475,9 @@ export const verifyOrder = expressAsyncHandler(
                         value.value_ar === prop.value_ar
                     )
                 )
-                // .forEach((value: any) => {
-                //   value.quantity = Number(value.quantity) - item.quantity;
-                // });
+              // .forEach((value: any) => {
+              //   value.quantity = Number(value.quantity) - item.quantity;
+              // });
             });
             // save the updated product back to the database
             await product.save();
@@ -1208,14 +1211,14 @@ export const createShippingOrder = expressAsyncHandler(
     console.log(
       "length :::::: ",
       length ===
-        responseOrder.cashItems.items.length +
-          responseOrder.onlineItems.items.length
+      responseOrder.cashItems.items.length +
+      responseOrder.onlineItems.items.length
     );
 
     if (
       length ===
       responseOrder.cashItems.items.length +
-        responseOrder.onlineItems.items.length
+      responseOrder.onlineItems.items.length
     ) {
       responseOrder.sendToDelivery = true;
       await responseOrder.save();

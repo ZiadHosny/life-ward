@@ -44,6 +44,7 @@ import { setCart } from "../../APIs/cartSlice";
 import { useSubmitPointsMutation } from "../../APIs/pointsApi";
 import styled from "@emotion/styled";
 import Loader from "../../components/loader/loader";
+import { openDialog } from "../../APIs/dialogSlice";
 
 const CustomWidthTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -122,6 +123,9 @@ const CartTest = () => {
       );
       return;
     }
+
+    dispatch(openDialog())
+
     navigate("/checkout");
   };
 
@@ -199,7 +203,7 @@ const CartTest = () => {
           toast.success(res[`success_${lng === "en" ? "en" : "ar"}`]);
           getCart()
             .unwrap()
-            .then((res) => {});
+            .then((res) => { });
         })
         .catch((e) => {
           toast.error(e.data[`error_${lng === "en" ? "en" : "ar"}`]);
@@ -365,8 +369,7 @@ const CartTest = () => {
                     src={`${imageBaseUrl}/${item?.product?.images[0]}`}
                     onClick={() =>
                       navigate(
-                        `/productDetails/${
-                          item?.product?._id
+                        `/productDetails/${item?.product?._id
                         }/${item.product.title_en.replace(/ /g, "-")}`
                       )
                     }
@@ -441,13 +444,13 @@ const CartTest = () => {
                               ? "online"
                               : "اونلاين"
                             : language === "en"
-                            ? "On Shop"
-                            : "الدفع في المتجر"}
+                              ? "On Shop"
+                              : "الدفع في المتجر"}
                         </Typography>
                       </Stack>
                       <Stack sx={{ margin: "10px 0px" }}>
                         {ProductDiscount(item) &&
-                        couponAdded.couponEnter !== "" ? (
+                          couponAdded.couponEnter !== "" ? (
                           <Stack
                             sx={{
                               display: "flex",
@@ -508,7 +511,7 @@ const CartTest = () => {
                             }}
                           >
                             <Box component={"span"} sx={{ mx: 0.5 }}>
-                              {}
+                              { }
                             </Box>
                             {couponAdded?.couponEnter !== "" ? (
                               <>
@@ -518,7 +521,7 @@ const CartTest = () => {
                                     {(
                                       item?.totalWithoutShipping -
                                       item?.totalWithoutShipping *
-                                        (couponAdded?.persentage / 100)
+                                      (couponAdded?.persentage / 100)
                                     ).toFixed(2)}
                                   </>
                                 ) : (
@@ -532,7 +535,7 @@ const CartTest = () => {
 
                           {item.product.priceAfterDiscount > 0 &&
                             item?.product?.priceAfterDiscount !==
-                              item?.product?.priceBeforeDiscount && (
+                            item?.product?.priceBeforeDiscount && (
                               <Box
                                 component={"span"}
                                 sx={{
@@ -902,7 +905,7 @@ const CartTest = () => {
                           <CustomWidthTooltip
                             title={
                               data?.data?.couponUsed ||
-                              couponAdded?.couponEnter !== ""
+                                couponAdded?.couponEnter !== ""
                                 ? lng === "en"
                                   ? "You Have To Delete the coupon To Use Your Points"
                                   : "يجب حذف الكوبون حتي تتمكن من استخدام نقاطك"

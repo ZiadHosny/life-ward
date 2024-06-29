@@ -34,6 +34,7 @@ import { useGetFastCoast, useGetNote } from "./FirstHooks";
 import { useVerifyCartMutation } from "../../../APIs/cartApi";
 import SaPhoneInput from "../../../components/SaPhoneInput/SaPhoneInput";
 import RecordVoideNew from "./RecordVoiceNew";
+import { Dialog } from "../../../components/Dialog/Dialog";
 const FirstTab = ({ showed, setValue, setUserPhone }) => {
   const [getMe] = useLazyGetMeQuery();
   const [uploadedVideo, setUploadVideo] = useState();
@@ -41,6 +42,7 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
   const [uploadMedia] = useUploadMediaMutation();
   const [addOrder] = useAddOrderMutation();
   const [submitCheckout] = useVerifyCartMutation();
+  const dialog = useSelector(state => state.dialog)
   const formik = useFormik({
     initialValues: { ...checkoutValues.first },
     validationSchema: Yup.object(checkoutValidaions.first),
@@ -75,7 +77,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
                   })
                     .unwrap()
                     .then(() => {
-                      setValue((value) => value + 1);
+                      if (values.for === 'yourself') {
+                        setValue((value) => value + 1);
+                      } else {
+                        setValue((value) => value + 2);
+                      }
                       setUserPhone(values.phone);
                     })
                     .catch((err) =>
@@ -101,7 +107,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
               })
                 .unwrap()
                 .then(() => {
-                  setValue((value) => value + 1);
+                  if (values.for === 'yourself') {
+                    setValue((value) => value + 1);
+                  } else {
+                    setValue((value) => value + 2);
+                  }
                   setUserPhone(values.phone);
                 })
                 .catch((err) =>
@@ -138,7 +148,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
                 })
                   .unwrap()
                   .then(() => {
-                    setValue((value) => value + 1);
+                    if (values.for === 'yourself') {
+                      setValue((value) => value + 1);
+                    } else {
+                      setValue((value) => value + 2);
+                    }
                     setUserPhone(values.phone);
                   })
                   .catch((err) =>
@@ -165,7 +179,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
             })
               .unwrap()
               .then(() => {
-                setValue((value) => value + 1);
+                if (values.for === 'yourself') {
+                  setValue((value) => value + 1);
+                } else {
+                  setValue((value) => value + 2);
+                }
                 setUserPhone(values.phone);
               })
               .catch((err) =>
@@ -188,7 +206,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
               addOrder(values)
                 .unwrap()
                 .then(() => {
-                  setValue((value) => value + 1);
+                  if (values.for === 'yourself') {
+                    setValue((value) => value + 1);
+                  } else {
+                    setValue((value) => value + 2);
+                  }
                   setUserPhone(values.phone);
                 })
                 .catch((err) =>
@@ -205,7 +227,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
           addOrder(values)
             .unwrap()
             .then(() => {
-              setValue((value) => value + 1);
+              if (values.for === 'yourself') {
+                setValue((value) => value + 1);
+              } else {
+                setValue((value) => value + 2);
+              }
               setUserPhone(values.phone);
             })
             .catch((err) =>
@@ -244,14 +270,19 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
         setFieldValue("name", tempUser.name);
         setFieldValue("email", tempUser.email);
         setFieldValue("phone", tempUser.phone);
-        setFieldValue(
-          "country",
-          language === "en" ? "Saudi Arabia" : "السعودية"
-        );
+        setFieldValue("country", language === "en" ? "Saudi Arabia" : "السعودية");
         // setFieldValue("city", language === "en" ? "Jeddah" : "جدة");
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (dialog.phone) {
+      setFieldValue("phone", dialog.phone)
+      setFieldValue("for", dialog.for)
+    }
+  }, [dialog]);
+
   useEffect(() => {
     setValues({
       ...values,
@@ -303,39 +334,46 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
             pb: "30px",
           }}
         >
-          <InputBase
-            type="checkbox"
-            id="cogratz"
-            sx={{
-              accentColor: colors.main,
-              height: 20,
-              width: 20,
-              cursor: "pointer",
-            }}
-            name="congratzStatus"
-            value={values?.congratzStatus}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+          {dialog.for === 'friend' ?
+            <>
+              <InputBase
+                type="checkbox"
+                id="cogratz"
+                sx={{
+                  accentColor: colors.main,
+                  height: 20,
+                  width: 20,
+                  cursor: "pointer",
+                }}
+                name="congratzStatus"
+                value={values?.congratzStatus}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-          <Typography
-            component={"label"}
-            htmlFor={"cogratz"}
-            fontFamily={publicFontFamily}
-            fontWeight={"bold"}
-            sx={{
-              color: colors.main,
-              fontSize: {
-                md: "19px",
-                xs: "17.5px",
-              },
-              cursor: "pointer",
-            }}
-          >
-            {language === "en"
-              ? "Would you like to send congratulations?"
-              : "هل تود إرسال تهنئة؟"}
-          </Typography>
+              <Typography
+                component={"label"}
+                htmlFor={"cogratz"}
+                fontFamily={publicFontFamily}
+                fontWeight={"bold"}
+                sx={{
+                  color: colors.main,
+                  fontSize: {
+                    md: "19px",
+                    xs: "17.5px",
+                  },
+                  cursor: "pointer",
+                }}
+              >
+                {language === "en"
+                  ? "Would you like to send congratulations?"
+                  : "هل تود إرسال تهنئة؟"}
+              </Typography>
+            </>
+            :
+            <>
+            </>
+          }
         </Stack>
         <Box
           sx={{
@@ -449,24 +487,24 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
           ) : undefined}
           {values?.congratz?.type === "video"
             ? uploadedVideo && (
-                <Box mb="25px" px="25px">
-                  <CardMedia
-                    controls
-                    component="video"
-                    sx={{
-                      height: {
-                        md: 400,
-                        xs: 280,
-                      },
-                      width: {
-                        md: 400,
-                        xs: 1,
-                      },
-                    }}
-                    src={URL.createObjectURL(uploadedVideo)}
-                  />
-                </Box>
-              )
+              <Box mb="25px" px="25px">
+                <CardMedia
+                  controls
+                  component="video"
+                  sx={{
+                    height: {
+                      md: 400,
+                      xs: 280,
+                    },
+                    width: {
+                      md: 400,
+                      xs: 1,
+                    },
+                  }}
+                  src={URL.createObjectURL(uploadedVideo)}
+                />
+              </Box>
+            )
             : undefined}
         </Box>
         <Stack
@@ -520,39 +558,6 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
             handleBlur={handleBlur}
           />
 
-          <CheckTextInput
-            type="text"
-            name="country"
-            label={language === "en" ? "Country" : "الدولة"}
-            value={values.country}
-            error={errors.country}
-            touched={touched.country}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            disabled={true}
-          />
-        </Stack>
-        <Stack
-          sx={{
-            flexDirection: {
-              md: "row",
-              xs: "column",
-            },
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* <CheckTextInput
-            type="text"
-            name="city"
-            label={language === "en" ? "City" : "المدينة"}
-            value={values.city}
-            error={errors.city}
-            touched={touched.city}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            disabled={true}
-          /> */}
           <Box
             sx={{
               position: "relative",
@@ -587,9 +592,8 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
               value={values.city}
               style={{
                 width: "100%",
-                border: `1px solid ${
-                  errors.city && touched.city ? "red" : colors.main
-                }`,
+                border: `1px solid ${errors.city && touched.city ? "red" : colors.main
+                  }`,
                 borderRadius: "20px",
                 fontSize: "20px",
                 padding: "8px 15px",
@@ -622,6 +626,41 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
               </Typography>
             ) : undefined}
           </Box>
+
+          {/* <CheckTextInput
+            type="text"
+            name="country"
+            label={language === "en" ? "Country" : "الدولة"}
+            value={values.country}
+            error={errors.country}
+            touched={touched.country}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            disabled={true}
+          /> */}
+        </Stack>
+        <Stack
+          sx={{
+            flexDirection: {
+              md: "row",
+              xs: "column",
+            },
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* <CheckTextInput
+            type="text"
+            name="city"
+            label={language === "en" ? "City" : "المدينة"}
+            value={values.city}
+            error={errors.city}
+            touched={touched.city}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            disabled={true}
+          /> */}
+
           <CheckTextInput
             type="text"
             name="address"
@@ -646,18 +685,7 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
             handleBlur={handleBlur}
             disabled={!values.city}
           />
-        </Stack>
-        {!values.fastDelivery ? (
-          <Stack
-            sx={{
-              flexDirection: {
-                md: "row",
-                xs: "column",
-              },
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-            }}
-          >
+          {!values.fastDelivery ? (
             <CheckTextInput
               type="date"
               name="receiveDate"
@@ -668,8 +696,8 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
               handleChange={handleChange}
               handleBlur={handleBlur}
             />
-          </Stack>
-        ) : undefined}
+          ) : undefined}
+        </Stack>
         <Stack
           sx={{
             flexDirection: {
@@ -769,6 +797,7 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
           </Button>
         </Stack>
       </form>
+      <Dialog />
     </Box>
   );
 };

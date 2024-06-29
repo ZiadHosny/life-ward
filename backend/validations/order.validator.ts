@@ -5,6 +5,7 @@ export const createOrderValidation = Joi.object({
   city: Joi.string().required(),
   phone: Joi.string().required(),
   name: Joi.string().required(),
+  for: Joi.string().required(),
   area: Joi.string().optional(),
   address: Joi.string().required(),
   country: Joi.string().required(),

@@ -156,6 +156,7 @@ export const checkoutValues = {
     email: "",
     country: "Saudi Arabia",
     city: "",
+    for: 'yourself',
     address: "",
     receiveDate: "",
     congratzStatus: false,
@@ -222,6 +223,7 @@ export const checkoutValidaions = {
         language === "en" ? "Address is required" : "العنوان مطلوب"
       ),
     }),
+    for: Yup.string().required(),
     fastDelivery: Yup.boolean().required(),
     receiveDate: Yup.date().when("fastDelivery", {
       is: false,

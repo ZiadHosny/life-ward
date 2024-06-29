@@ -5,6 +5,7 @@ import { savedProductsApi } from "../APIs/SavedProductApi";
 import { SectionApi } from "../APIs/SectionApis";
 import { userApi } from "../APIs/UserApis";
 import savedReducer from "../APIs/savedSlice";
+import dialogReducer from "../APIs/dialogSlice";
 import cartReducer from "../APIs/cartSlice";
 import guestUserApi from "../APIs/gestUserApi";
 import cartApi from "../APIs/cartApi";
@@ -53,13 +54,13 @@ const RootReducer = combineReducers({
   [commentsApi.reducerPath]: commentsApi.reducer,
   [PointsApi.reducerPath]: PointsApi.reducer,
   [analyticsMetaApi.reducerPath]: analyticsMetaApi.reducer,
- 
+  
   saved: savedReducer,
+  dialog: dialogReducer,
   cart: cartReducer,
   refetching: refetchReducer,
   currentUser: userSlice,
   categoriesSlice,
-  
 });
 export const store = configureStore({
   reducer: RootReducer,
