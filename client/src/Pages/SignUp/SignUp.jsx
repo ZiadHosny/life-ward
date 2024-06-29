@@ -136,7 +136,7 @@ const SignUp = () => {
         formik.values.phone
           ? (delete values.email, delete values.password)
           : (delete values.phone,
-            delete values.name,
+           
             delete values.birthDate,
             delete values.gender);
 
