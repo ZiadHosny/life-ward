@@ -139,12 +139,12 @@ function MouseOverPopover({
 //   ========================================Attr===============================
 
 const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
-   const { attrAciveColors } = colors;
+  const { attrAciveColors } = colors;
   const [, { language: lang }] = useTranslation();
   const handleUpdateQualities = ({ attr, values }) => {
     setCartData((prev) => {
       const newQualities = prev?.qualities?.filter((v) => {
-         
+
         return v?.key_en !== attr?.key_en && v?.key_ar !== attr?.key_ar;
       });
       // qualitiesBefore
@@ -187,18 +187,9 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
       className="quality"
       sx={{
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
-        border: "1px solid #A989C3",
-        padding: "0px",
-        borderTop: "0px",
-        borderBottom: "0px",
-        borderTop: "1px solid  #A989C3",
-        borderBottom: "1px solid  #A989C3",
-        marginBottom: "0px",
-        height: "fit-content",
-        maxHeight: "300px",
-        borderBottom: "1px solid #A989C3",
+        gap: 2,
+        flexDirection: lang === 'ar' ? 'row-reverse' : 'row'
       }}
     >
       <Typography
@@ -206,52 +197,28 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
           color: colors?.attrKeyColor,
           fontWeight: "bold",
           textAlign: lang === "en" ? "left" : "right",
-          marginBottom: "15px",
-          padding: { xs: "9px", lg: "10px" },
-          paddingBottom: "2px",
-          borderBottom: "1px solid #A989C3",
           width: "fit-content",
           color: "#693096",
-          marginBottom: "0px",
-          width: "100%",
-          textAlign: "center",
-          width:
-            attr[`key_${lang === "en" ? "en" : "ar"}`]?.length > 90
-              ? "100%"
-              : "200px",
           fontSize: {
             xs: "15px",
-            md: "30px",
-          },
-          height: {
-            xs: "50px",
-            md: "80px",
-            xl: "120px",
+            md: "25px",
           },
           fontWeight: "100",
           fontFamily: "El Messiri",
         }}
       >
+        {lang === 'ar' ? ':' : ''}
         {attr[`key_${lang === "en" ? "en" : "ar"}`]}
+        {lang === 'en' ? ':' : ''}
       </Typography>
       <ButtonGroup
+        variant="outlined"
         sx={{
-          flexDirection: "column",
-          alignItems: "flex-end",
-          margin: "0px",
-          padding: "0px",
           width: "100%",
-          overflow: "auto",
-          padding: "38px 0px",
           display: "flex",
-          "align-items": " flex-start",
-          "justify-content": "flex-start",
-          margin: "auto",
-          "padding-top": "0px",
-          overflow: "auto",
-          height: "400px",
+          alignItems: "center",
+          justifyContent: "start",
         }}
-        className="GroupedButtons"
       >
         {attr?.values?.map((val) => {
           return (
@@ -259,36 +226,22 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
               sx={{
                 color: isSelectedAtt(val) ? "#fff" : "#693096",
                 bgcolor: isSelectedAtt(val) ? "#693096" : "#fff",
-                margin: "0px 10px",
                 borderColor: `#ddd !important`,
-                fontSize: "11px !important",
-                border: "0px",
-                margin: "0px",
-                borderBottom: "0px",
-                borderRadius: "0px",
                 width: "100%",
-                padding: "10px",
-
-                "&:last-child": {
-                  borderBottom: "0px",
-                },
+                paddingRight: 3,
+                paddingLeft: 3,
+                paddingTop: 1,
+                paddingBottom: 1,
                 "&:hover": {
-                  border: "0px",
-                  borderBottom: "1px solid #693096",
                   bgcolor: "#693096",
                   color: "#fff",
                 },
                 fontSize: "20px",
-                borderRadius: "0px",
-                border: "1px solid #ddd",
-                borderRight: "0px",
-                borderleft: "0px",
-                fontSize: "30px !important",
                 ".css-n7haop-MuiTypography-root": {
-                  "font-size": {
-                    xs: "15px",
-                    md: "27px",
-                  },
+                  // "font-size": {
+                  //   xs: "15px",
+                  //   md: "20px",
+                  // },
                   "font-weight": 200,
                   fontFamily: "El Messiri",
                 },
@@ -309,7 +262,7 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
                 <MouseOverPopover
                   text={
                     val.price
-                      ? `${product?.offer?.percentage ? val?.price- val?.price*product?.offer?.percentage/100:val?.price } 
+                      ? `${product?.offer?.percentage ? val?.price - val?.price * product?.offer?.percentage / 100 : val?.price} 
                           ${lang === "en" ? "SAR" : "رس"}`
                       : null
                   }
@@ -324,14 +277,18 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
                 >
                   {val[`value_${lang === "en" ? "en" : "ar"}`]}
                 </MouseOverPopover>
-              ) : (
-                <>{val[`value_${lang === "en" ? "en" : "ar"}`]}</>
-              )}
+              ) :
+                (
+                  <MouseOverPopover>
+                    {val[`value_${lang === "en" ? "en" : "ar"}`]}
+                  </MouseOverPopover>
+                )
+              }
             </Button>
           );
         })}
       </ButtonGroup>
-    </Box>
+    </Box >
   );
 };
 
@@ -392,7 +349,7 @@ function SingleProduct() {
           qualitiesBefore: [],
         });
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [productId]);
   //  const [allSelectedQualities, setAllSelectedQualities] = useState([]);
 
@@ -415,38 +372,38 @@ function SingleProduct() {
 
     qu.length
       ? addToCart({
-          paymentType:
-            product.paymentType === "both"
-              ? paymentMethod
-              : product.paymentType,
-          quantity: cartData?.quantity,
-          id: cartData?.id,
-          qualities: qu,
+        paymentType:
+          product.paymentType === "both"
+            ? paymentMethod
+            : product.paymentType,
+        quantity: cartData?.quantity,
+        id: cartData?.id,
+        qualities: qu,
+      })
+        .unwrap()
+        .then((res) => {
+          toast.success(res[`success_${lang === "en" ? "en" : "ar"}`]);
+          if (method === "creatingOrder") navigate("/cart");
         })
-          .unwrap()
-          .then((res) => {
-            toast.success(res[`success_${lang === "en" ? "en" : "ar"}`]);
-            if (method === "creatingOrder") navigate("/cart");
-          })
-          .catch((e) => {
-            toast.error(e.data[`error_${lang === "en" ? "en" : "ar"}`]);
-          })
+        .catch((e) => {
+          toast.error(e.data[`error_${lang === "en" ? "en" : "ar"}`]);
+        })
       : addToCart({
-          paymentType:
-            product.paymentType === "both"
-              ? paymentMethod
-              : product.paymentType,
-          quantity: cartData?.quantity,
-          id: cartData?.id,
+        paymentType:
+          product.paymentType === "both"
+            ? paymentMethod
+            : product.paymentType,
+        quantity: cartData?.quantity,
+        id: cartData?.id,
+      })
+        .unwrap()
+        .then((res) => {
+          toast.success(res[`success_${lang === "en" ? "en" : "ar"}`]);
+          if (method === "creatingOrder") navigate("/cart");
         })
-          .unwrap()
-          .then((res) => {
-            toast.success(res[`success_${lang === "en" ? "en" : "ar"}`]);
-            if (method === "creatingOrder") navigate("/cart");
-          })
-          .catch((e) => {
-            toast.error(e.data[`error_${lang === "en" ? "en" : "ar"}`]);
-          });
+        .catch((e) => {
+          toast.error(e.data[`error_${lang === "en" ? "en" : "ar"}`]);
+        });
   };
   const handleAddToCartFunction = (method) => {
     if (method === "creatingOrder") {
@@ -595,7 +552,7 @@ function SingleProduct() {
               marginTop: { xs: "0px", md: "20px" },
             }}
           >
-            {}
+            { }
             <Grid
               item
               xs={12}
@@ -718,42 +675,31 @@ function SingleProduct() {
                     }}
                   >
                     <Box
-                      className={"chips"}
                       sx={{
+                        margin: "10px 0px",
                         display: "flex",
                         flexDirection: "column",
-                        width: {
-                          xs: "100%",
-                          lg: "70%",
-                        },
-                        margin: "10px 0px",
-                        overflowX: "auto",
+                        gap: 3,
                       }}
                     >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                        }}
-                      >
-                        {product?.qualities?.map((quality) => (
-                          <Attrs
-                            key={quality?._id}
-                            colors={{
-                              attrKeyColor: colors.attrKeyColor,
-                              attrValueColor: colors.attrValueColor,
-                              attrValueBgColor: colors.attrValueBgColor,
-                              attrValueBorderColor: colors.attrValueBorderColor,
-                              attrAciveColors: colors.attrAciveColors,
-                            }}
-                            product={product}
-                            attr={quality}
-                            setCartData={setCartData}
-                            cartData={cartData}
-                          />
-                        ))}
-                      </Box>
-                      {/* <Stack
+                      {product?.qualities?.map((quality) => (
+                        <Attrs
+                          key={quality?._id}
+                          colors={{
+                            attrKeyColor: colors.attrKeyColor,
+                            attrValueColor: colors.attrValueColor,
+                            attrValueBgColor: colors.attrValueBgColor,
+                            attrValueBorderColor: colors.attrValueBorderColor,
+                            attrAciveColors: colors.attrAciveColors,
+                          }}
+                          product={product}
+                          attr={quality}
+                          setCartData={setCartData}
+                          cartData={cartData}
+                        />
+                      ))}
+                    </Box>
+                    {/* <Stack
                 direction="row"
                 justifyContent={'flex-start'}
                 width={'100%'}
@@ -845,7 +791,6 @@ function SingleProduct() {
                   )
                 })}
               </Stack> */}
-                    </Box>
                     <Stack
                       direction="row"
                       alignItems="center"
@@ -877,9 +822,9 @@ function SingleProduct() {
                             console.log("product :::: ", product?.offer?.percentage)
                           }
                           {
-                            product?.offer?.percentage? 
-                          Math.abs(product?.finalPrice + (extraPrice-extraPrice*product?.offer?.percentage/100)).toFixed(2):Math.abs(product?.finalPrice + extraPrice).toFixed(2) 
-                        }{" "}
+                            product?.offer?.percentage ?
+                              Math.abs(product?.finalPrice + (extraPrice - extraPrice * product?.offer?.percentage / 100)).toFixed(2) : Math.abs(product?.finalPrice + extraPrice).toFixed(2)
+                          }{" "}
                           {lang === "en" ? "SAR" : "ر.س"}
                         </Typography>
                       </div>
@@ -925,7 +870,7 @@ function SingleProduct() {
                     {console.log(product)}
                     {product?.priceAfterDiscount > 0 &&
                       product?.priceAfterDiscount !==
-                        product?.priceBeforeDiscount && (
+                      product?.priceBeforeDiscount && (
                         <Box
                           component={"span"}
                           sx={{
@@ -937,8 +882,8 @@ function SingleProduct() {
                                 : "1.5rem",
                           }}
                         >
-                           {product?.offer?.percentage? Math.abs(product?.priceBeforeDiscount + (extraPrice-extraPrice*product?.offer?.percentage/100)).toFixed(2):
-                            Math.abs(product?.priceBeforeDiscount + extraPrice).toFixed(2) }
+                          {product?.offer?.percentage ? Math.abs(product?.priceBeforeDiscount + (extraPrice - extraPrice * product?.offer?.percentage / 100)).toFixed(2) :
+                            Math.abs(product?.priceBeforeDiscount + extraPrice).toFixed(2)}
                           {lang === "en" ? "SAR" : "ر.س"}
                         </Box>
                       )}
@@ -993,9 +938,9 @@ function SingleProduct() {
                             onClick={() =>
                               cartData.quantity !== 1
                                 ? setCartData({
-                                    ...cartData,
-                                    quantity: cartData.quantity - 1,
-                                  })
+                                  ...cartData,
+                                  quantity: cartData.quantity - 1,
+                                })
                                 : undefined
                             }
                           >
@@ -1069,8 +1014,8 @@ function SingleProduct() {
                                 ? " online"
                                 : "اونلاين"
                               : lang === "en"
-                              ? "cash"
-                              : "كاش"
+                                ? "cash"
+                                : "كاش"
                             : null}
                         </Typography>
                       </Stack>
