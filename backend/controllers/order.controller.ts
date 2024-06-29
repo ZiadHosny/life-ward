@@ -92,7 +92,6 @@ export const createOrder = expressAsyncHandler(
       phone,
       email,
       name,
-      for: forWhom,
       area,
       address,
       postalCode,
@@ -207,20 +206,22 @@ export const createOrder = expressAsyncHandler(
       // delete order
       await Order.findByIdAndDelete(hasOrder._id);
     }
+    let hashVerificationCode;
+    let verificationCodeExpiresAt;
 
-    // 5- get user info and send a verification code to the user phone number
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-    // const verificationCode = "123456";
-    const verificationCodeExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
-    const hashVerificationCode = crypto
-      .createHash("sha256")
-      .update(verificationCode)
-      .digest("hex");
+    // check for slef gift or not
+    if (!congratzStatus) {
+      const verificationCode = Math.floor(
+        100000 + Math.random() * 900000
+      ).toString();
+      // const verificationCode = "123456";
+      verificationCodeExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
+      hashVerificationCode = crypto
+        .createHash("sha256")
+        .update(verificationCode)
+        .digest("hex");
 
-    if (forWhom === 'yourself') {
-      // 3) send the reset code via email
+      // 3) send the reset code via sms
       try {
         await sendSMSTaqnyat({
           recipient: parseInt(req.body.phone),
@@ -238,6 +239,7 @@ export const createOrder = expressAsyncHandler(
         );
       }
     }
+    // 5- get user info and send a verification code to the user phone number
 
     // 6- calculate total price and quantity
 
@@ -465,16 +467,15 @@ export const verifyOrder = expressAsyncHandler(
           const product = item.product;
           if (product) {
             product.qualities.forEach((quality: any) => {
-              quality.values
-                .filter(
-                  (value: any) =>
-                    item.properties &&
-                    item.properties.some(
-                      (prop) =>
-                        value.value_en === prop.value_en &&
-                        value.value_ar === prop.value_ar
-                    )
-                )
+              quality.values.filter(
+                (value: any) =>
+                  item.properties &&
+                  item.properties.some(
+                    (prop) =>
+                      value.value_en === prop.value_en &&
+                      value.value_ar === prop.value_ar
+                  )
+              );
               // .forEach((value: any) => {
               //   value.quantity = Number(value.quantity) - item.quantity;
               // });
@@ -1211,14 +1212,14 @@ export const createShippingOrder = expressAsyncHandler(
     console.log(
       "length :::::: ",
       length ===
-      responseOrder.cashItems.items.length +
-      responseOrder.onlineItems.items.length
+        responseOrder.cashItems.items.length +
+          responseOrder.onlineItems.items.length
     );
 
     if (
       length ===
       responseOrder.cashItems.items.length +
-      responseOrder.onlineItems.items.length
+        responseOrder.onlineItems.items.length
     ) {
       responseOrder.sendToDelivery = true;
       await responseOrder.save();
