@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
   );
 };
 
-const publishable_api_key = "pk_test_KSDmss5dyhieD7StkXVSzP1z3m2rbbhSDN7br9xe";
+const publishable_api_key = "pk_test_jbeoHr2PpoSUwvKzHruPeChRLvtoH7rLaVywgprU";
 
 const Creditcard = ({ amount, callback_url, description, metadata }) => {
   useEffect(() => {
