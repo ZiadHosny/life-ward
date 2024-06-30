@@ -208,10 +208,10 @@ export const createOrder = expressAsyncHandler(
       await Order.findByIdAndDelete(hasOrder._id);
     }
 
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-    // const verificationCode = "123456";
+    // const verificationCode = Math.floor(
+    //   100000 + Math.random() * 900000
+    // ).toString();
+    const verificationCode = "123456";
     const verificationCodeExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
     const hashVerificationCode = crypto
       .createHash("sha256")
@@ -219,9 +219,7 @@ export const createOrder = expressAsyncHandler(
       .digest("hex");
 
     // check for slef gift or not
-    if (forWhom === 'yourself') {
-
-
+    if (forWhom === "yourself") {
       // 3) send the reset code via sms
       try {
         await sendSMSTaqnyat({
@@ -1213,14 +1211,14 @@ export const createShippingOrder = expressAsyncHandler(
     console.log(
       "length :::::: ",
       length ===
-      responseOrder.cashItems.items.length +
-      responseOrder.onlineItems.items.length
+        responseOrder.cashItems.items.length +
+          responseOrder.onlineItems.items.length
     );
 
     if (
       length ===
       responseOrder.cashItems.items.length +
-      responseOrder.onlineItems.items.length
+        responseOrder.onlineItems.items.length
     ) {
       responseOrder.sendToDelivery = true;
       await responseOrder.save();

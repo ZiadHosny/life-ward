@@ -27,7 +27,10 @@ export const WhatsAppChat = () => {
                     zIndex: 999,
                     position: 'fixed',
                     height: { xs: "60px", xl: "70px" },
-                    height: { xs: "60px", xl: "70px" },
+                    backgroundColor:"rgb(37, 211, 102)",
+                    "&:hover":{
+                        backgroundColor:"rgb(18, 140, 126)",
+                    }
                 }}
             >
                 <img

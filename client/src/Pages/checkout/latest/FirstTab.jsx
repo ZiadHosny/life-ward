@@ -787,6 +787,7 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
           justifyContent={"flex-end"}
         >
           <Button onClick={handleSubmit}>
+           
             <KeyboardBackspaceIcon
               sx={{
                 color: colors.main,
@@ -794,6 +795,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
                 fontSize: "50px",
               }}
             />
+             <span style={{
+              color: colors.main,
+             
+              fontSize: "25px",
+             }}>{language=='en'? "Next":"التالى"}</span>
           </Button>
         </Stack>
       </form>
