@@ -267,7 +267,7 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
     getMe().then(({ data, error }) => {
       if (data.data && !error) {
         const tempUser = { ...data.data };
-        setFieldValue("name", tempUser.name);
+        setFieldValue("name", tempUser.name.trim());
         setFieldValue("email", tempUser.email);
         setFieldValue("phone", tempUser.phone);
         setFieldValue("country", language === "en" ? "Saudi Arabia" : "السعودية");

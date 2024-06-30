@@ -221,22 +221,22 @@ export const createOrder = expressAsyncHandler(
     // check for slef gift or not
     if (forWhom === "yourself") {
       // 3) send the reset code via sms
-      try {
-        await sendSMSTaqnyat({
-          recipient: parseInt(req.body.phone),
-          message: `${process.env.MessageOrderSMS} : ${verificationCode}`,
-        });
-      } catch (err) {
-        return next(
-          new ApiError(
-            {
-              en: "There Is An Error In Sending SMS",
-              ar: "هناك خطأ في إرسال الرسالة القصيرة",
-            },
-            StatusCodes.INTERNAL_SERVER_ERROR
-          )
-        );
-      }
+      // try {
+      //   await sendSMSTaqnyat({
+      //     recipient: parseInt(req.body.phone),
+      //     message: `${process.env.MessageOrderSMS} : ${verificationCode}`,
+      //   });
+      // } catch (err) {
+      //   return next(
+      //     new ApiError(
+      //       {
+      //         en: "There Is An Error In Sending SMS",
+      //         ar: "هناك خطأ في إرسال الرسالة القصيرة",
+      //       },
+      //       StatusCodes.INTERNAL_SERVER_ERROR
+      //     )
+      //   );
+      // }
     }
     // 5- get user info and send a verification code to the user phone number
 
@@ -424,7 +424,7 @@ export const verifyOrder = expressAsyncHandler(
       user: _id,
       verificationCode: hashVerificationCode,
       verificationCodeExpiresAt: { $gt: Date.now() },
-      phone: phone,
+      phone: { $regex: phone },
     }).populate([
       { path: "onlineItems.items.product" },
       { path: "cashItems.items.product" },
@@ -1480,3 +1480,26 @@ export const trackOrder = expressAsyncHandler(
 //     });
 //   }
 // );
+
+export const getMyLastOrder = expressAsyncHandler(async (req, res, next) => {
+  const order = await Order.findOne({ user: (req.user as any)._id }).sort({
+    createdAt: -1,
+  });
+  if (!order) {
+    return next(
+      new ApiError(
+        {
+          en: "Order Not Found",
+          ar: "الطلب غير موجود",
+        },
+        StatusCodes.NOT_FOUND
+      )
+    );
+  }
+  res.status(StatusCodes.OK).json({
+    status: Status.SUCCESS,
+    data: order,
+    success_en: "Order Found Successfully",
+    success_ar: "تم العثور على الطلب بنجاح",
+  });
+});

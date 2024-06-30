@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import { protectedMiddleware } from "../middlewares/protected.middleware";
 import { allowedTo } from "../middlewares/allowedTo.middleware";
@@ -16,16 +15,16 @@ import {
   createItemRepository,
   deleteGroupOfOrders,
   createShippingOrderStatus,
-  cancelShippingOrder
+  cancelShippingOrder,
+  getMyLastOrder,
 } from "../controllers/order.controller";
 import {
   createOrderValidation,
   verifyOrderValidation,
-  deleteGroupOfOrdersValidation
+  deleteGroupOfOrdersValidation,
 } from "../validations/order.validator";
 
 const orderRouter = Router();
-
 
 orderRouter
   .route("/createItemRepository")
@@ -34,7 +33,7 @@ orderRouter
     allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
     createItemRepository
   );
-  
+
 orderRouter
   .route("/")
   .post(
@@ -54,6 +53,7 @@ orderRouter
     ),
     getAllOrders
   );
+orderRouter.route("/getMyLastOrder").get(protectedMiddleware, getMyLastOrder);
 orderRouter
   .route("/trackOrder/:id")
   .post(
@@ -86,12 +86,12 @@ orderRouter
   );
 
 orderRouter
-    .route("/createShippingOrderStatus/:id")
-    .post(
-        protectedMiddleware,
-        allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
-        createShippingOrderStatus
-    );
+  .route("/createShippingOrderStatus/:id")
+  .post(
+    protectedMiddleware,
+    allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
+    createShippingOrderStatus
+  );
 
 orderRouter
   .route("/cancelShippingOrder/:id")
@@ -105,7 +105,7 @@ orderRouter
   .route("/myOrders")
   .get(protectedMiddleware, allowedTo(Role.USER), getMyOrders);
 
-  orderRouter
+orderRouter
   .route("/deleteMany")
   .delete(
     protectedMiddleware,

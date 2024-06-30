@@ -13,6 +13,10 @@ const ordersApi = createApi({
       query: () => "/order/getOrdersByUser",
       providesTags: ["Orders"],
     }),
+    getMyLastOrder: builder.query({
+      query: () => "/order/getMyLastOrder",
+      providesTags: ["Orders"],
+    }),
     addOrder: builder.mutation({
       query: (payload) => ({
         url: `/orders`,
@@ -44,5 +48,6 @@ export const {
   useAddOrderMutation,
   useVerifyOrderCodeMutation,
   useCreateOnlineOrderMutation,
+  useLazyGetMyLastOrderQuery
 } = ordersApi;
 export default ordersApi;

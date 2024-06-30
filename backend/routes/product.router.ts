@@ -35,7 +35,7 @@ productRouter
     protectedMiddleware,
     allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
     limitsMiddleware("Product"),
-    createProductValidator,
+    // createProductValidator,
     createProduct
   ); //admin root admina adminb
 
@@ -51,7 +51,7 @@ productRouter
   .put(
     protectedMiddleware,
     allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
-    updateProductValidator,
+    // updateProductValidator,
     updateProduct
   ) //admin root admina adminb
   .delete(

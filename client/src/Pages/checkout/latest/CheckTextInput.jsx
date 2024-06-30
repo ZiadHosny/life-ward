@@ -58,7 +58,7 @@ const CheckTextInput = ({
         onChange={(e) => {
           handleChange(e);
 
-          setCreditFocus(creditCardNames);
+          // setCreditFocus(creditCardNames);
         }}
         onBlur={handleBlur}
         placeholder={placeholder || ""}

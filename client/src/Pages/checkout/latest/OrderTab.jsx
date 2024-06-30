@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import { useVerifyOrderCodeMutation } from "../../../APIs/ordersApi";
 import { useNavigate } from "react-router-dom";
 import { useLazyGetAllCartsQuery } from "../../../APIs/cartApi";
-const SecondTab = ({ showed, setValue, userPhone }) => {
+const OrderTab = ({ showed, setValue, userPhone }) => {
 
  
   const navigate = useNavigate();
@@ -28,7 +28,6 @@ const SecondTab = ({ showed, setValue, userPhone }) => {
     initialValues: { ...checkoutValues.second },
     validationSchema: Yup.object(checkoutValidaions.second),
     onSubmit: () => {
-      console.log('What is wrong With Formic ================')
       verifyOrderCode({ ...values, phone: userPhone })
         .unwrap()
         .then((res) => {
@@ -44,7 +43,6 @@ const SecondTab = ({ showed, setValue, userPhone }) => {
         })
         .catch((error) => toast.error(error.data[`error_${language}`]));
     },
-    
   });
 
   const [_, { language }] = useTranslation();
@@ -141,4 +139,4 @@ const SecondTab = ({ showed, setValue, userPhone }) => {
   );
 };
 
-export default SecondTab;
+export default OrderTab;

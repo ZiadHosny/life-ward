@@ -413,20 +413,19 @@ export const createProductValidator = [
     .withMessage({
       en: "Sub Category must be mongo id",
       ar: "يجب أن تكون الفئة الفرعية معرف mongo",
-    })
-    .custom(async (value, { req }) => {
-      const subCategory = await SubCategory.findOne({
-        _id: value,
-        category: req.body.category,
-      });
-      if (!subCategory) {
-        return Promise.reject({
-          en: "Sub Category not found",
-          ar: "الفئة الفرعية غير موجودة",
-        });
-      }
     }),
-
+  // .custom(async (value, { req }) => {
+  //   const subCategory = await SubCategory.findOne({
+  //     _id: value,
+  //     category: req.body.category,
+  //   });
+  //   if (!subCategory) {
+  //     return Promise.reject({
+  //       en: "Sub Category not found",
+  //       ar: "الفئة الفرعية غير موجودة",
+  //     });
+  //   }
+  // })
   body("subSubCategory")
     .optional()
     .isArray()
