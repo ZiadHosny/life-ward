@@ -93,6 +93,7 @@ export const createOrder = expressAsyncHandler(
       email,
       name,
       for: forWhom,
+      time,
       area,
       address,
       postalCode,
@@ -103,6 +104,8 @@ export const createOrder = expressAsyncHandler(
       receiveDate,
       congratz,
     } = req.body;
+
+    console.log(req.body)
 
     // 2- add address in database for user
     const newAddress = { city, area, address, postalCode } as addressInterface;
@@ -1211,14 +1214,14 @@ export const createShippingOrder = expressAsyncHandler(
     console.log(
       "length :::::: ",
       length ===
-        responseOrder.cashItems.items.length +
-          responseOrder.onlineItems.items.length
+      responseOrder.cashItems.items.length +
+      responseOrder.onlineItems.items.length
     );
 
     if (
       length ===
       responseOrder.cashItems.items.length +
-        responseOrder.onlineItems.items.length
+      responseOrder.onlineItems.items.length
     ) {
       responseOrder.sendToDelivery = true;
       await responseOrder.save();

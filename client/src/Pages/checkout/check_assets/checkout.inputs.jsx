@@ -161,6 +161,7 @@ export const checkoutValues = {
     receiveDate: "",
     congratzStatus: false,
     fastDelivery: false,
+    time: ''
   },
   second: {
     code: "",
@@ -216,6 +217,9 @@ export const checkoutValidaions = {
     ),
     city: Yup.string().required(
       language === "en" ? "City is required" : "المدينة مطلوبة"
+    ),
+    time: Yup.string().required(
+      language === "en" ? "Time is required" : "الوقت مطلوب"
     ),
     address: Yup.string().when("city", {
       is: (data) => data,

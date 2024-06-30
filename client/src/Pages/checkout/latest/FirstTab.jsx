@@ -35,6 +35,11 @@ import { useVerifyCartMutation } from "../../../APIs/cartApi";
 import SaPhoneInput from "../../../components/SaPhoneInput/SaPhoneInput";
 import RecordVoideNew from "./RecordVoiceNew";
 import { Dialog } from "../../../components/Dialog/Dialog";
+
+const timesAr = ["٤ عصراً - ٧ مساءً", "٧ مساءً - ٩ مساءً", "٩ مساءً- ١٢ مساءً"]
+const timesEn = ["4pm - 7pm", "7pm - 9pm", "9pm - 12pm"]
+
+
 const FirstTab = ({ showed, setValue, setUserPhone }) => {
   const [getMe] = useLazyGetMeQuery();
   const [uploadedVideo, setUploadVideo] = useState();
@@ -251,6 +256,9 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
     handleSubmit,
   } = formik;
   const [_, { language }] = useTranslation();
+
+  const times = language === 'en' ? timesEn : timesAr
+
   const addCongratzType = (type) => {
     setValues({
       ...values,
@@ -698,6 +706,85 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
             />
           ) : undefined}
         </Stack>
+
+        <Stack
+          sx={{
+            flexDirection: {
+              md: "row",
+              xs: "column",
+            },
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box
+            sx={{
+              position: "relative",
+              pb: "20px",
+
+              width: {
+                md: 0.49,
+                xs: 1,
+              },
+            }}
+          >
+            <Typography
+              fontFamily={publicFontFamily}
+              fontWeight={"bold"}
+              sx={{
+                color: colors.main,
+                fontSize: {
+                  md: "19px",
+                  xs: "17.5px",
+                },
+              }}
+            >
+              {language === "en" ? "Time" : "الوقت"}
+            </Typography>
+            <select
+              name="time"
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              onBlur={handleBlur}
+              value={values.time}
+              style={{
+                width: "100%",
+                border: `1px solid ${errors.time && touched.time ? "red" : colors.main}`,
+                borderRadius: "20px",
+                fontSize: "20px",
+                padding: "8px 15px",
+                fontFamily: publicFontFamily,
+                fontWeight: "bold",
+                outline: 0,
+              }}
+            >
+              <Typography py="15px" component="option" selected hidden>
+                {language === "en" ? "Select time" : "أختر الوقت"}
+              </Typography>
+              {times.map((option) => (
+                <Typography height="15px" value={option} component="option">
+                  {option}
+                </Typography>
+              ))}
+            </select>
+            {errors.time && touched.time ? (
+              <Typography
+                sx={{
+                  fontFamily: publicFontFamily,
+                  fontSize: "17px",
+                  fontWeight: "bold",
+                  position: "absolute",
+                  bottom: 0,
+                  color: "red",
+                }}
+              >
+                {errors.time}
+              </Typography>
+            ) : undefined}
+          </Box>
+        </Stack>
+
         <Stack
           sx={{
             flexDirection: {
@@ -787,7 +874,7 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
           justifyContent={"flex-end"}
         >
           <Button onClick={handleSubmit}>
-           
+
             <KeyboardBackspaceIcon
               sx={{
                 color: colors.main,
@@ -795,11 +882,11 @@ const FirstTab = ({ showed, setValue, setUserPhone }) => {
                 fontSize: "50px",
               }}
             />
-             <span style={{
+            <span style={{
               color: colors.main,
-             
+
               fontSize: "25px",
-             }}>{language=='en'? "Next":"التالى"}</span>
+            }}>{language == 'en' ? "Next" : "التالى"}</span>
           </Button>
         </Stack>
       </form>

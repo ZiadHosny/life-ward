@@ -69,8 +69,11 @@ const SaPhoneInput = ({
           // }}
           value={value}
           onChange={(e) => {
-            if (e.target.value.length >= 12 & e.target.value.startsWith('966')) {
+            if (e.target.value.length >= 12 && e.target.value.startsWith('966')) {
               e.target.value = e.target.value.split('966')[1]
+            }
+            else if (e.target.value.length >= 13 && e.target.value.startsWith('+966')) {
+              e.target.value = e.target.value.split('+966')[1]
             }
             handleChange(e);
           }}
