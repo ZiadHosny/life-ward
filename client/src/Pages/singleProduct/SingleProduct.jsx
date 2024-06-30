@@ -214,7 +214,8 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
       <ButtonGroup
         variant="outlined"
         sx={{
-          width: "100%",
+          overflow: 'auto',
+          width: "350px",
           display: "flex",
           alignItems: "center",
           justifyContent: "start",
