@@ -5,21 +5,28 @@ import Cards from "../../components/cards/Cards";
 import CustomError from "../../components/Error/Error";
 import Loader from "../../components/loader/loader";
 import { useTranslation } from "react-i18next";
+import { setSubId } from '../../APIs/subSlice'
 import {
   publicFontFamily,
   publicSizes,
 } from "../../components/publicStyle/publicStyle";
 import useFetchDepartments from "../departments/useFetchDepartments";
 import FilterAttributesMenu from "../departments/FilterAttributesMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SubSubMenu from "./SubSubMenu";
 function CategoryPage() {
   // MANIPULATING THE STRUCTURE OF THE PRODUCTS ARRAY TO MAKE THE REQUIRED DESIGN
   const [pros, setPros] = useState();
   const { categoryId } = useParams();
-  const { categoriesSlice } = useSelector((state) => state);
+  const dispatch = useDispatch()
+  const { categoriesSlice, sub: subSlice } = useSelector((state) => state);
   const [selectedAtts, setSelectedAtts] = React.useState([]);
   const [priceSearchedClicked, setPriceSearchedClicked] = React.useState(false);
+
+  const subCategoryId = subSlice.subId
+  const setSubCategoryId = (id) => {
+    dispatch(setSubId(id))
+  }
 
   const [priceState, setPriceState] = React.useState({
     from: 0,
@@ -36,13 +43,11 @@ function CategoryPage() {
       .join("&");
     query += `&${joinedValues_en}`;
     if (priceSearchedClicked) {
-      query += `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${
-        priceState.from
-      }&priceAfterDiscount[lte]=${priceState.to}`;
+      query += `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${priceState.from
+        }&priceAfterDiscount[lte]=${priceState.to}`;
     } else {
       query.replace(
-        `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${
-          priceState.from
+        `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${priceState.from
         }&priceAfterDiscount[lte]=${priceState.to}`,
         ""
       );
@@ -50,17 +55,15 @@ function CategoryPage() {
     return query;
   };
   const [subSubId, setSubSubId] = useState("");
-  const [subCategoryId, setSubCategoryId] = useState("");
   const { products, error, isLoading } = useFetchDepartments(
-    `category=${categoryId}${
-      subCategoryId ? `&subCategory=${subCategoryId}&` : ``
+    `category=${categoryId}${subCategoryId ? `&subCategory=${subCategoryId}&` : ``
     }${subSubId ? `subSubCategory=${subSubId}` : ``}` + manipulateQuery(),
     priceState
   );
   const [page, setPage] = React.useState(1);
   const [_, { language }] = useTranslation();
   const [subCategories, setSubCategories] = React.useState();
-
+  
   const hundleAddAtt = (attribute, selectedValue, event) => {
     console.log(attribute, selectedValue, "abdallah");
     const { checked, value } = event.target;
@@ -70,41 +73,41 @@ function CategoryPage() {
     if (checked) {
       existedAtt
         ? setSelectedAtts(
-            selectedAtts.map((item) =>
-              item.key_en === attribute.key_en
-                ? {
-                    key_en: attribute.key_en,
-                    key_ar: attribute.key_ar,
-                    values: [...existedAtt.values, { ...selectedValue }],
-                  }
-                : item
-            )
+          selectedAtts.map((item) =>
+            item.key_en === attribute.key_en
+              ? {
+                key_en: attribute.key_en,
+                key_ar: attribute.key_ar,
+                values: [...existedAtt.values, { ...selectedValue }],
+              }
+              : item
           )
+        )
         : setSelectedAtts([
-            ...selectedAtts,
-            {
-              key_en: attribute.key_en,
-              value_en: attribute.key_ar,
-              values: [selectedValue],
-            },
-          ]);
+          ...selectedAtts,
+          {
+            key_en: attribute.key_en,
+            value_en: attribute.key_ar,
+            values: [selectedValue],
+          },
+        ]);
     } else {
       existedAtt.values.length > 1
         ? setSelectedAtts(
-            selectedAtts.map((item) =>
-              item.key_en === existedAtt.key_en
-                ? {
-                    ...existedAtt,
-                    values: existedAtt.values.filter(
-                      (item) => item.value_en !== value
-                    ),
-                  }
-                : item
-            )
+          selectedAtts.map((item) =>
+            item.key_en === existedAtt.key_en
+              ? {
+                ...existedAtt,
+                values: existedAtt.values.filter(
+                  (item) => item.value_en !== value
+                ),
+              }
+              : item
           )
+        )
         : setSelectedAtts(
-            selectedAtts.filter((sel) => sel.key_en !== existedAtt.key_en)
-          );
+          selectedAtts.filter((sel) => sel.key_en !== existedAtt.key_en)
+        );
     }
   };
   useEffect(() => {
@@ -196,6 +199,7 @@ function CategoryPage() {
             transition: "all 0.4s",
           }}
           onClick={() => {
+
             setSubCategoryId("");
             setSubSubId("");
           }}

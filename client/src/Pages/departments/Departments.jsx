@@ -46,13 +46,11 @@ function Departments() {
       .join("&");
     query += `${joinedValues_en}`;
     if (priceSearchedClicked) {
-      query += `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${
-        priceState.from
-      }&priceAfterDiscount[lte]=${priceState.to}`;
+      query += `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${priceState.from
+        }&priceAfterDiscount[lte]=${priceState.to}`;
     } else {
       query.replace(
-        `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${
-          priceState.from
+        `${joinedValues_en ? "&" : ""}priceAfterDiscount[gte]=${priceState.from
         }&priceAfterDiscount[lte]=${priceState.to}`,
         ""
       );
@@ -114,41 +112,41 @@ function Departments() {
     if (checked) {
       existedAtt
         ? setSelectedAtts(
-            selectedAtts.map((item) =>
-              item.key_en === attribute.key_en
-                ? {
-                    key_en: attribute.key_en,
-                    key_ar: attribute.key_ar,
-                    values: [...existedAtt.values, { ...selectedValue }],
-                  }
-                : item
-            )
+          selectedAtts.map((item) =>
+            item.key_en === attribute.key_en
+              ? {
+                key_en: attribute.key_en,
+                key_ar: attribute.key_ar,
+                values: [...existedAtt.values, { ...selectedValue }],
+              }
+              : item
           )
+        )
         : setSelectedAtts([
-            ...selectedAtts,
-            {
-              key_en: attribute.key_en,
-              value_en: attribute.key_ar,
-              values: [selectedValue],
-            },
-          ]);
+          ...selectedAtts,
+          {
+            key_en: attribute.key_en,
+            value_en: attribute.key_ar,
+            values: [selectedValue],
+          },
+        ]);
     } else {
       existedAtt.values.length > 1
         ? setSelectedAtts(
-            selectedAtts.map((item) =>
-              item.key_en === existedAtt.key_en
-                ? {
-                    ...existedAtt,
-                    values: existedAtt.values.filter(
-                      (item) => item.value_en !== value
-                    ),
-                  }
-                : item
-            )
+          selectedAtts.map((item) =>
+            item.key_en === existedAtt.key_en
+              ? {
+                ...existedAtt,
+                values: existedAtt.values.filter(
+                  (item) => item.value_en !== value
+                ),
+              }
+              : item
           )
+        )
         : setSelectedAtts(
-            selectedAtts.filter((sel) => sel.key_en !== existedAtt.key_en)
-          );
+          selectedAtts.filter((sel) => sel.key_en !== existedAtt.key_en)
+        );
     }
   };
   useEffect(() => {
@@ -159,7 +157,7 @@ function Departments() {
           arr.push(items.slice(i, i + 8));
         }
 
-         
+
         setPros(arr);
       }
     }
@@ -174,7 +172,7 @@ function Departments() {
           xs: "80px",
           md: "200px",
           lg: "250px",
-          
+
         },
       }}
     >
@@ -212,18 +210,18 @@ function Departments() {
             sx={{
               color:
                 pathname ===
-                `/departments/${category._id}/${category.name_en.replace(
-                  /\s/g,
-                  "-"
-                )}`
+                  `/departments/${category._id}/${category.name_en.replace(
+                    /\s/g,
+                    "-"
+                  )}`
                   ? "#74409E"
                   : "#8455A9",
               fontWeight:
                 pathname ===
-                `/departments/${category._id}/${category.name_en.replace(
-                  /\s/g,
-                  "-"
-                )}`
+                  `/departments/${category._id}/${category.name_en.replace(
+                    /\s/g,
+                    "-"
+                  )}`
                   ? "bolder"
                   : "600",
 
@@ -231,10 +229,10 @@ function Departments() {
               fontFamily: publicFontFamily,
               fontSize:
                 pathname ===
-                `/departments/${category._id}/${category.name_en.replace(
-                  /\s/g,
-                  "-"
-                )}`
+                  `/departments/${category._id}/${category.name_en.replace(
+                    /\s/g,
+                    "-"
+                  )}`
                   ? "21px"
                   : publicSizes.xSmall,
               transition: "all 0.4s",

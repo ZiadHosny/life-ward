@@ -8,8 +8,7 @@ import "./i18n";
 import { ThemeProvider } from '@mui/material'
 import { theme } from "./theme.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
-   <Provider store={store}>
-
+  <Provider store={store}>
     <App />
   </Provider>
- );
+);

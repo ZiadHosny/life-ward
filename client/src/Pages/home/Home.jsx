@@ -1,6 +1,7 @@
 import { Box, Stack, CircularProgress, Typography } from "@mui/material";
 import React from "react";
 import useFetchMostSellingProducts from "./homeComponents/cards/useFetchMostSellingProducts";
+import useFetchDepartmentsProducts from "./homeComponents/cards/useFetchDepartmentsProducts";
 import useFetchMostNewiestProducts from "./homeComponents/cards/useFetchMostNewiestProducts";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -12,6 +13,9 @@ import OurTarget from "./OurTarget";
 import HomeAbout from "./HomeAbout";
 import MostSellingProducts from "../../components/homeProducts/MostSellingProducts";
 import MostNewiestProducts from "../../components/homeProducts/MostNewiestProducts";
+import DepartmentsProducts from "../../components/homeProducts/DepartmentsProducts";
+
+
 function Home() {
   const dispatch = useDispatch();
   const [_, { language }] = useTranslation();
@@ -19,6 +23,8 @@ function Home() {
     useFetchMostSellingProducts();
   const { mostNewiestProducts, isLoading: loadingNewiest } =
     useFetchMostNewiestProducts();
+  const { departmentsProducts, isLoading: loadingDepartmentsProducts } =
+    useFetchDepartmentsProducts();
   return (
     <Box
       sx={{
@@ -52,7 +58,10 @@ function Home() {
           mt: "30px",
         }}
       >
-        <HomeAbout />
+        <Box sx={{ bgcolor: 'beige', width: '100%', height: '700px' }}>
+
+        </Box>
+        {/* <HomeAbout /> */}
       </Box>
 
       {loadingNewiest ? (
@@ -68,12 +77,41 @@ function Home() {
         <CustomError
           errorMessage={
             language === "en"
-              ? "Most Newest products are not dound"
+              ? "Most Newest products are not found"
               : "لم يتم العثور على المنتجات الأحدث"
           }
         />
       )}
-      <OurTarget />
+      <Box
+        sx={{
+          mt: "30px",
+        }}
+      >
+        <Box sx={{ bgcolor: 'beige', width: '100%', height: '700px' }}>
+
+        </Box>
+        {/* <OurTarget /> */}
+      </Box>
+
+      {loadingDepartmentsProducts ? (
+        <Loader />
+      ) : departmentsProducts?.length > 0 ? (
+        <Box sx={{ pt: 3 }}>
+          <DepartmentsProducts
+            title={language === "en" ? "All Departments" : "جميع الأقسام"}
+            items={departmentsProducts}
+          />
+        </Box>
+      ) : (
+        <CustomError
+          errorMessage={
+            language === "en"
+              ? "All Departments products are not found"
+              : "لم يتم العثور على جميع الأقسام"
+          }
+        />
+      )}
+
     </Box>
   );
 }

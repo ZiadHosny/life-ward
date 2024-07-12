@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import FilterAttributesMenu from "../departments/FilterAttributesMenu";
-import { SearchInput } from "./utilies/SearhInput";
+import { SearchInput } from "./utilies/SearchInput";
 import { useGetAllProductsQuery } from "../../APIs/ProductApis";
 import Loader from "../../components/loader/loader";
 import { useTheme } from "@emotion/react";
@@ -55,41 +55,41 @@ const SearchPage = () => {
     if (checked) {
       existedAtt
         ? setSelectedAtts(
-            selectedAtts.map((item) =>
-              item.key_en === attribute.key_en
-                ? {
-                    key_en: attribute.key_en,
-                    key_ar: attribute.key_ar,
-                    values: [...existedAtt.values, { ...selectedValue }],
-                  }
-                : item
-            )
+          selectedAtts.map((item) =>
+            item.key_en === attribute.key_en
+              ? {
+                key_en: attribute.key_en,
+                key_ar: attribute.key_ar,
+                values: [...existedAtt.values, { ...selectedValue }],
+              }
+              : item
           )
+        )
         : setSelectedAtts([
-            ...selectedAtts,
-            {
-              key_en: attribute.key_en,
-              value_en: attribute.key_ar,
-              values: [selectedValue],
-            },
-          ]);
+          ...selectedAtts,
+          {
+            key_en: attribute.key_en,
+            value_en: attribute.key_ar,
+            values: [selectedValue],
+          },
+        ]);
     } else {
       existedAtt.values.length > 1
         ? setSelectedAtts(
-            selectedAtts.map((item) =>
-              item.key_en === existedAtt.key_en
-                ? {
-                    ...existedAtt,
-                    values: existedAtt.values.filter(
-                      (item) => item.value_en !== value
-                    ),
-                  }
-                : item
-            )
+          selectedAtts.map((item) =>
+            item.key_en === existedAtt.key_en
+              ? {
+                ...existedAtt,
+                values: existedAtt.values.filter(
+                  (item) => item.value_en !== value
+                ),
+              }
+              : item
           )
+        )
         : setSelectedAtts(
-            selectedAtts.filter((sel) => sel.key_en !== existedAtt.key_en)
-          );
+          selectedAtts.filter((sel) => sel.key_en !== existedAtt.key_en)
+        );
     }
   };
   useEffect(() => {
@@ -115,7 +115,7 @@ const SearchPage = () => {
     }
     setPriceQuery(query);
   }, [priceSearchedClicked]);
-   
+
   return (
     <Box
       sx={{
@@ -183,7 +183,7 @@ const SearchPage = () => {
             gap={"20px"}
           >
             {data?.data?.map((product, index) => {
-               
+
               return <DepartmentProduct item={product} key={index} />;
             })}
           </Stack>
@@ -226,9 +226,8 @@ const SearchPage = () => {
           onChange={handlPagination}
           sx={{
             "& > svg": {
-              transform: `rotateY(${
-                lang === "en" ? "0deg" : "180deg"
-              }) !important`,
+              transform: `rotateY(${lang === "en" ? "0deg" : "180deg"
+                }) !important`,
             },
             "& button": {
               width: "32px",

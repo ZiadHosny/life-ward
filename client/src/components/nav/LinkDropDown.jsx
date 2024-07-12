@@ -49,8 +49,8 @@ const LinkDropDown = ({
           fontWeight: "bolder",
           textTransform: "capitalize",
           fontSize: {
-            xs:'14px',
-            md:"16px"
+            xs: '14px',
+            md: "16px"
           },
           borderRadius: 0,
           fontFamily: publicFontFamily,

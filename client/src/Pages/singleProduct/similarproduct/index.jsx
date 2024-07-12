@@ -5,7 +5,7 @@ import { ScrollColors } from './colors'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode } from 'swiper/modules'
 import { useNavigate } from 'react-router-dom'
-  import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 // import Card from '../noon1/NewCard'
 import { useLazyGetProductsOfCategoryQuery } from '../../../APIs/ProductApis'
@@ -20,7 +20,7 @@ const ErrorSection = ({ isError, error }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-       }}
+      }}
     >
       <Typography
         fontSize={'1.5rem'}
@@ -50,14 +50,14 @@ const SliderHeader = ({ colors }) => {
       >
         {lang === 'en' ? 'similar products' : 'المنتجات المتشابهه'}
       </Typography>
-     
+
     </Box>
   )
 }
 
-const Slider = ({ data, lang,productid }) => {
+const Slider = ({ data, lang, productid }) => {
   console.log(productid)
-   return (
+  return (
     <Grid
       width={'100%'}
       item
@@ -73,7 +73,7 @@ const Slider = ({ data, lang,productid }) => {
           style={{ direction: 'ltr' }}
           className="mySwiper"
           slidesPerView={4}
-           freeMode={true}
+          freeMode={true}
           modules={[FreeMode]}
           breakpoints={{
             320: {
@@ -85,7 +85,7 @@ const Slider = ({ data, lang,productid }) => {
               spaceBetween: 5,
             },
             900: {
-              slidesPerView:3,
+              slidesPerView: 3,
               spaceBetween: 5,
             },
             1024: {
@@ -94,29 +94,30 @@ const Slider = ({ data, lang,productid }) => {
             },
           }}
         >
-          {data?.filter(item=>item?.id!==productid).map((item) => {
-            console.log(item,'item')
+          {data?.filter(item => item?.id !== productid).map((item) => {
+            console.log(item, 'item')
 
-return(
-  <SwiperSlide key={item.title}>
-    <Box sx={{   display:'flex',justifyContent:'center' ,
-  
-  // "& img":{
-  //   height: { xs: '210px', sm: '320px', md: '400px',
-  //   lg:'450px',xl:'500px' },
-  // }
-  
-  width:'100%',
-  ".most-selling-slider":{
-    width:'100% !important'
-  }
-  }} >
-    {/* <Card item={item}></Card> */}
-    <DepartmentProduct item={item} key={item.title} />
+            return (
+              <SwiperSlide key={item.title}>
+                <Box sx={{
+                  display: 'flex', justifyContent: 'center',
 
-     </Box>
-  </SwiperSlide>
-)
+                  // "& img":{
+                  //   height: { xs: '210px', sm: '320px', md: '400px',
+                  //   lg:'450px',xl:'500px' },
+                  // }
+
+                  width: '100%',
+                  ".most-selling-slider": {
+                    width: '100% !important'
+                  }
+                }} >
+                  {/* <Card item={item}></Card> */}
+                  <DepartmentProduct item={item} key={item.title} />
+
+                </Box>
+              </SwiperSlide>
+            )
           })}
         </Swiper>
       </Box>
@@ -124,100 +125,100 @@ return(
   )
 }
 
-const Similarproduct = ({id,productId=''}) => {
-console.log(productId)
-    const [data,setData] = useState ({});
-    
-  const [getSimilarProducts,{ isSuccess, isError, error} ] =
-  useLazyGetProductsOfCategoryQuery();
-  useEffect(()=>{
+const SimilarProduct = ({ id, productId = '' }) => {
+  console.log(productId)
+  const [data, setData] = useState({});
+
+  const [getSimilarProducts, { isSuccess, isError, error }] =
+    useLazyGetProductsOfCategoryQuery();
+  useEffect(() => {
     console.log(id)
-    id&& getSimilarProducts(id).unwrap().then(res=>{
-        console.log(res,)
-        setData(res.data)}).catch(err=>console.log(err))
-  },[id])
-   const [, { language: lang }] = useTranslation()
+    id && getSimilarProducts(id).unwrap().then(res => {
+      console.log(res,)
+      setData(res.data)
+    }).catch(err => console.log(err))
+  }, [id])
+  const [, { language: lang }] = useTranslation()
   const { colors } = ScrollColors
   return (
-<>
- {
+    <>
+      {
+        data?.length > 1 ?
+          <Box
+            mt={10}
+            sx={{
+              direction: lang === 'en' ? 'ltr' : 'rtl',
+              height: '100%',
+            }}
+            my={data?.data !== undefined ? 5 : 0}
+            py={data?.data !== undefined ? 3 : 0}
+          >
+            {isError && error && <ErrorSection error={error} isError={isError} />}
+            {isSuccess && !isError && data?.length > 0 ? (
 
-      data?.length>1?
-      <Box
-      mt={10}
-      sx={{
-        direction: lang === 'en' ? 'ltr' : 'rtl',
-        height:'100%',
-       }}
-      my={data?.data !== undefined ? 5 : 0}
-      py={data?.data !== undefined ? 3 : 0}
-    >
-      {isError && error && <ErrorSection error={error} isError={isError} />}
-      {isSuccess && !isError && data?.length > 0 ? (
+              <>
 
-      <>
-      
-      <Stack>
+                <Stack>
 
-<Typography
+                  <Typography
 
-sx={{
-  fontSize:'30px',
-  fontWeight:'bold',
-  textAlign:'center',
-  margin:{
-    xs:'10px auto',
-    sm:'14px auto',
-    md:'40px auto'
-  },
-  fontSize:{
-    xs:'16px',
-    sm:'14px',
-    md:'30px'
-  },
-  textTransform:'uppercase',
-  color:'#693096'
-}}
+                    sx={{
+                      fontSize: '30px',
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      margin: {
+                        xs: '10px auto',
+                        sm: '14px auto',
+                        md: '40px auto'
+                      },
+                      fontSize: {
+                        xs: '16px',
+                        sm: '14px',
+                        md: '30px'
+                      },
+                      textTransform: 'uppercase',
+                      color: '#693096'
+                    }}
 
-component={'h3'}>
-  {lang==="en"?"You may also like":"يمكن ان يعجبك ايضا"}
-</Typography>
-
+                    component={'h3'}>
+                    {lang === "en" ? "You may also like" : "يمكن ان يعجبك ايضا"}
+                  </Typography>
 
 
 
-<Stack sx={{
-display:'flex',
-alignItems:'center',
-justifyContent:'center'
-}}>
-</Stack>
+
+                  <Stack sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                  </Stack>
 
 
 
-</Stack>
-        <Grid  
-        
-        sx={{
-          justifyContent:'center',
-          height:'100%'
-        }}>
-        
-          {/* Newest title and btn */}
-      
+                </Stack>
+                <Grid
 
-          {/* Slider */}
-           <Slider data={data.filter(pId=>pId.id!==productId)}
-           
-           productid={productId} lang={lang} />
-        </Grid>
-      </>
-      ):null}
-    </Box>
-      :null
-    }</>
+                  sx={{
+                    justifyContent: 'center',
+                    height: '100%'
+                  }}>
+
+                  {/* Newest title and btn */}
+
+
+                  {/* Slider */}
+                  <Slider data={data.filter(pId => pId.id !== productId)}
+
+                    productid={productId} lang={lang} />
+                </Grid>
+              </>
+            ) : null}
+          </Box>
+          : null
+      }</>
 
   )
 }
 
-export default Similarproduct
+export default SimilarProduct

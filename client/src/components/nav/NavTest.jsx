@@ -14,6 +14,7 @@ import urlPath from "../../assets/life-icon.png";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import SideBar from "../../components/Sidebar/SideBar";
+import { Search } from "./Search";
 function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -33,10 +34,10 @@ function DrawerAppBar(props) {
       sx={{
         display:
           pathname === "/sign-in" ||
-          pathname === "/register" ||
-          pathname === "/forgetPassword" ||
-          pathname === "/thanksOrder" ||
-          pathname === "/ourTarget"
+            pathname === "/register" ||
+            pathname === "/forgetPassword" ||
+            pathname === "/thanksOrder" ||
+            pathname === "/ourTarget"
             ? "none"
             : "block",
         position: "absolute",
@@ -82,10 +83,12 @@ function DrawerAppBar(props) {
             <Drawers />
             <Box
               sx={{
+                alignItems: 'center',
                 display: {
-                  md: "block",
+                  md: "flex",
                   xs: "none",
                 },
+                gap: 3,
               }}
             >
               <Logo
@@ -100,9 +103,10 @@ function DrawerAppBar(props) {
                     md: 55,
                     xs: 35,
                   },
-                  transform: `translateX(${lang === "en" ? "-70px" : "65px"})`,
+                  // transform: `translateX(${lang === "en" ? "-70px" : "65px"})`,
                 }}
               />
+              <Search />
             </Box>
             <Box
               sx={{
@@ -110,11 +114,20 @@ function DrawerAppBar(props) {
                   md: "block",
                   xs: "none",
                 },
-              }}
-            >
+              }}>
               <LanguageToggler />
             </Box>
           </Stack>
+        </Box>
+        <Box
+          sx={{
+            display: {
+              md: "none",
+              xs: "block",
+              padding: '20px 40px',
+            },
+          }}>
+          <Search mobile={true} />
         </Box>
         <NavLinks />
       </Box>

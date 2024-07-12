@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { SearchStyles } from "./utilesStyles";
 import { useTranslation } from "react-i18next";
-import { Box, InputBase } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { InputBase } from "@mui/material";
 
-export const SearchInput = ({ onChange }) => {
+export const SearchInput = ({ onChange, setOpen }) => {
   const [search, setSearch] = useState("");
   const { pathname } = useLocation();
   const {
@@ -27,15 +26,15 @@ export const SearchInput = ({ onChange }) => {
   }, [pathname]);
 
   return (
-    <Box sx={SearchStyles.BoxSearch}>
-      <InputBase
-        type={"text"}
-        placeholder={language === "en" ? "Search" : "بحث"}
-        sx={SearchStyles.BoxInput}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <SearchIcon size={24} />
-    </Box>
+    <InputBase
+      type={"text"}
+      placeholder={language === 'ar' ? 'ما الذي تبحث عنه؟' : 'what are you looking for?'}
+      sx={SearchStyles.BoxInput}
+      value={search}
+      onChange={(e) => {
+        setSearch(e.target.value);
+      }}
+      onFocus={() => setOpen(true)}
+    />
   );
 };

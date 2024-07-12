@@ -1,7 +1,7 @@
 import "./App.css";
 import Nav from "./components/nav/Nav";
 import NavTest from "./components/nav/NavTest";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./components/Router/Router";
 import Cards from "./components/cards/Cards";
 import { ToastContainer } from "react-toastify";

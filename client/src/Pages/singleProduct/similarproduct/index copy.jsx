@@ -127,7 +127,7 @@ const Slider = ({ data, lang }) => {
   )
 }
 
-const Similarproduct = ({id}) => {
+const SimilarProduct = ({id}) => {
   const { data, isSuccess, isError, error } =
   useGetProductsOfCategoryQuery(id);
   console.log(data,id,'133data')
@@ -169,4 +169,4 @@ const Similarproduct = ({id}) => {
   )
 }
 
-export default Similarproduct
+export default SimilarProduct

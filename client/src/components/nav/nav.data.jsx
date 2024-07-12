@@ -91,16 +91,67 @@ export const NavLinksData = () => {
       nestedLinks: useFetchCategoriesWithSubAndSubSubs(),
     },
     {
+      title_en: "All Departments",
+      title_ar: "جميع الاقسام",
+      link: "/departments",
+    },
+    // {
+    //   title_en: "Who are we",
+    //   title_ar: "من نحن",
+    //   link: "/aboutUs",
+    // },
+    // {
+    //   title_en: "Contact Us",
+    //   title_ar: "تواصل معنا",
+    //   link: "/contactUs",
+    // },
+    // {
+    //   title_en: "Our Blogs",
+    //   title_ar: "مدوناتنا",
+    //   link: "/blogs"
+    // },
+  ];
+};
+
+
+export const NavLinksMobileData = () => {
+  return [
+    {
+      title_en: "Home",
+      title_ar: "الصفحة الرئيسية",
+      link: "/",
+    },
+    {
+      title_en: "Saved products",
+      title_ar: "المفضلة لديك",
+      link: "/savedProducts",
+    },
+    {
+      title_en: "Our Departments",
+      title_ar: "أقسامنا",
+      // nestedLinks: useFetchCategories(),
+      nestedLinks: useFetchCategoriesWithSubAndSubSubs(),
+    },
+    {
+      title_en: "All Departments",
+      title_ar: "جميع الاقسام",
+      link: "/departments",
+    },
+    {
       title_en: "Who are we",
       title_ar: "من نحن",
       link: "/aboutUs",
     },
-
     {
       title_en: "Contact Us",
       title_ar: "تواصل معنا",
       link: "/contactUs",
     },
-    { title_en: "Our Blogs", title_ar: "مدوناتنا", link: "/blogs" },
+    {
+      title_en: "Our Blogs",
+      title_ar: "مدوناتنا",
+      link: "/blogs"
+    },
   ];
 };
+

@@ -12,7 +12,6 @@ function useFetchMostNewiestProducts() {
     isLoading,
     refetch: mostNewiestRefetch,
   } = useGetMostNewiestProductsQuery();
-  console.log(data,'mostNewiestProductsmostNewiestProductsmostNewiestProductsmostNewiestProducts')
   const [mostNewiestProducts, setMostNewiestProducts] = useState([]);
   const dispatch = useDispatch();
 

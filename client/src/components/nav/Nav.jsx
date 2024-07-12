@@ -14,6 +14,7 @@ import MobileSidebar from "./MobileSidebar";
 import LanguageToggler from "./LanguageToggler";
 import { colors } from "./nav.styes";
 import { motion } from "framer-motion";
+import { Search } from "./Search";
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -31,9 +32,9 @@ function DrawerAppBar(props) {
         width: "100%",
         zIndex: 2,
       }}
-      // component={motion.div}
-      // initial={{ scale: 0.5 }}
-      // animate={{ scale: 1, transition: { duration: 0.1 } }}
+    // component={motion.div}
+    // initial={{ scale: 0.5 }}
+    // animate={{ scale: 1, transition: { duration: 0.1 } }}
     >
       <CssBaseline />
       <AppBar

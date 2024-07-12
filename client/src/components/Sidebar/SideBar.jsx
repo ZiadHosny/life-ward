@@ -2,23 +2,16 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { colors, publicFontFamily } from "../publicStyle/publicStyle";
 import { Stack } from "@mui/material";
-import LinkDropDown from "../nav/LinkDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import CloseIcon from "@mui/icons-material/Close";
 import { MobileItemListContainerStyle } from "../nav/nav.styes";
-import { NavLinksData } from "../nav/nav.data";
+import { NavLinksMobileData } from "../nav/nav.data";
+import Profile from "./Profile";
+import { NestedNavMobile } from "./NestedNavMobile";
 
 export default function SideBar() {
   const { pathname } = useLocation();
@@ -56,7 +49,7 @@ export default function SideBar() {
         position: "fixed",
         right: lang === "ar" ? "10px" : undefined,
         left: lang === "en" ? "10px" : undefined,
-        mt : '3px'
+        mt: '3px'
       }}
     >
       <Button
@@ -71,7 +64,7 @@ export default function SideBar() {
             fontSize: "27px",
             color: {
               md: colors.main,
-              xs: pathname.includes("/productDetails/") ? "#fff" : colors.main,
+              xs: !'pathname.includes("/productDetails/")' ? "#fff" : colors.main,
             },
           }}
         />
@@ -85,24 +78,27 @@ export default function SideBar() {
             boxSizing: "border-box",
             width: 0.55,
             bgcolor: colors.main,
-            pt: 6,
+            pt: 4,
             px: 3,
           },
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent={"flex-end"}>
+        <Stack direction="row" alignItems="center" justifyContent={"space-between"}>
+          <Profile />
           <Button
             sx={{
-              width: "35px",
-              height: "35px",
+              width: "40px",
+              height: "40px",
               minWidth: "auto",
               borderRadius: 1,
               bgcolor: `${colors.heavyMainColor} !important`,
             }}
             onClick={toggleDrawer(lang === "en" ? "left" : "right", false)}
           >
-            <KeyboardBackspaceIcon
+            <CloseIcon
               sx={{
+                width: "40px",
+                height: "40px",
                 color: "#fff",
                 transform: lang === "ar" ? "rotateY(180deg)" : 0,
               }}
@@ -110,31 +106,40 @@ export default function SideBar() {
           </Button>
         </Stack>
         <Box sx={MobileItemListContainerStyle}>
-          {NavLinksData().map((item, index) => {
+          {NavLinksMobileData().map((item, index) => {
             return item.nestedLinks ? (
-              <LinkDropDown
-                key={index}
-                item={item}
-                pathname={pathname}
-                color={pathname.includes("/department") ? "#fff" : "#aaa"}
-              />
+              item.nestedLinks.map((item) => (
+                <NestedNavMobile
+                  handleClose={toggleDrawer(lang === "en" ? "left" : "right", false)}
+                  key={index}
+                  item={item}
+                />
+              ))
             ) : (
-              <Button
-                key={item.link}
-                disableRipple
-                onClick={() => navigate(item.link)}
-                sx={{
-                  color: pathname === item.link ? "#fff" : "#aaa",
-                  fontSize: "16px",
-                  textTransform: "capitalize",
-                  fontWeight: "bold",
-                  backgroundColor: "transparent !important",
-                  display: "block",
-                  fontFamily: publicFontFamily,
-                }}
-              >
-                {item[`title_${lang}`]}
-              </Button>
+              <>
+                <Button
+                  key={item.link}
+                  disableRipple
+                  onClick={() => navigate(item.link)}
+                  sx={{
+                    color: pathname === item.link ? "#fff" : "#aaa",
+                    fontSize: "20px",
+                    textTransform: "capitalize",
+                    fontWeight: "bold",
+                    backgroundColor: "transparent !important",
+                    display: "block",
+                    fontFamily: publicFontFamily,
+                  }}
+                >
+                  {item[`title_${lang}`]}
+                </Button>
+                {
+                  NavLinksMobileData().length - 1 <= index ?
+                    <></>
+                    :
+                    < hr />
+                }
+              </>
             );
           })}
         </Box>

@@ -11,7 +11,6 @@ import { ProfileMenuData, profile_cart_likesData } from "./nav.data";
 import { useTranslation } from "react-i18next";
 import { colors, publicFontFamily } from "../publicStyle/publicStyle";
 import { useLocation, useNavigate } from "react-router-dom";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "./../../store/Store";
 import { savedProductsApi } from "../../APIs/SavedProductApi";
@@ -19,8 +18,6 @@ import cartApi from "../../APIs/cartApi";
 import { setSaved } from "../../APIs/savedSlice";
 import { setCart } from "../../APIs/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import { use } from "i18next";
 import { removeCurrentUser } from "../../APIs/userSlice";
 import { useLogoutMutation } from "../../APIs/UserApis";
@@ -51,10 +48,10 @@ export default function MobileProfileMenu() {
       navigate("/");
       dispatch(removeCurrentUser());
       createGuestUser()
-      .unwrap()
-      .then((res) => {
-        localStorage.setItem('token', res.token)
-      })
+        .unwrap()
+        .then((res) => {
+          localStorage.setItem('token', res.token)
+        })
     });
   };
   const handleClick = (event) => {
@@ -73,20 +70,20 @@ export default function MobileProfileMenu() {
       <Tooltip
         title={
           currentUser &&
-          [
-            "rootAdmin",
-            "subAdmin",
-            "adminA",
-            "adminB",
-            "adminC",
-            "user",
-          ].includes(currentUser.role)
+            [
+              "rootAdmin",
+              "subAdmin",
+              "adminA",
+              "adminB",
+              "adminC",
+              "user",
+            ].includes(currentUser.role)
             ? language === "en"
               ? "Profile"
               : "الصفحة الشخصية"
             : language === "en"
-            ? "Sign in"
-            : "تسجيل دخول"
+              ? "Sign in"
+              : "تسجيل دخول"
         }
       >
         <Button
@@ -97,7 +94,7 @@ export default function MobileProfileMenu() {
           onClick={handleClick}
           disableRipple
           sx={{
-            
+
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -121,8 +118,8 @@ export default function MobileProfileMenu() {
               component={"img"}
               src={ProfileIcon}
               sx={{
-                height:{md: 21,xs: 17},
-                width:{md: 21,xs: 17},
+                height: { md: 21, xs: 17 },
+                width: { md: 21, xs: 17 },
                 objectFit: "fill",
               }}
             />
@@ -144,7 +141,7 @@ export default function MobileProfileMenu() {
         }}
       >
         {ProfileMenuData.filter(({ name_en }) =>
-          (currentUser&& currentUser?.role!=="guest"&& currentUser?.email) || currentUser?.phone 
+          (currentUser && currentUser?.role !== "guest" && currentUser?.email) || currentUser?.phone
             ? name_en !== "Login" && name_en !== "Register"
             : name_en !== "Profile" && name_en !== "Logout"
         ).map((item) => (
@@ -185,13 +182,10 @@ export default function MobileProfileMenu() {
             </Typography>
           </Stack>
         ))}
-        {
-          console.log(currentUser,'currentUsers')
-        }
         {currentUser &&
-        ["rootAdmin", "subAdmin", "adminA", "adminB", "adminC"].includes(
-          currentUser.role
-        ) ? (
+          ["rootAdmin", "subAdmin", "adminA", "adminB", "adminC"].includes(
+            currentUser.role
+          ) ? (
           <Stack
             direction="row"
             alignItems="center"

@@ -18,7 +18,6 @@ export const ProductsApi = createApi({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: (query) => {
-        console.log('================================================',query)
         return `/products?${query ? query : ""}`
       },
       providesTags: ["Product"],
@@ -55,7 +54,6 @@ export const ProductsApi = createApi({
       }),
       invalidatesTags: ["Product"],
     }),
-   
     addRating: builder.mutation({
       query: ({ productId, rating }) => ({
         url: `/reviews/product/${productId}`,

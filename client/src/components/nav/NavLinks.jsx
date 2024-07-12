@@ -1,8 +1,9 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { publicFontFamily } from "../publicStyle/publicStyle";
 import LinkDropDown from "./LinkDropDown";
+import { NestedNav } from './NestedNav'
 import { NavLinksData } from "./nav.data";
 import { colors } from "./nav.styes";
 export default function NavLinks() {
@@ -21,33 +22,40 @@ export default function NavLinks() {
           md: "flex",
           xs: "none",
         },
+        alignItems: 'center',
+        justifyContent: 'space-between'
       }}
     >
       {NavLinksData()
-        .filter((item) => item.title_en !== "Our Blogs")
         .map((item, index) => {
           return item.nestedLinks ? (
-            <Grid
-              key={index}
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <LinkDropDown
-                key={item}
-                item={item}
-                pathname={pathname}
-                color={pathname.includes("/department") ? "#fff" : colors.main}
-              />
-            </Grid>
+            item.nestedLinks.map((dep) => {
+              return (
+                <Grid
+                  key={index}
+                  item
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <NestedNav
+                    key={index}
+                    item={dep}
+                  />
+                  {/* <LinkDropDown
+                    key={dep}
+                    item={dep}
+                    pathname={pathname}
+                    color={pathname.includes("/department") ? "#fff" : colors.main}
+                  /> */}
+                </Grid>
+              )
+            })
           ) : (
             <Grid
               key={index}
               item
-              xs={3}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -72,7 +80,6 @@ export default function NavLinks() {
                     lg: "30px",
                     md: "20px",
                   },
-
                   color: pathname === item.link ? "#fff" : colors.main,
                   bgcolor:
                     pathname === item.link

@@ -9,9 +9,16 @@ import {
   Typography,
   ButtonGroup,
   useMediaQuery,
+  CardMedia,
 } from "@mui/material";
+import Apple from "../../assets/payment/apple.jpg";
+import Master from "../../assets/payment/master.jpg";
+import Visa from "../../assets/payment/visa.jpg";
+import Transfer from "../../assets/payment/transfer.jpg";
+import Mda from "../../assets/payment/mda.jpg";
+import Stc from "../../assets/payment/stc.jpg";
 import Popover from "@mui/material/Popover";
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
@@ -45,7 +52,7 @@ import { useEffect } from "react";
 import i18n from "../../i18n";
 import { setCart } from "../../APIs/cartSlice";
 import { Colors } from "./colors";
-import Similarproduct from "./similarproduct/index";
+import SimilarProduct from "./similarproduct/index";
 import Loader from "../../components/loader/loader";
 import Rating from "./Rating.jsx";
 
@@ -215,7 +222,11 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
         variant="outlined"
         sx={{
           overflow: 'auto',
-          width: "350px",
+          width: {
+            md: "350px",
+            sm: '200px',
+            xs: '100%'
+          },
           display: "flex",
           alignItems: "center",
           justifyContent: "start",
@@ -313,7 +324,7 @@ function SingleProduct() {
     qualities: [],
     id: productId,
   });
-  const colors = Colors;
+  // const colors = Colors;
 
   const [addRating] = useAddRatingMutation();
   const [_, { language: lang }] = useTranslation();
@@ -504,6 +515,191 @@ function SingleProduct() {
       qualitiesBefore: qualitiesAfterDelete,
     });
   };
+
+
+
+  const PaymentType = () => (
+    <Box sx={{
+      // paddingX: 4,
+      marginTop: '40px',
+      marginBottom: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 2,
+    }}>
+      <Typography
+        fontFamily={publicFontFamily}
+        sx={{
+          color: "#693096",
+          fontSize: {
+            md: "25px",
+            sm: '20px',
+            xs: '16px'
+          }
+        }}
+      >
+        {lang === "en" ? "payment Type:" : "طرق الدفع:"}
+      </Typography>
+      <Box sx={{
+        display: 'flex',
+        gap: 2,
+        flexWrap: 'wrap'
+      }}>
+        <Box>
+          <CardMedia
+            component={"img"}
+            src={Mda}
+            sx={{
+              border: 1,
+              borderColor: "#693096",
+              width: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              height: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              objectFit: "fill",
+            }}
+          />
+        </Box>
+        <Box>
+          <CardMedia
+            component={"img"}
+            src={Visa}
+            sx={{
+              border: 1,
+              borderColor: "#693096",
+              width: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              height: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              objectFit: "fill",
+            }}
+          />
+        </Box>
+        <Box>
+          <CardMedia
+            component={"img"}
+            src={Master}
+            sx={{
+              border: 1,
+              borderColor: "#693096",
+              width: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              height: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              objectFit: "fill",
+            }}
+          />
+        </Box>
+        <Box>
+          <CardMedia
+            component={"img"}
+            src={Apple}
+            sx={{
+              border: 1,
+              borderColor: "#693096",
+              width: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              height: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              objectFit: "fill",
+            }}
+          />
+        </Box>
+        <Box>
+          <CardMedia
+            component={"img"}
+            src={Stc}
+            sx={{
+              border: 1,
+              borderColor: "#693096",
+              width: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              height: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              objectFit: "fill",
+            }}
+          />
+        </Box>
+        <Box>
+          <CardMedia
+            component={"img"}
+            src={Transfer}
+            sx={{
+              border: 1,
+              borderColor: "#693096",
+              width: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              height: {
+                xl: 50,
+                lg: 40,
+                md: 40,
+                sm: 30,
+                xs: 18,
+              },
+              objectFit: "fill",
+            }}
+          />
+        </Box>
+      </Box>
+    </Box>
+  )
+
+
   return (
     <Box
       sx={{
@@ -514,30 +710,12 @@ function SingleProduct() {
         <Box
           sx={{
             mx: "auto",
-            width: 1,
             p: {
               md: "200px 0 100px",
               xs: "150px 0 50px",
             },
           }}
         >
-          {/* {!product ? (
-        <Stack
-          sx={{
-            height: "66vh",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CircularProgress
-            sx={{
-              color: colors.newMainColor,
-            }}
-          />
-        </Stack>
-      ) : */}
-
           <Grid
             container
             sx={{
@@ -558,7 +736,7 @@ function SingleProduct() {
               item
               xs={12}
               md={11}
-              lg={5.5}
+              lg={6}
               sx={{ order: { xs: -1, md: -1 } }}
             >
               {product && <ImageSlider product={product} images={qImage} />}
@@ -570,8 +748,7 @@ function SingleProduct() {
               lg={6}
               sx={{
                 textAlign: "end",
-                px: { sm: 0 },
-                margin: "10px",
+                // px: { sm: 0, md: 5 },
                 position: {
                   xs: "block",
                   lg: "sticky",
@@ -582,7 +759,7 @@ function SingleProduct() {
                   xl: "0px",
                 },
                 height: "fit-content",
-                padding: "20px  ",
+                padding: "20px",
                 direction: lang === "en" ? "ltr !important" : "rtl !important",
               }}
             >
@@ -592,35 +769,374 @@ function SingleProduct() {
                   alignItems: "flex-start",
                   justifyContent: "flex-start",
                   flexDirection: "column",
-                }}
-              >
-                <Typography
+                }}>
+                <Box
                   sx={{
-                    color: colors.newMainColor,
-                    fontFamily: publicFontFamily,
-                    fontSize: {
-                      xl: "40px",
-                      lg: "35px",
-                      md: "25px",
-                      xs: " 14px",
-                    },
-                    mt: "20px",
-                    display: "inline",
-                    color: colors.main,
-                    fontWeight: "bold",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: 'space-between',
+                    width: '100%',
                     py: "6px",
-                    px: {
-                      lg: "35px",
-                      md: "25px",
-                      xs: "15px",
-                      color: "#693096",
-                    },
-                    borderRadius:
-                      lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
+                    gap: 10,
+                    mt: "20px",
                   }}
                 >
-                  {lang === "en" ? product?.title_en : product?.title_ar}
-                </Typography>
+                  <Typography
+                    sx={{
+                      color: colors.newMainColor,
+                      fontFamily: publicFontFamily,
+                      flex: 1,
+                      textAlign: 'center',
+                      fontSize: {
+                        xl: "40px",
+                        lg: "35px",
+                        md: "25px",
+                        sm: '23px',
+                        xs: " 16px",
+                      },
+                      display: "inline",
+                      color: colors.main,
+                      fontWeight: "bold",
+                      px: {
+                        // lg: "35px",
+                        // md: "25px",
+                        // xs: "15px",
+                        color: "#693096",
+                      },
+                      borderRadius:
+                        lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
+                    }}
+                  >
+                    {lang === "en" ? product?.title_en : product?.title_ar}
+                  </Typography>
+                  <Typography
+                    component="span"
+                    sx={{
+                      flex: 1,
+                      fontWeight: "bolder",
+                      fontWeight: "bold",
+                      fontFamily: publicFontFamily,
+                      textAlign: 'center',
+                      fontSize: {
+                        xl: "27px",
+                        lg: "25px",
+                        md: "23px",
+                        sm: '19px',
+                        xs: " 14px",
+                      },
+                      textDecoration:
+                        addedPrice || offPrice ? "line-through" : "none",
+                      bgcolor: "#693096",
+                      padding: '10px 35px',
+                      borderRadius: 10,
+                      color: 'white'
+                    }}
+                  >
+                    {
+                      product?.offer?.percentage ?
+                        Math.abs(product?.finalPrice + (extraPrice - extraPrice * product?.offer?.percentage / 100)).toFixed(2) : Math.abs(product?.finalPrice + extraPrice).toFixed(2)
+                    }{" "}
+                    {lang === "en" ? "SAR" : "ر.س"}
+                  </Typography>
+                </Box>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mt="15px"
+                  mb={"20px"}
+                  sx={{
+                    width: '100%',
+                    marginTop: "20px",
+                    // gap: {
+                    //   md: 4,
+                    //   sm: 1,
+                    // },
+                    paddingX: {
+                      md: 4,
+                      sm: 0,
+                    }
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                      flex: 1,
+                      gap: 1,
+                      "& .react-stars": {
+                        flexDirection: "row",
+                        display: "flex",
+                      },
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: publicFontFamily,
+                        fontSize: {
+                          xl: "30px",
+                          lg: "25px",
+                          md: "20px",
+                          xs: " 14px",
+                        },
+                        display: "inline",
+                        color: colors.main,
+                        fontWeight: "bold",
+                        borderRadius:
+                          lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
+                      }}
+                    >
+                      {lang === 'ar' ? 'التقييم' : 'rating'}
+                    </Typography>
+
+                    <Rating
+                      setRating={handleRating}
+                      totalRating={data?.data?.rating}
+                      id={data?.data?._id}
+                    />
+                  </Stack>
+                  <Box sx={{
+                    // alignItems: "center",
+                  }}>
+                    <Stack
+                      sx={{
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: "20px",
+                      }}
+                    >
+                      <Typography
+                        fontFamily={publicFontFamily}
+                        sx={{
+                          color: "#693096",
+                          fontWeight: 'bold',
+                          fontSize: {
+                            xl: "30px",
+                            lg: "25px",
+                            md: "20px",
+                            xs: " 14px",
+                          },
+                        }}
+                      >
+                        {lang === "en" ? "Quantity" : "الكمية"}
+                      </Typography>
+                      <Stack
+                        sx={{
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          gap: {
+                            xl: "30px",
+                            lg: "20px",
+                            md: "13px",
+                            xs: "10px",
+                          },
+                          width: "100%",
+                        }}
+                      >
+                        <Button
+                          sx={{
+                            bgcolor: "#fff !important",
+                            border: 1,
+                            borderColor: "#693096 ",
+                            minWidth: 0,
+                            width: 0,
+                            height: 0,
+                            p: {
+                              xl: "17px",
+                              lg: "15px",
+                              md: "13px",
+                              xs: " 10px",
+                            },
+                            borderRadius: "50%",
+                          }}
+                          onClick={() =>
+                            cartData.quantity !== 1
+                              ? setCartData({
+                                ...cartData,
+                                quantity: cartData.quantity - 1,
+                              })
+                              : undefined
+                          }
+                        >
+                          <RemoveIcon
+                            sx={{
+                              fontSize: {
+                                xl: "30px",
+                                lg: "25px",
+                                md: "20px",
+                                xs: " 14px",
+                              },
+                              color: "#693096",
+                            }}
+                          />
+                        </Button>
+                        <Typography
+                          fontFamily={publicFontFamily}
+                          variant="h6"
+                          fontWeight={"bold"}
+                          align={"center"}
+                          sx={{
+                            fontSize: {
+                              xl: "30px",
+                              lg: "25px",
+                              md: "20px",
+                              xs: " 14px",
+                            },
+                            fontWeight: 'bold',
+                            color: "#693096",
+                          }}
+                        >
+                          {cartData.quantity}
+                        </Typography>
+                        <Button
+                          sx={{
+                            bgcolor: "#fff !important",
+                            border: 1,
+                            borderColor: "#693096",
+                            minWidth: 0,
+                            width: 0,
+                            height: 0,
+                            p: {
+                              xl: "17px",
+                              lg: "15px",
+                              md: "13px",
+                              xs: " 10px",
+                            },
+                            borderRadius: "50%",
+                          }}
+                          onClick={() =>
+                            setCartData({
+                              ...cartData,
+                              quantity: cartData.quantity + 1,
+                            })
+                          }
+                        >
+                          <AddIcon
+                            sx={{
+                              fontSize: {
+                                xl: "30px",
+                                lg: "25px",
+                                md: "20px",
+                                xs: " 14px",
+                              },
+                              color: "#693096",
+                            }}
+                          />
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Stack>
+                <Box
+                  // px={5}
+                  sx={{
+                    margin: "10px 0px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                  }}
+                >
+                  {product?.qualities?.map((quality) => (
+                    <Attrs
+                      key={quality?._id}
+                      colors={{
+                        attrKeyColor: colors.attrKeyColor,
+                        attrValueColor: colors.attrValueColor,
+                        attrValueBgColor: colors.attrValueBgColor,
+                        attrValueBorderColor: colors.attrValueBorderColor,
+                        attrAciveColors: colors.attrAciveColors,
+                      }}
+                      product={product}
+                      attr={quality}
+                      setCartData={setCartData}
+                      cartData={cartData}
+                    />
+                  ))}
+                </Box>
+
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  gap="15px"
+                  mt="30px"
+                  width={"100%"}
+                  sx={{
+                    display: {
+                      xs: 'none',
+                      md: 'flex',
+
+                    },
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Button
+                    sx={{
+                      flex: 1,
+                      color: "#693096",
+                      borderRadius: "10px",
+                      fontFamily: publicFontFamily,
+                      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+                      borderRadius: "40px",
+                      fontWeight: "bold",
+                      "&:hover": {
+                        color: "#fff",
+                        bgcolor: "#693096",
+                      },
+                      padding: " 14px",
+                    }}
+                    onClick={() =>
+                      handleAddToCartFunction("creatingOrder")
+                    }
+                  >
+                    {lang === "en" ? "Buy now" : "أشتري الآن"}
+                  </Button>
+
+                  <Button
+                    sx={{
+                      flex: 1,
+                      color: "#693096",
+                      borderRadius: "10px",
+                      fontFamily: publicFontFamily,
+                      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+                      borderRadius: "40px",
+                      "&:hover": {
+                        color: "#fff",
+                        bgcolor: "#693096",
+                      },
+                      padding: "10px 20px",
+                      width: {
+                        xs: "100%",
+                        lg: "49%",
+                      },
+                      padding: "14px",
+                    }}
+                    // disabled={!checkActivity || productInCart}
+                    // disabled={productInCart}
+                    onClick={() => handleAddToCartFunction()}
+                  >
+                    <Typography
+                      component="span"
+                      sx={{
+                        fontWeight: "bold",
+                        fontFamily: publicFontFamily,
+                      }}
+                    >
+                      {lang === "en"
+                        ? "Add to cart"
+                        : "أضف إلي عربة التسوق"}
+                    </Typography>
+
+                    <ShoppingCartIcon />
+
+                  </Button>
+                </Stack>
+
+                <PaymentType />
                 <Box
                   sx={{
                     px: {
@@ -628,17 +1144,32 @@ function SingleProduct() {
                       md: "25px",
                       xs: "15px",
                     },
+                    mt: "20px",
                     width: "100%",
                   }}
                 >
                   <Typography
+                    fontFamily={publicFontFamily}
+                    sx={{
+                      color: "#693096",
+                      textAlign: lang === "en" ? "left" : "right",
+                      fontSize: {
+                        md: "25px",
+                        sm: '20px',
+                        xs: '16px'
+                      }
+                    }}
+                  >
+                    {lang === "en" ? "The Description:" : "الوصف:"}
+                  </Typography>
+
+                  <Typography
                     sx={{
                       fontFamily: publicFontFamily,
                       fontSize: "20px",
-                      mt: "20px",
                       color: colors.main,
                       fontWeight: "bold",
-                      width: 0.7,
+                      // width: 0.7,
                       textAlign: lang === "en" ? "left" : "right",
                       color: "#693096",
                       "&  *": {
@@ -661,8 +1192,7 @@ function SingleProduct() {
                           : product?.description_ar.slice(0, 2000),
                     }}
                   />
-
-                  <Stack
+                  {/* <Stack
                     sx={{
                       flexDirection: {
                         xs: "column",
@@ -675,200 +1205,6 @@ function SingleProduct() {
                       alignItems: "flex-start",
                     }}
                   >
-                    <Box
-                      sx={{
-                        margin: "10px 0px",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 3,
-                      }}
-                    >
-                      {product?.qualities?.map((quality) => (
-                        <Attrs
-                          key={quality?._id}
-                          colors={{
-                            attrKeyColor: colors.attrKeyColor,
-                            attrValueColor: colors.attrValueColor,
-                            attrValueBgColor: colors.attrValueBgColor,
-                            attrValueBorderColor: colors.attrValueBorderColor,
-                            attrAciveColors: colors.attrAciveColors,
-                          }}
-                          product={product}
-                          attr={quality}
-                          setCartData={setCartData}
-                          cartData={cartData}
-                        />
-                      ))}
-                    </Box>
-                    {/* <Stack
-                direction="row"
-                justifyContent={'flex-start'}
-                width={'100%'}
-                spacing={2}
-                height={60}
-                className='chips'
-
-                sx={{
-                  justifyContent: 'flex-start',
-                  overflowX:'auto',
-                  overflowY:'hidden',
-                  transition:'0.5s all ease-in-out' ,
-                  postition:'sticky',
-                  right:'0px'
-                  // borderTop:'1px solid #ddd'
-                }}
-              >
-                {cartData?.qualities?.map((chip) => {
-                   
-                   return (
-                    <>
-                      {chip?.value_en?.startsWith('#') ? (
-                        <Chip
-                          //  label={`${lang === 'en'
-                          //  ? 'color' : 'اللون'}`}
-                          // key={chip?.key_en}
-                          variant="outlined"
-                          sx={{
-                            margin: '10px !important',
-                            padding: 1,
-                            visibility: 'visible',
-                            width: 'fit-content',
-                            borderRadius: '0px !important',
-                            border: `0px`,
-                            color: '#fff !important',
-                            height: '28px !important',
-                            'svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiChip-deleteIcon.MuiChip-deleteIconMedium.MuiChip-deleteIconColorDefault.MuiChip-deleteIconOutlinedColorDefault.css-i4bv87-MuiSvgIcon-root':
-                              {
-                                color: '#fff',
-                                margin: '10px auto',
-                                width: '20px',
-                                height: '20px',
-                                top: '-22px',
-                                left: '-13px',
-                              },
-                            position: 'relative',
-                            overflow: 'visible',
-                            '.css-1jzq0dw-MuiChip-label': {
-                              display: 'none',
-                            },
-                            background: `${chip?.value_en} !important`,
-                            borderRadius: '0px !important',
-
-                            "& .css-meyyna-MuiButtonBase-root-MuiChip-root":{
-                              border:'0px !important'
-                            }
-                          }}
-                          onDelete={() => handleDelete(chip?.key_en)}
-                        ></Chip>
-                      ) : (
-                        <Chip
-                          label={`${
-                            lang === 'en' ? chip.value_en : chip.value_ar
-                          }`}
-                          key={chip?.key_en}
-                          variant="outlined"
-                          sx={{
-                            margin: '10px !important',
-                            padding: 1,
-                            visibility: 'visible',
-                            width: 'fit-content',
-                            borderRadius: '0px !important',
-                            border: '0px !important',
-                            color: '#000 !important',
-
-                            'svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiChip-deleteIcon.MuiChip-deleteIconMedium.MuiChip-deleteIconColorDefault.MuiChip-deleteIconOutlinedColorDefault.css-i4bv87-MuiSvgIcon-root':
-                              {
-                                color: 'black',
-                              },
-                            border: '1px solid  !important',
-                            borderColor: `#5c5c5c !important`,
-                            borderRadius: '0px !important',
-                            transition:'0.5s all ease'
-                          }}
-                          onDelete={() => handleDelete(chip?.key_en)}
-                        />
-                      )}
-                    </>
-                  )
-                })}
-              </Stack> */}
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="flex-start"
-                      gap="20px"
-                      mt="15px"
-                      mb={"20px"}
-                    >
-                      <div className="my-3">
-                        <Typography
-                          component="span"
-                          sx={{
-                            fontWeight: "bolder",
-
-                            fontWeight: "bold",
-                            fontFamily: publicFontFamily,
-                            fontSize: {
-                              xl: "25px",
-                              lg: "27px",
-                              md: "25px",
-                              xs: "23px",
-                            },
-                            textDecoration:
-                              addedPrice || offPrice ? "line-through" : "none",
-                            color: "#693096",
-                          }}
-                        >
-                          {
-                            console.log("product :::: ", product?.offer?.percentage)
-                          }
-                          {
-                            product?.offer?.percentage ?
-                              Math.abs(product?.finalPrice + (extraPrice - extraPrice * product?.offer?.percentage / 100)).toFixed(2) : Math.abs(product?.finalPrice + extraPrice).toFixed(2)
-                          }{" "}
-                          {lang === "en" ? "SAR" : "ر.س"}
-                        </Typography>
-                      </div>
-
-                      <Stack
-                        sx={{
-                          "& .react-stars": {
-                            flexDirection: "row",
-                            display: "flex",
-                          },
-                        }}
-                      >
-                        {console.log(data?.data?.rating, "ratingsda")}
-                        {/* <Stack
-                   sx={{
-                    flexDirection:'row-reverse',
-                    display:'flex'
-                   }}
-                   component={ReactStars}
-                  count={5}
-                   onChange={ (newValue) => {
-
-                    handleRating(data.data._id, newValue);
-                  }}      
-                  id={'rating'}
-                  size={30}
-                  // isHalf={true}
-                  // value={Math.floor(data?.data?.rating)}
-                  // fullIcon={<i className="fa fa-star"></i>}
-                  // halfIcon={<i className="fa fa-star-half-alt"></i>}
-                  emptyIcon={<i className="far fa-star"></i>}
-                  color2="#ffd700"
-                  color1="gray"
-                /> */}
-
-                        <Rating
-                          setRating={handleRating}
-                          totalRating={data?.data?.rating}
-                          id={data?.data?._id}
-                        />
-                      </Stack>
-                    </Stack>
-                    {console.log(product)}
                     {product?.priceAfterDiscount > 0 &&
                       product?.priceAfterDiscount !==
                       product?.priceBeforeDiscount && (
@@ -896,100 +1232,6 @@ function SingleProduct() {
                         },
                       }}
                     >
-                      <Stack
-                        sx={{
-                          marginTop: "20px",
-                          display: "flex",
-                          alignItems: "center",
-                          flexDirection: "row",
-                          gap: "20px",
-                        }}
-                      >
-                        <Typography
-                          fontFamily={publicFontFamily}
-                          sx={{
-                            color: "#693096",
-                            fontSize: "25px",
-                          }}
-                        >
-                          {lang === "en" ? "Quantity" : "الكميه"}
-                        </Typography>
-                        <Stack
-                          sx={{
-                            flexDirection: "row",
-                            justifyContent: "flex-start",
-                            alignItems: "center",
-                            width: 0.6,
-                            gap: "50px",
-                            width: "100%",
-                          }}
-                        >
-                          <Button
-                            sx={{
-                              bgcolor: "#fff !important",
-
-                              border: 1,
-                              borderColor: "#693096 ",
-                              minWidth: 0,
-                              width: 0,
-                              height: 0,
-                              p: "13px",
-                              borderRadius: "50%",
-                            }}
-                            onClick={() =>
-                              cartData.quantity !== 1
-                                ? setCartData({
-                                  ...cartData,
-                                  quantity: cartData.quantity - 1,
-                                })
-                                : undefined
-                            }
-                          >
-                            <RemoveIcon
-                              sx={{
-                                color: "#693096",
-                              }}
-                            />
-                          </Button>
-                          <Typography
-                            fontFamily={publicFontFamily}
-                            variant="h6"
-                            fontWeight={"bold"}
-                            align={"center"}
-                            sx={{
-                              color: "#693096",
-                            }}
-                          >
-                            {cartData.quantity}
-                          </Typography>
-
-                          <Button
-                            sx={{
-                              bgcolor: "#fff !important",
-
-                              border: 1,
-                              borderColor: "#693096",
-                              minWidth: 0,
-                              width: 0,
-                              height: 0,
-                              p: "13px",
-                              borderRadius: "50%",
-                            }}
-                            onClick={() =>
-                              setCartData({
-                                ...cartData,
-                                quantity: cartData.quantity + 1,
-                              })
-                            }
-                          >
-                            <AddIcon
-                              sx={{
-                                color: "#693096",
-                              }}
-                            />
-                          </Button>
-                        </Stack>
-                      </Stack>
                       <Stack
                         direction={"row"}
                         alignItems={"center"}
@@ -1103,82 +1345,8 @@ function SingleProduct() {
                             : ""
                           : ""}
                       </Typography>
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        gap="15px"
-                        mt="30px"
-                        width={"100%"}
-                        sx={{
-                          width: "100% !important",
-                        }}
-                      >
-                        <Button
-                          sx={{
-                            color: "#693096",
-                            borderRadius: "10px",
-                            fontFamily: publicFontFamily,
-                            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                            p: "10px",
-                            borderRadius: "40px",
-                            fontWeight: "bold",
-                            "&:hover": {
-                              color: "#fff",
-                              bgcolor: "#693096",
-                            },
-                            padding: "10px 20px",
-                            width: "49%",
-                            padding: " 14px",
-                          }}
-                          onClick={() =>
-                            handleAddToCartFunction("creatingOrder")
-                          }
-                        >
-                          {lang === "en" ? "Buy now" : "أشتري الآن"}
-                        </Button>
-
-                        <Button
-                          sx={{
-                            color: "#693096",
-                            borderRadius: "10px",
-                            fontFamily: publicFontFamily,
-                            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                            p: "10px",
-                            borderRadius: "40px",
-                            "&:hover": {
-                              color: "#fff",
-                              bgcolor: "#693096",
-                            },
-                            padding: "10px 20px",
-                            width: {
-                              xs: "100%",
-                              lg: "49%",
-                            },
-                            padding: "14px",
-                          }}
-                          // disabled={!checkActivity || productInCart}
-                          // disabled={productInCart}
-                          onClick={() => handleAddToCartFunction()}
-                        >
-                          <Typography
-                            component="span"
-                            sx={{
-                              color: productInCart ? "#fff" : colors.main,
-
-                              fontWeight: "bold",
-                              fontFamily: publicFontFamily,
-                            }}
-                          >
-                            {lang === "en"
-                              ? "Add to cart"
-                              : "أضف إلي عربة التسوق"}
-                          </Typography>
-
-                          <i className="fa-solid fa-cart-shopping mx-2"></i>
-                        </Button>
-                      </Stack>
                     </Stack>
-                  </Stack>
+                  </Stack> */}
                 </Box>
               </Box>
             </Grid>
@@ -1187,12 +1355,83 @@ function SingleProduct() {
       ) : (
         <Loader />
       )}
-
-      <Similarproduct productId={product?.id} id={categoryId} />
-
+      <SimilarProduct productId={product?.id} id={categoryId} />
       <ProductComments colors={colors.commentsColors} productId={productId} />
-    </Box>
+
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          zIndex: 100,
+          bgcolor: 'lightgrey',
+          gap: 4,
+          padding: '5px 40px',
+          width: '100%',
+          height: '50px',
+          display: { xs: 'flex', md: 'none' },
+        }}>
+        <Button
+          sx={{
+            color: "#693096",
+            bgcolor: "#fff",
+            "&:hover": {
+              color: "#fff",
+              bgcolor: "#693096",
+            },
+            fontSize: '10px',
+            borderRadius: "10px",
+            fontFamily: publicFontFamily,
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius: "40px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            width: "50%",
+            padding: " 14px",
+          }}
+          onClick={() =>
+            handleAddToCartFunction("creatingOrder")
+          }
+        >
+          {lang === "en" ? "Buy now" : "أشتري الآن"}
+        </Button>
+
+        <Button
+          sx={{
+            color: "#693096",
+            bgcolor: "#fff",
+            "&:hover": {
+              color: "#fff",
+              bgcolor: "#693096",
+            },
+            borderRadius: "10px",
+            fontFamily: publicFontFamily,
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius: "40px",
+            width: "50%",
+            padding: "14px",
+            width: "50%",
+          }}
+          onClick={() => handleAddToCartFunction()}
+        >
+          <Typography
+            component="span"
+            sx={{
+              fontSize: '10px',
+              fontWeight: "bold",
+              fontFamily: publicFontFamily,
+            }}>
+            {lang === "en"
+              ? "Add to cart"
+              : "أضف إلي عربة التسوق"}
+          </Typography>
+
+          <ShoppingCartIcon />
+        </Button>
+      </Box>
+    </Box >
   );
 }
 
 export default SingleProduct;
+
+

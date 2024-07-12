@@ -31,13 +31,31 @@ export const contactWaysIcons = [
     des_ar: "0-123-456-7890",
   },
   {
-    title_en: "lifewardshop@gmail.com",
-    title_ar: "lifewardshop@gmail.com",
+    title_en: "info@lifeward.com",
+    title_ar: "info@lifeward.com",
     icon: <EmailOutlinedIcon />,
-    des_en: "lifewardshop@gmail.com",
-    des_ar: "lifewardshop@gmail.com",
+    des_en: "info@lifeward.com",
+    des_ar: "info@lifeward.com",
   },
 ];
+
+export const ImportantLinksData = [
+  {
+    title_en: "Who are we",
+    title_ar: "من نحن",
+    link: "/aboutUs",
+  },
+  {
+    title_en: "Contact Us",
+    title_ar: "تواصل معنا",
+    link: "/contactUs",
+  },
+  {
+    title_en: "Our Blogs",
+    title_ar: "مدوناتنا",
+    link: "/blogs"
+  },
+]
 
 export const contactFormik = {
   heading_en: "Quick Contact Form",

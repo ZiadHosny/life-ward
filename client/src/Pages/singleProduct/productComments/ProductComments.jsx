@@ -14,6 +14,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { toast } from "react-toastify";
 import {
+  colors as AllColors,
+} from "../../../components/publicStyle/publicStyle";
+import {
   useCreateCommentForProductMutation,
   useGetProductCommentsQuery,
   useRemoveCommentFromProductMutation,
@@ -37,6 +40,7 @@ const TextField = ({ handleSubmit, placeholder, state, setState }) => {
           py: 1,
           px: 3,
           width: 0.97,
+          color: AllColors.main
         }}
         placeholder={placeholder}
         value={state}
@@ -86,15 +90,17 @@ const CommentCard = ({ colors, item }) => {
     return custom;
   };
   return (
-    <Box mb={"10px"}>
+    <Box mb={"10px"}
+      sx={{
+        border: 1,
+        borderColor: AllColors.main,
+        borderRadius: 10,
+        bgcolor: '#fbf7ff'
+      }}>
       <Box
         sx={{
-          border: "0px",
-          borderColor: "rgba(0, 0, 0, 0.12)",
-          margin: " 27px",
+          margin: "10px",
           marginBottom: "0px",
-          borderRight: language === "en" ? "0px" : "1px solid #000",
-          borderLeft: language === "ar" ? "0px" : "1px solid #000",
         }}
       >
         <Stack
@@ -112,7 +118,8 @@ const CommentCard = ({ colors, item }) => {
             <Stack direction={"row"} gap={1} alignItems={"center"}>
               <Typography
                 sx={{
-                  fontSize: "17px",
+                  fontSize: "20px",
+                  color: AllColors.main
                 }}
                 fontWeight={"bold"}
               >
@@ -124,11 +131,18 @@ const CommentCard = ({ colors, item }) => {
                   fontSize: "12px",
                 }}
               >
-                Verfied
+                Verified
               </Typography>
             </Stack>
 
-            <Typography variant={"body1"}>{item.comment}</Typography>
+            <Typography
+              sx={{
+                padding: '15px 0px',
+                fontSize: "24px",
+                color: AllColors.main
+              }}
+              fontWeight={"bold"}
+              variant={"body1"}>{item.comment}</Typography>
           </Box>
         </Stack>
       </Box>
@@ -145,7 +159,7 @@ const CommentCard = ({ colors, item }) => {
             : "10px"
         }
       >
-        <Typography>
+        <Typography sx={{ padding: 1, fontWeight: 'bold' }}>
           {customMoment(
             item.createdAt === item.updatedAt ? item.createdAt : item.updatedAt
           )}
@@ -201,22 +215,29 @@ const ProductComments = ({ colors, productId }) => {
         pb: "40px",
       }}
     >
-      <Box py={"15px"} mb={"15px"}>
+      <Box py={"15px"} px={'40px'} mb={"15px"}>
         <Typography
           variant="h6"
           sx={{
-            color: "#000",
+            color: AllColors.main,
+            fontSize: '40px',
+            fontWeight: 'bold',
             textAlign: language === "en" ? "left" : "right",
             textTransform: "capitalize",
           }}
         >
-          {language === "en" ? "product comments" : "تعليقات المنتج"}
+          {language === "en" ? "Comments" : "التعليقات"}
         </Typography>
       </Box>
-
-      {data?.data.map((item) => (
-        <CommentCard item={item} key={item._id} colors={colors} />
-      ))}
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+      }}>
+        {data?.data.map((item) => (
+          <CommentCard item={item} key={item._id} colors={colors} />
+        ))}
+      </Box>
       {currentUser && (
         <Box mt={"20px"}>
           <Stack direction={"row"} alignItems={"center"} gap={"20px"}>
@@ -224,9 +245,9 @@ const ProductComments = ({ colors, productId }) => {
             <Typography variant={"h6"}>
               {
                 currentUser[
-                  currentUser.name
-                    ? "name"
-                    : currentUser.email
+                currentUser.name
+                  ? "name"
+                  : currentUser.email
                     ? "email"
                     : "phone"
                 ]
@@ -238,6 +259,7 @@ const ProductComments = ({ colors, productId }) => {
               border: "1px solid #e0e0e0",
               borderRadius: "50px",
               my: "10px",
+              bgcolor: '#faf6fe'
             }}
           >
             <TextField
@@ -249,8 +271,8 @@ const ProductComments = ({ colors, productId }) => {
                     ? "Edit the comment"
                     : "تعديل التعليق"
                   : language === "en"
-                  ? "Add comment"
-                  : "أضف تعليق"
+                    ? "Add comment"
+                    : "أضف تعليق"
               }
               handleSubmit={handleSubmit}
             />

@@ -59,26 +59,14 @@ export default function Drawers() {
       })}
       <Box
         sx={{
+          display: {
+            md: "block",
+            xs: "none",
+          },
           mx: "2px",
         }}
       >
         <MobileProfileMenu />
-      </Box>
-      <Box mx={"8px"}>
-        <Tooltip title={language === "en" ? "search" : "بحث"}>
-          <CardMedia
-            component={"img"}
-            src={searchSvg}
-            alt="Search"
-            onClick={() => navigate("/search")}
-            sx={{
-              height: { md: 21, xs: 17 },
-              width: { md: 21, xs: 17 },
-              objectFit: "fill",
-              cursor: "pointer",
-            }}
-          />
-        </Tooltip>
       </Box>
       <Box
         sx={{
@@ -131,11 +119,9 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
               cursor: "pointer",
               borderRadius: 0,
               padding: "10px",
-
               svg: {
                 color: colors.main,
               },
-              display: "flex",
               mx: "4px",
               width: {
                 md: 30,
@@ -144,6 +130,10 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
               height: {
                 md: 40,
                 xs: 30,
+              },
+              display: {
+                md: "flex",
+                xs: name === 'likes' ? "none" : 'flex',
               },
               ".MuiBadge-badge": {
                 fontWeight: "bolder",
@@ -162,10 +152,10 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
                     ? savedProducts?.data?.favourite.length
                     : undefined
                   : name == "cart"
-                  ? carts?.data?.totalQuantity > 0 && !isErrCart
-                    ? carts?.data?.totalQuantity
+                    ? carts?.data?.totalQuantity > 0 && !isErrCart
+                      ? carts?.data?.totalQuantity
+                      : undefined
                     : undefined
-                  : undefined
               }
               showZero={name != "profile"}
             >
@@ -176,8 +166,8 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
                       ? "Saved products"
                       : "المنتجات المفضلة"
                     : language === "en"
-                    ? "Cart"
-                    : "عربة التسوق"
+                      ? "Cart"
+                      : "عربة التسوق"
                 }
               >
                 <CardMedia
