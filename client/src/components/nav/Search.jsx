@@ -18,7 +18,7 @@ export const Search = ({ mobile = false }) => {
     const navigate = useNavigate()
     const [_, { language: lang }] = useTranslation();
     const [query, setQuery] = useState("");
-    const { data, error, isLoading , } = useGetAllProductsQuery(
+    const { data, error, isLoading, } = useGetAllProductsQuery(
         query
             .concat(`&limit=24`)
     );
@@ -76,7 +76,6 @@ export const Search = ({ mobile = false }) => {
                                     >
                                         <ListItemAvatar>
                                             <Avatar src={product.imagesUrl[0]}>
-                                                {/* <FolderIcon /> */}
                                             </Avatar>
                                         </ListItemAvatar>
                                         <ListItemText
@@ -157,7 +156,7 @@ export const Search = ({ mobile = false }) => {
                     setOpen={setOpen}
                 />
             </Paper>
-            {open ? <SearchList onClose={() => setOpen(false)} /> : <></>}
+            {query && open ? <SearchList onClose={() => setOpen(false)} /> : <></>}
         </div >
     )
 }
