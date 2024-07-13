@@ -14,27 +14,32 @@ export const WhatsAppChat = () => {
     const inProductDetails = pathname.includes('productDetails')
 
     return (
-        <Tooltip
+        <div
             dir='rtl'
             title={
                 language === "en"
                     ? titleWhenHoverEn
                     : titleWhenHoverAr
             }>
-            <IconButton
+            <span
                 href={whatsAppLink}
                 target='_blank'
-                sx={{
+                style={{
                     bottom: inProductDetails ? 60 : 20,
                     right: language === "en" ? 30 : null,
                     left: language === "ar" ? 30 : null,
                     zIndex: 999,
                     position: 'fixed',
-                    height: { xs: "60px", xl: "70px" },
+                    height: "65px",
+                    width:"65px",
+                    padding:"5px",
                     backgroundColor: "rgb(37, 211, 102)",
-                    "&:hover": {
-                        backgroundColor: "rgb(18, 140, 126)",
-                    }
+                    borderRadius:"50%"
+                    
+                    // "&:hover": {
+                    //     backgroundColor: "rgb(18, 140, 126)",
+
+                    // }
                 }}
             >
                 <img
@@ -46,7 +51,7 @@ export const WhatsAppChat = () => {
                         objectFit: "contain",
                     }}
                 />
-            </IconButton >
-        </Tooltip >
+            </span >
+        </div >
     )
 }
