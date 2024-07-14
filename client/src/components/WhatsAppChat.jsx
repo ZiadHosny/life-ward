@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import WhatsAppLogo from '../assets/whatsapp.svg'
-import { IconButton, Tooltip } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 const whatsAppLink = "https://wa.me/+966599790939"
@@ -21,7 +20,7 @@ export const WhatsAppChat = () => {
                     ? titleWhenHoverEn
                     : titleWhenHoverAr
             }>
-            <span
+            <a
                 href={whatsAppLink}
                 target='_blank'
                 style={{
@@ -31,11 +30,11 @@ export const WhatsAppChat = () => {
                     zIndex: 999,
                     position: 'fixed',
                     height: "65px",
-                    width:"65px",
-                    padding:"5px",
+                    width: "65px",
+                    padding: "15px",
                     backgroundColor: "rgb(37, 211, 102)",
-                    borderRadius:"50%"
-                    
+                    borderRadius: "50%"
+
                     // "&:hover": {
                     //     backgroundColor: "rgb(18, 140, 126)",
 
@@ -51,7 +50,7 @@ export const WhatsAppChat = () => {
                         objectFit: "contain",
                     }}
                 />
-            </span >
+            </a >
         </div >
     )
 }
