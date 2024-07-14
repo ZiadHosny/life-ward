@@ -197,20 +197,20 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
         alignItems: "center",
         gap: 2,
         flexDirection: lang === 'ar' ? 'row-reverse' : 'row'
-      }}
-    >
+      }}>
       <Typography
         sx={{
           color: colors?.attrKeyColor,
-          fontWeight: "bold",
           textAlign: lang === "en" ? "left" : "right",
           width: "fit-content",
           color: "#693096",
+          fontWeight: "bold",
           fontSize: {
             xs: "15px",
-            md: "25px",
+            md: "23px",
+            sm: '19px',
+            xs: " 14px",
           },
-          fontWeight: "100",
           fontFamily: "El Messiri",
         }}
       >
@@ -242,8 +242,8 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
           return (
             <Button
               sx={{
-                color: isSelectedAtt(val) ? "#fff" : "#693096",
-                bgcolor: isSelectedAtt(val) ? "#693096" : "#fff",
+                color: isSelectedAtt(val) ? "#693096" : "#693096",
+                bgcolor: isSelectedAtt(val) ? "#EBEBEB" : "#fff",
                 borderColor: `#693096 !important`,
                 width: "100%",
                 paddingRight: 3,
@@ -251,8 +251,8 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
                 paddingTop: 1,
                 paddingBottom: 1,
                 "&:hover": {
-                  bgcolor: "#693096",
-                  color: "#fff",
+                  bgcolor: "#EBEBEB",
+                  // color: "#fff",
                 },
                 fontSize: "20px",
                 ".css-n7haop-MuiTypography-root": {
@@ -260,7 +260,6 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
                   //   xs: "15px",
                   //   md: "20px",
                   // },
-                  "font-weight": 200,
                   fontFamily: "El Messiri",
                 },
               }}
@@ -562,7 +561,12 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              // width: {
+              height: '100%',
+              width: {
+                lg: '100%',
+                md: '70%',
+                sm: '100%',
+              },              // width: {
               //   xl: 50,
               //   lg: 40,
               //   md: 40,
@@ -587,7 +591,12 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              // width: {
+              height: '100%',
+              width: {
+                lg: '100%',
+                md: '70%',
+                sm: '100%',
+              },              // width: {
               //   xl: 50,
               //   lg: 40,
               //   md: 40,
@@ -612,6 +621,12 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
+              height: '100%',
+              width: {
+                lg: '100%',
+                md: '70%',
+                sm: '100%',
+              },
               // width: {
               //   xl: 50,
               //   lg: 40,
@@ -637,7 +652,12 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              // width: {
+              height: '100%',
+              width: {
+                lg: '100%',
+                md: '70%',
+                sm: '100%',
+              },              // width: {
               //   xl: 50,
               //   lg: 40,
               //   md: 40,
@@ -662,7 +682,12 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              // width: {
+              height: '100%',
+              width: {
+                lg: '100%',
+                md: '70%',
+                sm: '100%',
+              },              // width: {
               //   xl: 50,
               //   lg: 40,
               //   md: 40,
@@ -687,7 +712,12 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              // width: {
+              height: '100%',
+              width: {
+                lg: '100%',
+                md: '70%',
+                sm: '100%',
+              },              // width: {
               //   xl: 50,
               //   lg: 40,
               //   md: 40,
@@ -885,7 +915,8 @@ function SingleProduct() {
                         fontSize: {
                           xl: "30px",
                           lg: "25px",
-                          md: "20px",
+                          md: "23px",
+                          sm: '19px',
                           xs: " 14px",
                         },
                         display: "inline",
@@ -895,7 +926,7 @@ function SingleProduct() {
                           lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
                       }}
                     >
-                      {lang === 'ar' ? 'التقييم' : 'rating'}
+                      {lang === 'ar' ? 'التقييم' : 'Rating'}
                     </Typography>
 
                     <Rating
@@ -924,7 +955,8 @@ function SingleProduct() {
                           fontSize: {
                             xl: "30px",
                             lg: "25px",
-                            md: "20px",
+                            md: "23px",
+                            sm: '19px',
                             xs: " 14px",
                           },
                         }}
@@ -975,7 +1007,8 @@ function SingleProduct() {
                               fontSize: {
                                 xl: "30px",
                                 lg: "25px",
-                                md: "20px",
+                                md: "23px",
+                                sm: '19px',
                                 xs: " 14px",
                               },
                               color: "#693096",
@@ -1437,5 +1470,3 @@ function SingleProduct() {
 }
 
 export default SingleProduct;
-
-
