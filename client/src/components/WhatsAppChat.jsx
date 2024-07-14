@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+ import { useTranslation } from 'react-i18next';
 import WhatsAppLogo from '../assets/whatsapp.svg'
 import { useLocation } from 'react-router-dom';
 

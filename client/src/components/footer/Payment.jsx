@@ -14,16 +14,17 @@ export const Payment = () => {
     const [_, { language: lang }] = useTranslation();
 
     return (
-        <Box sx={{
-            flex: 1,
-            mx: "auto",
-            display: "flex",
-            justifyContent: "start",
-            alignItems: "center",
-            flexDirection: "column",
-            gap: 3,
-            flexWrap: "wrap",
-        }}>
+        <Box
+            sx={{
+                flex: 1,
+                mx: "auto",
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "start",
+                flexDirection: "column",
+                gap: 3,
+                flexWrap: "wrap",
+            }}>
             <Box
                 sx={{
                     display: "flex",
@@ -55,7 +56,8 @@ export const Payment = () => {
                             fontWeight: "bold",
                             fontSize: {
                                 md: "18px",
-                                xs: "14px",
+                                sm: '15px',
+                                xs: "12px",
                             },
                         }}
                     >
@@ -63,129 +65,136 @@ export const Payment = () => {
                     </Typography>
                 </Box>
             </Box>
-            <Typography
-                sx={{
-                    fontFamily: publicFontFamily,
-                    fontWeight: "bold",
-                    fontSize: {
-                        md: "20px",
-                        xs: "14px",
-                    },
-                    borderBottom: 1,
-                    borderColor: 'white',
-                }}>
-                {lang === 'ar' ? "طرق الدفع المتاحة" : "Available payment methods"}
-            </Typography>
-            <Box sx={{
-                display: 'grid',
-                gridTemplateColumns: {
-                    xs: 'repeat(2, 1fr)',
-                    sm: 'repeat(3, 1fr)',
-                },
-                gap: 2,
-                flexWrap: 'wrap'
-            }}>
-                <Box>
-                    <CardMedia
-                        component={"img"}
-                        src={Mda}
-                        sx={{
-                            width: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            height: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            objectFit: "fill",
-                        }}
-                    />
-                </Box>
-                <Box>
-                    <CardMedia
-                        component={"img"}
-                        src={Visa}
-                        sx={{
-                            width: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            height: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            objectFit: "fill",
-                        }}
-                    />
-                </Box>
-                <Box>
-                    <CardMedia
-                        component={"img"}
-                        src={Master}
-                        sx={{
-                            width: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            height: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            objectFit: "fill",
-                        }}
-                    />
-                </Box>
-                <Box>
-                    <CardMedia
-                        component={"img"}
-                        src={Apple}
-                        sx={{
-                            width: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            height: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            objectFit: "fill",
-                        }}
-                    />
-                </Box>
-                <Box>
-                    <CardMedia
-                        component={"img"}
-                        src={Stc}
-                        sx={{
-                            width: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            height: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            objectFit: "fill",
-                        }}
-                    />
-                </Box>
-                <Box>
-                    <CardMedia
-                        component={"img"}
-                        src={Transfer}
-                        sx={{
-                            width: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            height: {
-                                md: 50,
-                                xs: 25,
-                            },
-                            objectFit: "fill",
-                        }}
-                    />
+            <Box sx={{ width: '100%' }}>
+                <Typography
+                    sx={{
+                        fontFamily: publicFontFamily,
+                        fontWeight: "bold",
+                        fontSize: {
+                            md: "20px",
+                            md: "17px",
+                            xs: "12px",
+                        },
+                        // borderBottom: 1,
+                        // borderColor: 'white',
+                    }}>
+                    {lang === 'ar' ? "طرق الدفع المتاحة" : "Available payment methods"}
+                </Typography>
+                <hr />
+                <Box
+                    sx={{
+                        marginY: '20px',
+                        paddingX: '20px',
+                        display: 'grid',
+                        gridTemplateColumns: {
+                            xs: 'repeat(2, 1fr)',
+                            sm: 'repeat(3, 1fr)',
+                        },
+                        gap: 2,
+                        flexWrap: 'wrap'
+                    }}>
+                    <Box>
+                        <CardMedia
+                            component={"img"}
+                            src={Mda}
+                            sx={{
+                                // width: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // height: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // objectFit: "fill",
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <CardMedia
+                            component={"img"}
+                            src={Visa}
+                            sx={{
+                                // width: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // height: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // objectFit: "fill",
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <CardMedia
+                            component={"img"}
+                            src={Master}
+                            sx={{
+                                // width: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // height: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // objectFit: "fill",
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <CardMedia
+                            component={"img"}
+                            src={Apple}
+                            sx={{
+                                // width: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // height: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // objectFit: "fill",
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <CardMedia
+                            component={"img"}
+                            src={Stc}
+                            sx={{
+                                // width: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // height: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // objectFit: "fill",
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <CardMedia
+                            component={"img"}
+                            src={Transfer}
+                            sx={{
+                                // width: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // height: {
+                                //     md: 50,
+                                //     xs: 25,
+                                // },
+                                // objectFit: "fill",
+                            }}
+                        />
+                    </Box>
                 </Box>
             </Box>
         </Box>

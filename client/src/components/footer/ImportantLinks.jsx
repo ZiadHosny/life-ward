@@ -35,7 +35,11 @@ export const ImportantLinks = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     width: "fit-content",
-                    gap: 1,
+                    gap: {
+                        lg: 2.5,
+                        md: 1.5,
+                        xs: 0.5,
+                    },
                 }}>
                 <Box
                     sx={{
@@ -61,83 +65,102 @@ export const ImportantLinks = () => {
                     </Typography>
                 </Box>
             </Box>
-            <Typography sx={{
-                fontFamily: publicFontFamily,
-                fontWeight: "bold",
-                fontSize: {
-                    md: "20px",
-                    xs: "14px",
-                },
-                borderBottom: 1,
-                borderColor: 'white',
+            <Box sx={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'start'
             }}>
-                {lang === 'ar' ? "روابط مهمة" : "Important Links"}
-            </Typography>
-            {data?.data?.map((item, index) => (
-                <Box
-                    key={index}
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Button
-                        disableRipple
-                        onClick={() => {
-                            navigate(`/policies/${item?.type}`);
-                            window.scrollTo(0, 0);
-                        }}
+                <Typography sx={{
+                    fontFamily: publicFontFamily,
+                    fontWeight: "bold",
+                    fontSize: {
+                        md: "18px",
+                        sm: '15px',
+                        xs: "12px",
+                    },
+                    // borderBottom: 1,
+                    // borderColor: 'white',
+                }}>
+                    {lang === 'ar' ? "روابط مهمة" : "Important Links"}
+                </Typography>
+                <hr style={{ width: '100%' }} />
+                {data?.data?.map((item, index) => (
+                    <Box
+                        key={index}
                         sx={{
-                            fontWeight: "bold",
-                            fontSize: {
-                                md: "18px",
-                                xs: "14px",
-                            },
-                            textAlign: 'start',
-                            textTransform: "capitalize",
-                            backgroundColor: "transparent !important",
-                            display: "block",
-                            color: footerStyle.color,
-                            fontFamily: publicFontFamily,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                         }}
                     >
-                        {lang === "en" ? item?.title_en : item?.title_ar}
-                    </Button>
-                </Box>
-            ))}
-            {ImportantLinksData.map((item, index) => (
-                <Box
-                    key={index}
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Button
-                        disableRipple
-                        onClick={() => {
-                            navigate(`${item.link}`);
-                            window.scrollTo(0, 0);
-                        }}
+                        <Button
+                            disableRipple
+                            onClick={() => {
+                                navigate(`/policies/${item?.type}`);
+                                window.scrollTo(0, 0);
+                            }}
+                            sx={{
+                                // fontWeight: "bold",
+                                fontSize: {
+                                    md: "18px",
+                                    sm: '15px',
+                                    xs: "12px",
+                                },
+                                '&:hover': {
+                                    fontWeight: "bold",
+                                    textDecoration: 'underline'
+                                },
+                                textAlign: 'start',
+                                textTransform: "capitalize",
+                                backgroundColor: "transparent !important",
+                                display: "block",
+                                color: footerStyle.color,
+                                fontFamily: publicFontFamily,
+                            }}
+                        >
+                            {lang === "en" ? item?.title_en : item?.title_ar}
+                        </Button>
+                    </Box>
+                ))}
+                {ImportantLinksData.map((item, index) => (
+                    <Box
+                        key={index}
                         sx={{
-                            fontWeight: "bold",
-                            fontSize: {
-                                md: "18px",
-                                xs: "14px",
-                            },
-                            textTransform: "capitalize",
-                            backgroundColor: "transparent !important",
-                            display: "block",
-                            color: footerStyle.color,
-                            fontFamily: publicFontFamily,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                         }}
                     >
-                        {lang === "en" ? item.title_en : item.title_ar}
-                    </Button>
-                </Box>
-            ))}
+                        <Button
+                            disableRipple
+                            onClick={() => {
+                                navigate(`${item.link}`);
+                                window.scrollTo(0, 0);
+                            }}
+                            sx={{
+                                // fontWeight: "bold",
+                                fontSize: {
+                                    md: "18px",
+                                    sm: '15px',
+                                    xs: "12px",
+                                },
+                                '&:hover': {
+                                    fontWeight: "bold",
+                                    textDecoration: 'underline'
+                                },
+                                textTransform: "capitalize",
+                                backgroundColor: "transparent !important",
+                                display: "block",
+                                color: footerStyle.color,
+                                fontFamily: publicFontFamily,
+                            }}
+                        >
+                            {lang === "en" ? item.title_en : item.title_ar}
+                        </Button>
+                    </Box>
+                ))}
+            </Box>
         </Box>
     )
 }
