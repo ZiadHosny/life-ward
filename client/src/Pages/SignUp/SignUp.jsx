@@ -136,7 +136,7 @@ const SignUp = () => {
         formik.values.phone
           ? (delete values.email, delete values.password)
           : (delete values.phone,
-           
+
             delete values.birthDate,
             delete values.gender);
 
@@ -262,7 +262,7 @@ const SignUp = () => {
 
             <Box
               sx={{
-                py: "50px",
+                pb: "50px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "15px",
@@ -275,7 +275,7 @@ const SignUp = () => {
               }}
             >
               {/* Name */}
-              <Input
+              {/* <Input
                 autoComplete="off"
                 startDecorator={
                   <Person2Icon
@@ -312,9 +312,9 @@ const SignUp = () => {
                 >
                   {formik.errors.name}
                 </Typography>
-              )}
+              )} */}
               {/* phone */}
-              <Typography
+              {/* <Typography
                 sx={{
                   fontWeight: "bold",
                   fontFamily: publicFontFamily,
@@ -366,9 +366,9 @@ const SignUp = () => {
                 >
                   {formik.errors.birthDate}
                 </Typography>
-              )}
+              )} */}
 
-              <Box>
+              {/* <Box>
                 <Typography
                   sx={{
                     fontWeight: "bold",
@@ -431,7 +431,7 @@ const SignUp = () => {
                 >
                   {formik.errors.gender}
                 </Typography>
-              )}
+              )} */}
               <Box direction="ltr">
                 <Input
                   autoComplete="off"
@@ -461,7 +461,7 @@ const SignUp = () => {
 
                     "& > input": {
                       textAlign: "left",
-                       direction: 'ltr'
+                      direction: 'ltr'
                     },
                   }}
                   name="phone"
