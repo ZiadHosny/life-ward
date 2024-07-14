@@ -221,15 +221,21 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
       <ButtonGroup
         variant="outlined"
         sx={{
+          width: '100%',
           overflow: 'auto',
-          width: {
-            md: "350px",
-            sm: '200px',
-            xs: '100%'
-          },
+          // width: {
+          //   md: "350px",
+          //   sm: '200px',
+          //   xs: '100%'
+          // },
+          gap: '8px',
           display: "flex",
           alignItems: "center",
           justifyContent: "start",
+          borderRadius: 0,
+          '& .MuiButtonGroup-grouped': {
+            borderRadius: "20px !important",
+          },
         }}
       >
         {attr?.values?.map((val) => {
@@ -238,7 +244,7 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
               sx={{
                 color: isSelectedAtt(val) ? "#fff" : "#693096",
                 bgcolor: isSelectedAtt(val) ? "#693096" : "#fff",
-                borderColor: `#ddd !important`,
+                borderColor: `#693096 !important`,
                 width: "100%",
                 paddingRight: 3,
                 paddingLeft: 3,
@@ -519,18 +525,22 @@ function SingleProduct() {
 
 
   const PaymentType = () => (
-    <Box sx={{
-      // paddingX: 4,
-      marginTop: '40px',
-      marginBottom: '10px',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 2,
-    }}>
+    <Box
+      sx={{
+        marginTop: '40px',
+        marginBottom: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        width: '100%',
+      }}>
       <Typography
         fontFamily={publicFontFamily}
         sx={{
           color: "#693096",
+          textAlign: 'start',
+          whiteSpace: 'nowrap',
+          // width: '20%',
           fontSize: {
             md: "25px",
             sm: '20px',
@@ -541,9 +551,9 @@ function SingleProduct() {
         {lang === "en" ? "payment Type:" : "طرق الدفع:"}
       </Typography>
       <Box sx={{
+        // width: '80%',
         display: 'flex',
-        gap: 2,
-        flexWrap: 'wrap'
+        gap: 1,
       }}>
         <Box>
           <CardMedia
@@ -552,21 +562,21 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              width: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              height: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              objectFit: "fill",
+              // width: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // height: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // objectFit: "fill",
             }}
           />
         </Box>
@@ -577,21 +587,21 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              width: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              height: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              objectFit: "fill",
+              // width: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // height: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // objectFit: "fill",
             }}
           />
         </Box>
@@ -602,21 +612,21 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              width: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              height: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              objectFit: "fill",
+              // width: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // height: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // objectFit: "fill",
             }}
           />
         </Box>
@@ -627,21 +637,21 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              width: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              height: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              objectFit: "fill",
+              // width: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // height: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // objectFit: "fill",
             }}
           />
         </Box>
@@ -652,21 +662,21 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              width: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              height: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              objectFit: "fill",
+              // width: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // height: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // objectFit: "fill",
             }}
           />
         </Box>
@@ -677,21 +687,21 @@ function SingleProduct() {
             sx={{
               border: 1,
               borderColor: "#693096",
-              width: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              height: {
-                xl: 50,
-                lg: 40,
-                md: 40,
-                sm: 30,
-                xs: 18,
-              },
-              objectFit: "fill",
+              // width: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // height: {
+              //   xl: 50,
+              //   lg: 40,
+              //   md: 40,
+              //   sm: 30,
+              //   xs: 18,
+              // },
+              // objectFit: "fill",
             }}
           />
         </Box>
@@ -747,6 +757,11 @@ function SingleProduct() {
               md={11}
               lg={6}
               sx={{
+                px: {
+                  lg: "35px",
+                  md: "25px",
+                  xs: "15px",
+                },
                 textAlign: "end",
                 // px: { sm: 0, md: 5 },
                 position: {
@@ -777,16 +792,16 @@ function SingleProduct() {
                     justifyContent: 'space-between',
                     width: '100%',
                     py: "6px",
-                    gap: 10,
                     mt: "20px",
                   }}
                 >
                   <Typography
                     sx={{
+                      flex: 1,
                       color: colors.newMainColor,
                       fontFamily: publicFontFamily,
                       flex: 1,
-                      textAlign: 'center',
+                      textAlign: 'start',
                       fontSize: {
                         xl: "40px",
                         lg: "35px",
@@ -794,17 +809,9 @@ function SingleProduct() {
                         sm: '23px',
                         xs: " 16px",
                       },
-                      display: "inline",
                       color: colors.main,
                       fontWeight: "bold",
-                      px: {
-                        // lg: "35px",
-                        // md: "25px",
-                        // xs: "15px",
-                        color: "#693096",
-                      },
-                      borderRadius:
-                        lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
+                      color: "#693096",
                     }}
                   >
                     {lang === "en" ? product?.title_en : product?.title_ar}
@@ -852,10 +859,10 @@ function SingleProduct() {
                     //   md: 4,
                     //   sm: 1,
                     // },
-                    paddingX: {
-                      md: 4,
-                      sm: 0,
-                    }
+                    // paddingX: {
+                    //   md: 4,
+                    //   sm: 0,
+                    // }
                   }}
                 >
                   <Stack
@@ -1035,6 +1042,7 @@ function SingleProduct() {
                 <Box
                   // px={5}
                   sx={{
+                    width: '100%',
                     margin: "10px 0px",
                     display: "flex",
                     flexDirection: "column",
@@ -1139,11 +1147,6 @@ function SingleProduct() {
                 <PaymentType />
                 <Box
                   sx={{
-                    px: {
-                      lg: "35px",
-                      md: "25px",
-                      xs: "15px",
-                    },
                     mt: "20px",
                     width: "100%",
                   }}
@@ -1354,7 +1357,8 @@ function SingleProduct() {
         </Box>
       ) : (
         <Loader />
-      )}
+      )
+      }
       <SimilarProduct productId={product?.id} id={categoryId} />
       <ProductComments colors={colors.commentsColors} productId={productId} />
 

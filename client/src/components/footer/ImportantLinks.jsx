@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGetAllPrivcayQuery } from '../../APIs/privacyApi';
 import { contactWaysIcons, ImportantLinksData } from '../../Pages/contactUs/assets/contact.data';
 import { useTranslation } from 'react-i18next';
-import { footerStyle, iconBoxStyle } from './FooterStyle';
+import { footerStyle } from './FooterStyle';
 import { publicFontFamily } from '../publicStyle/publicStyle';
 
 export const ImportantLinks = () => {
