@@ -15,6 +15,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import {
   colors as AllColors,
+  publicFontFamily,
 } from "../../../components/publicStyle/publicStyle";
 import {
   useCreateCommentForProductMutation,
@@ -28,7 +29,6 @@ const TextField = ({ handleSubmit, placeholder, state, setState }) => {
     <Box
       sx={{
         position: "relative",
-        borderRadius: "0px",
         display: "flex",
         alignItems: "center",
         my: "10px",
@@ -36,8 +36,9 @@ const TextField = ({ handleSubmit, placeholder, state, setState }) => {
     >
       <InputBase
         type="text"
+        size="small"
         sx={{
-          py: 1,
+          // py: 1,
           px: 3,
           width: 0.97,
           color: AllColors.main
@@ -53,7 +54,7 @@ const TextField = ({ handleSubmit, placeholder, state, setState }) => {
       />
       <Button
         sx={{
-          width: 0.03,
+          // width: 0.03,
           minWidth: 0,
           mx: 1,
         }}
@@ -66,7 +67,7 @@ const TextField = ({ handleSubmit, placeholder, state, setState }) => {
         <SendIcon
           sx={{
             transform: language === "ar" ? "rotate(180deg)" : "rotate(0)",
-            color: "#000",
+            color: AllColors.main,
           }}
         />
       </Button>
@@ -94,7 +95,7 @@ const CommentCard = ({ colors, item }) => {
       sx={{
         border: 1,
         borderColor: AllColors.main,
-        borderRadius: 10,
+        borderRadius: 5,
         bgcolor: '#fbf7ff'
       }}>
       <Box
@@ -104,7 +105,7 @@ const CommentCard = ({ colors, item }) => {
         }}
       >
         <Stack
-          direction={"row"}
+          direction={"column"}
           alignItems={"flex-start"}
           gap={"20px"}
           borderRadius={"20px"}
@@ -113,32 +114,37 @@ const CommentCard = ({ colors, item }) => {
             wordBreak: "break-word",
           }}
         >
-          <Avatar src={imageBaseUrl + item?.user.image} />
-          <Box>
-            <Stack direction={"row"} gap={1} alignItems={"center"}>
-              <Typography
-                sx={{
-                  fontSize: "20px",
-                  color: AllColors.main
-                }}
-                fontWeight={"bold"}
-              >
-                {item.user.name}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#693096",
-                  fontSize: "12px",
-                }}
-              >
-                Verified
-              </Typography>
-            </Stack>
-
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+          }}>
+            <Avatar src={imageBaseUrl + item?.user.image} />
             <Typography
               sx={{
-                padding: '15px 0px',
-                fontSize: "24px",
+                fontSize: "15px",
+                color: AllColors.main
+              }}
+              fontWeight={"bold"}
+            >
+              {item.user.name}
+            </Typography>
+            <Typography
+              sx={{
+                color: "#693096",
+                fontSize: "12px",
+              }}
+            >
+              Verified
+            </Typography>
+          </Box>
+
+          <Box>
+            <Typography
+              sx={{
+                width: '90%',
+                margin: 'auto',
+                fontSize: "20px",
                 color: AllColors.main
               }}
               fontWeight={"bold"}
@@ -159,7 +165,7 @@ const CommentCard = ({ colors, item }) => {
             : "10px"
         }
       >
-        <Typography sx={{ padding: 1, fontWeight: 'bold' }}>
+        <Typography sx={{ padding: 1, fontWeight: 'bold', color: '#777' }}>
           {customMoment(
             item.createdAt === item.updatedAt ? item.createdAt : item.updatedAt
           )}
@@ -174,6 +180,123 @@ const CommentCard = ({ colors, item }) => {
         )}
       </Stack>
     </Box>
+  );
+};
+
+const CommentCardMobile = ({ colors, item }) => {
+  const { currentUser } = useSelector((state) => state);
+  const [removeCommentFromProduct] = useRemoveCommentFromProductMutation();
+  const [_, { language }] = useTranslation();
+  const handleRemoveComment = () => {
+    removeCommentFromProduct(item._id)
+      .unwrap()
+      .then((res) => {
+        toast.success(res[`success_${language}`]);
+      });
+  };
+  const customMoment = (time) => {
+    const custom = moment(time).locale(language).fromNow();
+    return custom;
+  };
+  return (
+    <>
+      <Box
+        sx={{
+          margin: "10px",
+          marginBottom: "0px",
+        }}
+      >
+        <Stack
+          direction={"column"}
+          alignItems={"flex-start"}
+          gap={"20px"}
+          borderRadius={"20px"}
+          p={"10px"}
+          sx={{
+            wordBreak: "break-word",
+          }}
+        >
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+          }}>
+            <Avatar src={imageBaseUrl + item?.user.image} />
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+              }}>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    color: AllColors.main
+                  }}
+                  fontWeight={"bold"}
+                >
+                  {item.user.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#693096",
+                    opacity: '.8',
+                    fontSize: "12px",
+                  }}
+                >
+                  Verified
+                </Typography>
+              </Box>
+              <hr style={{ width: '80%', backgroundColor: AllColors.main, }} />
+            </Box>
+          </Box>
+
+          <Box>
+            <Typography
+              sx={{
+                width: '100%',
+                margin: 'auto',
+                fontSize: "15px",
+                color: AllColors.main
+              }}
+              fontWeight={"bold"}
+              variant={"body1"}>{item.comment}
+            </Typography>
+          </Box>
+        </Stack>
+      </Box>
+      <Stack
+        direction={"row"}
+        alignItems={"center"}
+        justifyContent={"flex-end"}
+        gap={"15px"}
+        px={
+          currentUser
+            ? currentUser?._id !== item.user._id
+              ? "10px"
+              : 0
+            : "10px"
+        }
+      >
+        <Typography sx={{ fontSize: 10, fontWeight: 'bold', color: '#777' }}>
+          {customMoment(
+            item.createdAt === item.updatedAt ? item.createdAt : item.updatedAt
+          )}
+        </Typography>
+        {currentUser?._id === item.user._id && (
+          <Button
+            sx={{ minWidth: 0, color: "black" }}
+            onClick={handleRemoveComment}
+          >
+            {language === "en" ? "delete" : "مسح"}
+          </Button>
+        )}
+      </Stack>
+      <hr style={{ width: '80%', height: '2px', backgroundColor: AllColors.main }} />
+    </>
   );
 };
 
@@ -215,34 +338,73 @@ const ProductComments = ({ colors, productId }) => {
         pb: "40px",
       }}
     >
-      <Box py={"15px"} px={'40px'} mb={"15px"}>
-        <Typography
-          variant="h6"
-          sx={{
-            color: AllColors.main,
-            fontSize: '40px',
-            fontWeight: 'bold',
-            textAlign: language === "en" ? "left" : "right",
-            textTransform: "capitalize",
-          }}
-        >
-          {language === "en" ? "Comments" : "التعليقات"}
-        </Typography>
-      </Box>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-      }}>
+      <Typography
+        variant="h6"
+        sx={{
+          py: '15px',
+          paddingX: {
+            md: '40px',
+            sm: 0,
+          },
+          fontSize: {
+            xl: "40px",
+            lg: "35px",
+            md: "25px",
+            sm: "25px"
+          },
+          color: AllColors.main,
+          fontWeight: 'bold',
+          textAlign: language === "en" ? "left" : "right",
+          textTransform: "capitalize",
+          fontFamily: publicFontFamily,
+        }}
+      >
+        {language === "en" ? "Comments" : "التعليقات"}
+      </Typography>
+      <Box
+        sx={{
+          display: {
+            md: 'flex',
+            sm: 'none',
+            xs: 'none'
+          },
+          flexDirection: 'column',
+          gap: 3,
+        }}>
         {data?.data.map((item) => (
           <CommentCard item={item} key={item._id} colors={colors} />
         ))}
       </Box>
+      {data?.data && data?.data.length > 0 &&
+        <Box
+          sx={{
+            display: {
+              md: 'none',
+              sm: 'flex'
+            },
+            border: 1,
+            borderColor: AllColors.main,
+            borderRadius: 5,
+            bgcolor: '#fbf7ff',
+            flexDirection: 'column',
+            gap: 3,
+            paddingBottom: 2,
+            marginBottom: 5,
+          }}>
+          {data?.data.map((item) => (
+            <CommentCardMobile item={item} key={item._id} colors={colors} />
+          ))}
+        </Box>
+      }
       {currentUser && (
         <Box mt={"20px"}>
-          <Stack direction={"row"} alignItems={"center"} gap={"20px"}>
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            mx={'20px'}
+            gap={"10px"}>
             <Avatar src={imageBaseUrl + currentUser?.image} />
-            <Typography variant={"h6"}>
+            <Typography sx={{ color: AllColors.main, fontWeight: 'bold' }} variant={"h6"}>
               {
                 currentUser[
                 currentUser.name
@@ -272,7 +434,7 @@ const ProductComments = ({ colors, productId }) => {
                     : "تعديل التعليق"
                   : language === "en"
                     ? "Add comment"
-                    : "أضف تعليق"
+                    : "أضف تعليقك"
               }
               handleSubmit={handleSubmit}
             />

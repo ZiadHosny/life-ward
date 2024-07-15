@@ -78,12 +78,16 @@ export default function SideBar() {
             boxSizing: "border-box",
             width: 0.55,
             bgcolor: colors.main,
-            pt: 4,
+            pt: 2,
             px: 3,
           },
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent={"space-between"}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent={"space-between"}
+        >
           <Profile />
           <Button
             sx={{
@@ -97,8 +101,8 @@ export default function SideBar() {
           >
             <CloseIcon
               sx={{
-                width: "40px",
-                height: "40px",
+                width: "30px",
+                height: "30px",
                 color: "#fff",
                 transform: lang === "ar" ? "rotateY(180deg)" : 0,
               }}
@@ -123,7 +127,7 @@ export default function SideBar() {
                   onClick={() => navigate(item.link)}
                   sx={{
                     color: pathname === item.link ? "#fff" : "#aaa",
-                    fontSize: "20px",
+                    fontSize: "15px",
                     textTransform: "capitalize",
                     fontWeight: "bold",
                     backgroundColor: "transparent !important",

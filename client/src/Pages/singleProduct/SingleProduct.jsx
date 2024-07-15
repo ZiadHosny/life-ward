@@ -221,7 +221,16 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
       <ButtonGroup
         variant="outlined"
         sx={{
-          width: '100%',
+          width: {
+            md: '100%',
+            sm: '70%',
+            xs: '70%'
+          },
+          paddingX: {
+            md: 4,
+            sm: 4,
+            xs: 3,
+          },
           overflow: 'auto',
           // width: {
           //   md: "350px",
@@ -234,7 +243,11 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
           justifyContent: "start",
           borderRadius: 0,
           '& .MuiButtonGroup-grouped': {
-            borderRadius: "20px !important",
+            borderRadius: {
+              md: "8px !important",
+              sm: '20px !important',
+              xs: '20px !important'
+            }
           },
         }}
       >
@@ -246,21 +259,19 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
                 bgcolor: isSelectedAtt(val) ? "#EBEBEB" : "#fff",
                 borderColor: `#693096 !important`,
                 width: "100%",
-                paddingRight: 3,
-                paddingLeft: 3,
-                paddingTop: 1,
-                paddingBottom: 1,
                 "&:hover": {
                   bgcolor: "#EBEBEB",
                   // color: "#fff",
                 },
-                fontSize: "20px",
+                padding: '2px',
                 ".css-n7haop-MuiTypography-root": {
-                  // "font-size": {
-                  //   xs: "15px",
-                  //   md: "20px",
-                  // },
+                  fontWeight: 'bold',
                   fontFamily: "El Messiri",
+                  fontSize: {
+                    md: "18px",
+                    sm: '10px',
+                    xs: '10px'
+                  },
                 },
               }}
               key={val.value_en}

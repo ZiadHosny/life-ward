@@ -31,11 +31,11 @@ export const contactWaysIcons = [
     des_ar: "0-123-456-7890",
   },
   {
-    title_en: "info@lifeward.com",
-    title_ar: "info@lifeward.com",
+    title_en: "Info@life-ward.com",
+    title_ar: "Info@life-ward.com",
     icon: <EmailOutlinedIcon />,
-    des_en: "info@lifeward.com",
-    des_ar: "info@lifeward.com",
+    des_en: "Info@life-ward.com",
+    des_ar: "Info@life-ward.com",
   },
 ];
 

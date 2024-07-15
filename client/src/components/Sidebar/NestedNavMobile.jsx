@@ -35,7 +35,7 @@ export const NestedNavMobile = ({ item, handleClose }) => {
             outline: 'none',
             padding: 0,
             boxShadow: 'none',
-            fontSize: "20px",
+            fontSize: "15px",
             textTransform: "capitalize",
             fontWeight: "bold",
             fontFamily: publicFontFamily,
@@ -66,7 +66,7 @@ export const NestedNavMobile = ({ item, handleClose }) => {
                       outline: 'none',
                       padding: 0,
                       boxShadow: 'none',
-                      fontSize: "20px",
+                      fontSize: "15px",
                       textTransform: "capitalize",
                       fontWeight: "bold",
                       fontFamily: publicFontFamily,
@@ -96,7 +96,7 @@ export const NestedNavMobile = ({ item, handleClose }) => {
                         sx={{
                           color: "#aaa",
                           borderBottom: 1,
-                          fontSize: "20px",
+                          fontSize: "15px",
                           textTransform: "capitalize",
                           fontWeight: "bold",
                           backgroundColor: "transparent !important",
@@ -118,7 +118,7 @@ export const NestedNavMobile = ({ item, handleClose }) => {
                     sx={{
                       color: "#aaa",
                       borderBottom: 1,
-                      fontSize: "20px",
+                      fontSize: "15px",
                       textTransform: "capitalize",
                       fontWeight: "bold",
                       backgroundColor: "transparent !important",
@@ -141,7 +141,7 @@ export const NestedNavMobile = ({ item, handleClose }) => {
           }}
           sx={{
             color: pathname === link ? "#fff" : "#aaa",
-            fontSize: "20px",
+            fontSize: "15px",
             textTransform: "capitalize",
             fontWeight: "bold",
             backgroundColor: "transparent !important",

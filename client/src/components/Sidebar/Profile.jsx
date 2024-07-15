@@ -76,12 +76,12 @@ export default function Profile() {
                 <Avatar
                     sx={{
                         width: {
-                            sm: "45px",
-                            sx: '35px'
+                            sm: "50px",
+                            sx: '50px',
                         },
                         height: {
-                            sm: "45px",
-                            sx: '35px'
+                            sm: "50px",
+                            sx: '50px',
                         },
                     }}
                     alt={currentUser.name} src={currentUser.imageUrl}
@@ -90,21 +90,21 @@ export default function Profile() {
                 <PersonOutlineIcon
                     sx={{
                         width: {
-                            sm: "45px",
-                            sx: '35px'
+                            sm: "50px",
+                            sx: '50px',
                         },
                         height: {
-                            sm: "45px",
-                            sx: '35px'
+                            sm: "50px",
+                            sx: '50px',
                         },
-                        color: 'white',
+                        color: '#EBEBEB',
                     }}
                 />}
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'start',
-                color: 'white',
+                color: "#EBEBEB",
             }}>
                 {currentUser &&
                     ["rootAdmin", "subAdmin", "adminA", "adminB", "adminC"].includes(
@@ -117,8 +117,9 @@ export default function Profile() {
                             justifyContent="space-between"
                             onClick={() => window.open(dashboardUrl, "_blank")}
                             sx={{
-                                padding: '5px',
-                                color: 'white',
+                                padding: '0px',
+                                margin: '0px',
+                                color: '#EBEBEB',
                                 cursor: "pointer",
                                 gap: 1,
                                 "&:hover": {
@@ -130,8 +131,8 @@ export default function Profile() {
                             <Typography
                                 sx={{
                                     fontSize: {
-                                        sm: '15px',
-                                        xs: '10px',
+                                        sm: '12px',
+                                        xs: '12px',
                                     },
                                     fontFamily: publicFontFamily,
                                     fontWeight: "bold",
@@ -140,7 +141,7 @@ export default function Profile() {
                                 {language === "en" ? "Dashboard" : "لوحة التحكم"}
                             </Typography>
                         </Stack>
-                        <hr style={{ width: '100%' }} />
+                        <hr style={{ width: '80%', margin: 0 }} />
                     </>
                 ) : undefined}
                 {currentUser &&
@@ -156,13 +157,15 @@ export default function Profile() {
                     <>
                         <Button
                             sx={{
-                                color: 'white',
-                                padding: '5px',
+                                color: '#EBEBEB',
+                                padding: '0px',
+                                margin: '0px',
                                 fontSize: {
-                                    sm: '15px',
-                                    xs: '10px',
+                                    sm: '12px',
+                                    xs: '12px',
                                 },
                                 fontWeight: "bold",
+                                fontFamily: publicFontFamily,
                             }}
                             variant="text"
                             onClick={() => {
@@ -174,16 +177,18 @@ export default function Profile() {
                                     : "الصفحة الشخصية"
                             }
                         </Button>
-                        <hr style={{ width: '100%' }} />
+                        <hr style={{ width: '80%', margin: 0 }} />
                         <Button
                             sx={{
-                                padding: '5px',
-                                color: 'white',
+                                padding: '0px',
+                                margin: '0px',
+                                color: '#EBEBEB',
                                 fontWeight: "bold",
                                 fontSize: {
-                                    sm: '15px',
-                                    xs: '10px',
+                                    sm: '12px',
+                                    xs: '12px',
                                 },
+                                fontFamily: publicFontFamily,
                             }}
                             variant="text"
                             onClick={() => {
@@ -201,13 +206,17 @@ export default function Profile() {
                     <>
                         <Button
                             sx={{
+                                textAlign: 'start',
                                 fontSize: {
-                                    sm: '15px',
-                                    xs: '10px',
+                                    sm: '12px',
+                                    xs: '12px',
                                 },
                                 fontWeight: "bold",
-                                color: 'white',
-                                padding: '5px',
+                                color: '#EBEBEB',
+                                padding: '0px',
+                                margin: '0px',
+                                fontFamily: publicFontFamily,
+
                             }}
                             variant="text"
                             onClick={() => {
@@ -219,16 +228,18 @@ export default function Profile() {
                                     : "تسجيل دخول"
                             }
                         </Button>
-                        <hr style={{ width: '100%' }} />
+                        <hr style={{ width: '80%', margin: 0 }} />
                         <Button
                             sx={{
                                 fontSize: {
-                                    sm: '15px',
-                                    xs: '10px',
+                                    sm: '12px',
+                                    xs: '12px',
                                 },
                                 fontWeight: "bold",
-                                padding: '5px',
-                                color: 'white'
+                                padding: '0px',
+                                margin: '0px',
+                                color: '#EBEBEB',
+                                fontFamily: publicFontFamily,
                             }}
                             variant="text"
                             onClick={() => {
