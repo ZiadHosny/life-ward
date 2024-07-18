@@ -223,8 +223,8 @@ const Attrs = ({ colors, attr, setCartData, cartData, product }) => {
         sx={{
           width: {
             md: '100%',
-            sm: '70%',
-            xs: '70%'
+            sm: '60%',
+            xs: '60%'
           },
           paddingX: {
             md: 4,
@@ -574,9 +574,10 @@ function SingleProduct() {
               borderColor: "#693096",
               height: '100%',
               width: {
-                lg: '100%',
-                md: '70%',
-                sm: '100%',
+                lg: '60%',
+                md: '60%',
+                sm: '60%',
+                xs: '100%',
               },              // width: {
               //   xl: 50,
               //   lg: 40,
@@ -604,9 +605,10 @@ function SingleProduct() {
               borderColor: "#693096",
               height: '100%',
               width: {
-                lg: '100%',
-                md: '70%',
-                sm: '100%',
+                lg: '60%',
+                md: '60%',
+                sm: '60%',
+                xs: '100%',
               },              // width: {
               //   xl: 50,
               //   lg: 40,
@@ -634,9 +636,10 @@ function SingleProduct() {
               borderColor: "#693096",
               height: '100%',
               width: {
-                lg: '100%',
-                md: '70%',
-                sm: '100%',
+                lg: '60%',
+                md: '60%',
+                sm: '60%',
+                xs: '100%',
               },
               // width: {
               //   xl: 50,
@@ -665,9 +668,10 @@ function SingleProduct() {
               borderColor: "#693096",
               height: '100%',
               width: {
-                lg: '100%',
-                md: '70%',
-                sm: '100%',
+                lg: '60%',
+                md: '60%',
+                sm: '60%',
+                xs: '100%',
               },              // width: {
               //   xl: 50,
               //   lg: 40,
@@ -695,9 +699,10 @@ function SingleProduct() {
               borderColor: "#693096",
               height: '100%',
               width: {
-                lg: '100%',
-                md: '70%',
-                sm: '100%',
+                lg: '60%',
+                md: '60%',
+                sm: '60%',
+                xs: '100%',
               },              // width: {
               //   xl: 50,
               //   lg: 40,
@@ -725,9 +730,10 @@ function SingleProduct() {
               borderColor: "#693096",
               height: '100%',
               width: {
-                lg: '100%',
-                md: '70%',
-                sm: '100%',
+                lg: '60%',
+                md: '60%',
+                sm: '60%',
+                xs: '100%',
               },              // width: {
               //   xl: 50,
               //   lg: 40,
@@ -1129,7 +1135,8 @@ function SingleProduct() {
                   <Button
                     sx={{
                       flex: 1,
-                      color: "#693096",
+                      color: "#fff",
+                      bgcolor: "#693096",
                       borderRadius: "10px",
                       fontFamily: publicFontFamily,
                       boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -1151,7 +1158,8 @@ function SingleProduct() {
                   <Button
                     sx={{
                       flex: 1,
-                      color: "#693096",
+                      color: "#fff",
+                      bgcolor: "#693096",
                       borderRadius: "10px",
                       fontFamily: publicFontFamily,
                       boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -1411,17 +1419,19 @@ function SingleProduct() {
           position: 'fixed',
           bottom: 0,
           zIndex: 100,
-          bgcolor: 'lightgrey',
+          borderTop: 1,
+          borderColor: colors.main,
+          bgcolor: '#EBEBEB',
           gap: 4,
           padding: '5px 40px',
           width: '100%',
-          height: '50px',
+          height: '55px',
           display: { xs: 'flex', md: 'none' },
         }}>
         <Button
           sx={{
-            color: "#693096",
-            bgcolor: "#fff",
+            color: "#fff",
+            bgcolor: "#693096",
             "&:hover": {
               color: "#fff",
               bgcolor: "#693096",
@@ -1445,8 +1455,8 @@ function SingleProduct() {
 
         <Button
           sx={{
-            color: "#693096",
-            bgcolor: "#fff",
+            color: "#fff",
+            bgcolor: "#693096",
             "&:hover": {
               color: "#fff",
               bgcolor: "#693096",

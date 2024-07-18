@@ -131,8 +131,8 @@ export default function Profile() {
                             <Typography
                                 sx={{
                                     fontSize: {
-                                        sm: '12px',
-                                        xs: '12px',
+                                        sm: '10px',
+                                        xs: '10px',
                                     },
                                     fontFamily: publicFontFamily,
                                     fontWeight: "bold",
@@ -161,8 +161,8 @@ export default function Profile() {
                                 padding: '0px',
                                 margin: '0px',
                                 fontSize: {
-                                    sm: '12px',
-                                    xs: '12px',
+                                    sm: '10px',
+                                    xs: '10px',
                                 },
                                 fontWeight: "bold",
                                 fontFamily: publicFontFamily,
@@ -185,8 +185,8 @@ export default function Profile() {
                                 color: '#EBEBEB',
                                 fontWeight: "bold",
                                 fontSize: {
-                                    sm: '12px',
-                                    xs: '12px',
+                                    sm: '10px',
+                                    xs: '10px',
                                 },
                                 fontFamily: publicFontFamily,
                             }}
@@ -208,8 +208,8 @@ export default function Profile() {
                             sx={{
                                 textAlign: 'start',
                                 fontSize: {
-                                    sm: '12px',
-                                    xs: '12px',
+                                    sm: '10px',
+                                    xs: '10px',
                                 },
                                 fontWeight: "bold",
                                 color: '#EBEBEB',
@@ -232,8 +232,8 @@ export default function Profile() {
                         <Button
                             sx={{
                                 fontSize: {
-                                    sm: '12px',
-                                    xs: '12px',
+                                    sm: '10px',
+                                    xs: '10px',
                                 },
                                 fontWeight: "bold",
                                 padding: '0px',

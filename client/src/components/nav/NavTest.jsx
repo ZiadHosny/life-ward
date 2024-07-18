@@ -16,6 +16,10 @@ import { useLocation } from "react-router-dom";
 import SideBar from "../../components/Sidebar/SideBar";
 import { Search } from "./Search";
 function DrawerAppBar(props) {
+  const { pathname } = useLocation();
+  const inCart = pathname.includes('cart')
+  const inCheckout = pathname.includes('checkout')
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [_, { language: lang }] = useTranslation();
@@ -24,7 +28,6 @@ function DrawerAppBar(props) {
   };
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  const { pathname } = useLocation();
   const [state, setState] = React.useState({
     left: false,
     right: false,
@@ -123,7 +126,7 @@ function DrawerAppBar(props) {
           sx={{
             display: {
               md: "none",
-              xs: "block",
+              xs: inCart || inCheckout ? 'none' : "block",
               padding: '20px 40px',
             },
           }}>

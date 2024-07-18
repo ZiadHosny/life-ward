@@ -1,4 +1,4 @@
- import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import WhatsAppLogo from '../assets/whatsapp.svg'
 import { useLocation } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ export const WhatsAppChat = () => {
     const [_, { language }] = useTranslation();
 
     const inProductDetails = pathname.includes('productDetails')
+    const inCart = pathname.includes('cart')
 
     return (
         <div
@@ -24,7 +25,7 @@ export const WhatsAppChat = () => {
                 href={whatsAppLink}
                 target='_blank'
                 style={{
-                    bottom: inProductDetails ? 60 : 20,
+                    bottom: (inProductDetails || inCart) ? 65 : 20,
                     right: language === "en" ? 30 : null,
                     left: language === "ar" ? 30 : null,
                     zIndex: 999,

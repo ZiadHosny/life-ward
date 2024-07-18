@@ -86,6 +86,7 @@ export const Payment = () => {
                         marginY: '20px',
                         paddingX: '20px',
                         display: 'grid',
+                        width: '100%',
                         gridTemplateColumns: {
                             xs: 'repeat(2, 1fr)',
                             sm: 'repeat(3, 1fr)',
@@ -98,14 +99,18 @@ export const Payment = () => {
                             component={"img"}
                             src={Mda}
                             sx={{
-                                // width: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
-                                // height: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
+                                width: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
+                                height: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
                                 // objectFit: "fill",
                             }}
                         />
@@ -115,14 +120,18 @@ export const Payment = () => {
                             component={"img"}
                             src={Visa}
                             sx={{
-                                // width: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
-                                // height: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
+                                width: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
+                                height: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
                                 // objectFit: "fill",
                             }}
                         />
@@ -132,14 +141,18 @@ export const Payment = () => {
                             component={"img"}
                             src={Master}
                             sx={{
-                                // width: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
-                                // height: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
+                                width: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
+                                height: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
                                 // objectFit: "fill",
                             }}
                         />
@@ -149,14 +162,18 @@ export const Payment = () => {
                             component={"img"}
                             src={Apple}
                             sx={{
-                                // width: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
-                                // height: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
+                                width: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
+                                height: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
                                 // objectFit: "fill",
                             }}
                         />
@@ -166,14 +183,18 @@ export const Payment = () => {
                             component={"img"}
                             src={Stc}
                             sx={{
-                                // width: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
-                                // height: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
+                                width: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
+                                height: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
                                 // objectFit: "fill",
                             }}
                         />
@@ -183,14 +204,18 @@ export const Payment = () => {
                             component={"img"}
                             src={Transfer}
                             sx={{
-                                // width: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
-                                // height: {
-                                //     md: 50,
-                                //     xs: 25,
-                                // },
+                                width: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
+                                height: {
+                                    lg: 60,
+                                    md: 50,
+                                    sm: 40,
+                                    xs: 40,
+                                },
                                 // objectFit: "fill",
                             }}
                         />

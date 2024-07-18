@@ -76,7 +76,7 @@ export default function SideBar() {
         sx={{
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
-            width: 0.55,
+            width: .7,
             bgcolor: colors.main,
             pt: 2,
             px: 3,

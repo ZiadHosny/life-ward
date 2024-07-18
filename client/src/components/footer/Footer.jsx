@@ -21,6 +21,7 @@ const Footer = () => {
   const [_, { language: lang }] = useTranslation();
 
   const inProductDetails = pathname.includes('productDetails')
+  const inCart = pathname.includes('cart')
 
   return (
     <Box
@@ -104,7 +105,7 @@ const Footer = () => {
             <Box
               sx={{
                 width: '50%',
-                marginBottom: inProductDetails ? 10 : 0,
+                marginBottom: inProductDetails || inCart ? 10 : 0,
                 fontSize: {
                   xs: 14,
                   sm: 18,
