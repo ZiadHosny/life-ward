@@ -169,7 +169,7 @@ function Departments() {
         pb: 7,
         overflowX: "hidden",
         pt: {
-          xs: "80px",
+          xs: "180px",
           md: "200px",
           lg: "250px",
 

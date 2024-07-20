@@ -13,8 +13,9 @@ export const SearchInput = ({ onChange, setOpen }) => {
   useEffect(() => {
     const id = setTimeout(() => {
       const s = search.trim()
-        ? `keyword[title_en]=${search}&keyword[title_ar]=${search}&keyword[description_en]=${search}&keyword[description_ar]=${search}`
+        ? `keyword[title_en]=${search}&keyword[title_ar]=${search}`
         : "";
+      //&keyword[description_en]=${search}&keyword[description_ar]=${search}
       onChange(s);
     }, 500);
     return () => {

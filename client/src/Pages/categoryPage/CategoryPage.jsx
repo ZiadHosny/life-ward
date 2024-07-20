@@ -63,7 +63,7 @@ function CategoryPage() {
   const [page, setPage] = React.useState(1);
   const [_, { language }] = useTranslation();
   const [subCategories, setSubCategories] = React.useState();
-  
+
   const hundleAddAtt = (attribute, selectedValue, event) => {
     console.log(attribute, selectedValue, "abdallah");
     const { checked, value } = event.target;
@@ -132,7 +132,7 @@ function CategoryPage() {
         pb: 7,
         overflowX: "hidden",
         pt: {
-          xs: "80px",
+          xs: "180px",
           md: "200px",
           lg: "250px",
         },
