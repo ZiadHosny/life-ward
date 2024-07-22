@@ -11,6 +11,9 @@ import Loader from "../../components/loader/loader";
 import CustomError from "../../components/Error/Error";
 import OurTarget from "./OurTarget";
 import HomeAbout from "./HomeAbout";
+import Banner1 from "../../assets/home/banner1.gif";
+import Banner2 from "../../assets/home/banner-2.gif";
+
 import MostSellingProducts from "../../components/homeProducts/MostSellingProducts";
 import MostNewiestProducts from "../../components/homeProducts/MostNewiestProducts";
 import DepartmentsProducts from "../../components/homeProducts/DepartmentsProducts";
@@ -58,9 +61,10 @@ function Home() {
           mt: "30px",
         }}
       >
-        <Box sx={{ bgcolor: 'beige', width: '100%', height: '700px' }}>
-
-        </Box>
+        <img
+          style={{ width: '100%', height: '100%', }}
+          src={Banner2}
+        />
         {/* <HomeAbout /> */}
       </Box>
 
@@ -87,9 +91,10 @@ function Home() {
           mt: "30px",
         }}
       >
-        <Box sx={{ bgcolor: 'beige', width: '100%', height: '700px' }}>
-
-        </Box>
+        <img
+          style={{ width: '100%', height: '100%', }}
+          src={Banner1}
+        />
         {/* <OurTarget /> */}
       </Box>
 
