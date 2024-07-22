@@ -139,17 +139,15 @@ const CommentCard = ({ colors, item }) => {
             </Typography>
           </Box>
 
-          <Box>
-            <Typography
-              sx={{
-                width: '90%',
-                margin: 'auto',
-                fontSize: "20px",
-                color: AllColors.main
-              }}
-              fontWeight={"bold"}
-              variant={"body1"}>{item.comment}</Typography>
-          </Box>
+          <Typography
+            sx={{
+              width: '90%',
+              margin: 'auto',
+              fontSize: "20px",
+              color: AllColors.main
+            }}
+            fontWeight={"bold"}
+            variant={"body1"}>{item.comment}</Typography>
         </Stack>
       </Box>
       <Stack
