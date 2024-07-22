@@ -98,8 +98,6 @@ const SignIn = () => {
       //   ...values,
       //   registrationType: formik.values.phone ? "phone" : "email",
       // };
-      console.log("ziadd", values);
-
       if (formik.values.phone && formik.values.email) {
         toast.error(
           lang === "en"

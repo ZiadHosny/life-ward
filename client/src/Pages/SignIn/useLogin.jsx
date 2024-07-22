@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useLazyGetAllSavedProductsQuery } from "../../APIs/SavedProductApi";
-import { useLazyGetAllCartsQuery } from "../../APIs/cartApi";
-import { useDispatch } from "react-redux";
+import { useAddToCartMutation, useLazyGetAllCartsQuery } from "../../APIs/cartApi";
+import { useDispatch, useSelector } from "react-redux";
 import { setSaved } from "../../APIs/savedSlice";
-import { setCart } from "../../APIs/cartSlice";
+import { setCart, setGoToCart } from "../../APIs/cartSlice";
 import { setCurrentUser } from "../../APIs/userSlice";
 import { useVerifyCodeMutation } from "../../APIs/verifySmsApi";
 function useLogin() {
@@ -18,14 +18,33 @@ function useLogin() {
   const [openModal, setOpenModal] = useState(false);
   const [getMe] = useLazyGetMeQuery();
   const dispatch = useDispatch();
-  const [getCartsByUser, {}] = useLazyGetAllCartsQuery();
-  const [getSavedProducts, {}] = useLazyGetAllSavedProductsQuery();
+  const [getCartsByUser, { }] = useLazyGetAllCartsQuery();
+  const [addToCart, { }] = useAddToCartMutation();
+  const { goToCart } = useSelector(state => state.cart)
+
+  const [getSavedProducts, { }] = useLazyGetAllSavedProductsQuery();
   const handleDispatchedData = () => {
     if (localStorage.getItem("token")) {
       getCartsByUser().then(({ data, error }) => {
-        if (data?.cart[0] && !error) {
-          dispatch(setCart(data?.cart.length));
+        data?.data?.onlineItems?.items.map((e) => {
+          addToCart({
+            paymentType: e?.paymentType,
+            quantity: e?.quantity,
+            id: e?.product._id,
+            properties: e?.product.qualities,
+          }).unwrap()
+            .then((res) => {
+              toast.success(res[`success_${lang === "en" ? "en" : "ar"}`]);
+            })
+            .catch((e) => {
+              toast.error(e.data[`error_${lang === "en" ? "en" : "ar"}`]);
+            })
+        })
+
+        if (data?.data?.totalQuantity && !error) {
+          dispatch(setCart(data?.data?.totalQuantity))
         }
+
       });
       getSavedProducts().then(({ data, error }) => {
         if (data?.products[0] && !error) {
@@ -48,20 +67,22 @@ function useLogin() {
       .catch((ERR) => toast.error(ERR.data[`error_${lang}`]));
   };
   function authUser(user, productRoute) {
-    console.log(user,'userasddsadsa')
-    const phoneType = user?.registrationType==="phone"?{...user,phone:`966${user?.phone}`}:user;
+    const phoneType = user?.registrationType === "phone" ? { ...user, phone: `966${user?.phone}` } : user;
 
     login(phoneType)
-      .then(({ data, error }) => { 
-         
-          
+      .then(({ data, error }) => {
         if (data) {
           if (user.registrationType === "email") {
             handleDispatchedData();
             dispatch(setCurrentUser(data.data));
             localStorage.setItem("token", data.token);
             setTimeout(() => {
-              navigate(productRoute ? productRoute : "/");
+              if (goToCart) {
+                dispatch(setGoToCart(false))
+                navigate('/cart')
+              } else {
+                navigate(productRoute ? productRoute : "/");
+              }
             }, 500);
           } else {
             setOpenModal(true);
@@ -71,11 +92,11 @@ function useLogin() {
         }
       })
       .catch((e) => {
-         
+
       });
   }
 
-  return [authUser, { setOpenModal,openModal ,verifySMSCode }];
+  return [authUser, { setOpenModal, openModal, verifySMSCode }];
 }
 
 export default useLogin;

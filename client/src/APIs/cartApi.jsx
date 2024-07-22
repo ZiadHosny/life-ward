@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
- import { toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { baseUrl } from '../components/service'
 
 
@@ -22,7 +22,6 @@ const cartApi = createApi({
         console.log(response, arg, 'response')
         return response
       },
-
       providesTags: ['Cart', 'Verification', 'points'],
     }),
     updateQuantity: builder.mutation({
@@ -45,7 +44,7 @@ const cartApi = createApi({
       async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-        } catch (err) {}
+        } catch (err) { }
       },
       invalidatesTags: ['Cart'],
     }),
@@ -55,7 +54,7 @@ const cartApi = createApi({
         body: {
           quantity: cartData.quantity,
           properties: cartData.qualities,
-          paymentType:cartData.paymentType,
+          paymentType: cartData.paymentType,
         },
         method: 'POST',
       }),
@@ -80,25 +79,25 @@ const cartApi = createApi({
 
 
           cartApi.endpoints.getAllCarts.initiate()
-        } catch (err) {}
+        } catch (err) { }
       },
 
       providesTags: ['Cart'],
     }),
     CouponQuery: builder.mutation({
       query: (code) => ({
-        url:`coupons/getCouponByNameAndProducts`, 
-         body:{  code },
-         method:'post'
-        }),
-        async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
-          try {
-            const { data } = await queryFulfilled
+        url: `coupons/getCouponByNameAndProducts`,
+        body: { code },
+        method: 'post'
+      }),
+      async onQueryStarted(arg, { dispatch, getState, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
 
 
-            cartApi.endpoints.getAllCarts.initiate()
-          } catch (err) {}
-        },
+          cartApi.endpoints.getAllCarts.initiate()
+        } catch (err) { }
+      },
       providesTags: ['cart'],
     }),
   }),

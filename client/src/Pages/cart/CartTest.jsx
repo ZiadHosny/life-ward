@@ -40,11 +40,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl, imageBaseUrl } from "../../components/service";
-import { setCart } from "../../APIs/cartSlice";
+import { setCart, setGoToCart } from "../../APIs/cartSlice";
 import { useSubmitPointsMutation } from "../../APIs/pointsApi";
 import styled from "@emotion/styled";
 import Loader from "../../components/loader/loader";
-import { openDialog } from "../../APIs/dialogSlice";
 
 const CustomWidthTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -74,6 +73,7 @@ const CartTest = () => {
   const [couponPrice, setTotalCouponPrice] = useState(0);
   const [, { language: lng }] = useTranslation();
   const [addToCart] = useAddToCartMutation();
+  const { currentUser } = useSelector((state) => state);
 
   //new Fekr
 
@@ -101,17 +101,16 @@ const CartTest = () => {
   }, [data?.data?.cashItems?.items, data?.data?.onlineItems.items]);
 
   const handlePaymentClick = () => {
-    console.log("asadsadsadsadsadsadsad");
-    if (currentUser.role === "guest") {
+    if (!currentUser || currentUser.role === "guest") {
       toast.error(
         lng === "en"
           ? "You Have To Sign In First To Submit Payment"
           : "يجب عليك تسجيل الدخول اولا لاتمام عمليه الدفع"
       );
+      dispatch(setGoToCart(true))
+      navigate("/sign-in");
       return;
-    }
-
-    if (
+    } else if (
       ["rootAdmin", "subAdmin", "adminA", "adminB", "adminC"].includes(
         currentUser.role
       )
@@ -121,11 +120,11 @@ const CartTest = () => {
           ? "You Have To Sign In With user Account"
           : "يجب عليك تسجيل الدخول بحساب مستخدم اولا لاتمام عمليه الدفع"
       );
+      dispatch(setGoToCart(true))
+      navigate("/sign-in");
       return;
+
     }
-
-    dispatch(openDialog())
-
     navigate("/checkout");
   };
 
@@ -300,7 +299,6 @@ const CartTest = () => {
       Quantity: item.Quantity - 1,
     }).then((res) => toast.success(res?.data[`success_${language}`]));
   };
-  const { currentUser } = useSelector((state) => state);
 
   const CheckoutMobile = () => {
     return (
