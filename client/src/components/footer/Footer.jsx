@@ -119,8 +119,8 @@ const Footer = () => {
                 color: 'white',
               }}>
               {lang === 'ar' ?
-                'كل الحقوق محفوظة لمؤسسة نبات الحياة الحيوية @2024' :
-                'All rights reserved to the Plant Life Foundation @2024'}
+                'كل الحقوق محفوظة لمؤسسة نبات الحياة للزهور @2024' :
+                'All rights reserved to Nabat Al Hayat Flowers Foundation @2024'}
             </Box>
           </Box>
         </Box>
