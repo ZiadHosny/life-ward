@@ -117,15 +117,15 @@ const RecordVoiceNew = ({ setRecordVoice, recordVoice, setFieldValue }) => {
           type="button"
           style={{
             fontFamily: publicFontFamily,
-            padding: "5px 10px 0",
-            border: "none",
+            padding: "5px 8px",
+            borderColor: "#693096",
+            borderWidth: '1px',
             marginLeft: "15px",
-            fontSize: "1rem",
+            fontSize: "35px",
             cursor: "pointer",
             borderRadius: "5px",
             fontWeight: "bold",
-            backgroundColor: "#693096",
-            color: "white",
+            backgroundColor: "white",
             transition: "all 300ms ease-in-out",
           }}
           onClick={() => {
@@ -141,13 +141,13 @@ const RecordVoiceNew = ({ setRecordVoice, recordVoice, setFieldValue }) => {
           {!isActive ? (
             <MicIcon
               sx={{
-                color: "#fff",
+                color: "#693096",
               }}
             />
           ) : (
             <StopIcon
               sx={{
-                color: "#fff",
+                color: "#693096",
                 transform: language === "en" ? `rotate(0)` : `rotate(180deg)`,
               }}
             />

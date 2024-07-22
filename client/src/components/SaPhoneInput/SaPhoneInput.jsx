@@ -53,10 +53,16 @@ const SaPhoneInput = ({
           padding: "10px",
           gap: "6px",
           direction: "ltr",
+          backgroundColor: 'white',
+
         }}
       >
         <Typography
-          sx={{ mb: "0px", fontWeight: "bold", fontFamily: publicFontFamily }}
+          sx={{
+            mb: "0px",
+            fontWeight: "bold",
+            fontFamily: publicFontFamily
+          }}
         >
           +966
         </Typography>
@@ -88,20 +94,22 @@ const SaPhoneInput = ({
           }}
         />
       </Box>
-      {error && touched ? (
-        <Typography
-          sx={{
-            fontFamily: publicFontFamily,
+      {
+        error && touched ? (
+          <Typography
+            sx={{
+              fontFamily: publicFontFamily,
 
-            position: "absolute",
-            bottom: 0,
-            color: "red",
-          }}
-        >
-          {error}
-        </Typography>
-      ) : undefined}
-    </Box>
+              position: "absolute",
+              bottom: 0,
+              color: "red",
+            }}
+          >
+            {error}
+          </Typography>
+        ) : undefined
+      }
+    </Box >
   );
 };
 

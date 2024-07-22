@@ -27,9 +27,9 @@ const CheckTextInput = ({
         width: fullWidth
           ? 1
           : {
-              md: 0.49,
-              xs: 1,
-            },
+            md: 0.49,
+            xs: 1,
+          },
         pb: "20px",
         position: "relative",
       }}
@@ -60,9 +60,11 @@ const CheckTextInput = ({
 
           // setCreditFocus(creditCardNames);
         }}
+        size="small"
         onBlur={handleBlur}
         placeholder={placeholder || ""}
         style={{
+          backgroundColor: 'white',
           width: "100%",
           border: `1px solid ${error && touched ? "red" : colors.main}`,
           borderRadius: "20px",

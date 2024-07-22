@@ -34,7 +34,7 @@ import { useGetFastCoast, useGetNote } from "./FirstHooks";
 import { useVerifyCartMutation } from "../../../APIs/cartApi";
 import SaPhoneInput from "../../../components/SaPhoneInput/SaPhoneInput";
 import RecordVoideNew from "./RecordVoiceNew";
-import { Dialog } from "../../../components/Dialog/Dialog";
+import { Dialog } from "../Dialog";
 
 const timesAr = ["٤ عصراً - ٧ مساءً", "٧ مساءً - ٩ مساءً", "٩ مساءً- ١٢ مساءً"]
 const timesEn = ["4pm - 7pm", "7pm - 9pm", "9pm - 12pm"]

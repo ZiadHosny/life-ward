@@ -21,8 +21,8 @@ const UploadFile = ({
         component="label"
         sx={{
           width: "auto",
-          backgroundColor: "#E8E8EE !important",
-          color: "#000",
+          backgroundColor: "#fff !important",
+          color: "#693096",
           justifyContent: "flex-start",
           padding: "15px",
           border: 1,

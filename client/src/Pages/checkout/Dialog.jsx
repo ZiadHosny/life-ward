@@ -11,8 +11,9 @@ import { closeDialog, submitDialog } from '../../APIs/dialogSlice';
 import { useTranslation } from 'react-i18next';
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import SaPhoneInput from '../SaPhoneInput/SaPhoneInput';
+import SaPhoneInput from '../../components/SaPhoneInput/SaPhoneInput';
 import { useFormik } from 'formik';
+import { publicFontFamily } from '../../components/publicStyle/publicStyle';
 
 export const Dialog = () => {
     const [, { language: lng }] = useTranslation();
@@ -77,30 +78,43 @@ export const Dialog = () => {
     return (
         <DialogMui
             maxWidth='xl'
-            sx={{ backgroundColor: "#693096" }}
+            sx={{
+                backgroundColor: "#693096",
+            }}
             open={open}
             PaperProps={{
                 component: 'form',
+                sx: {
+                    borderRadius: 5,
+                    bgcolor: '#f2e5fc',
+                },
                 onSubmit: (event) => {
                     event.preventDefault();
                     if (value === 'yourself') {
                         dispatch(submitDialog({
                             phone: '',
-                            for: 'yourself'
+                            for: 'yourself',
                         }))
                     } else {
                         handleSubmit()
                     }
                 },
             }}>
-            <DialogTitle sx={{ color: "#693096", fontSize: 30 }}>
+            <DialogTitle
+                fontFamily={publicFontFamily}
+                sx={{
+                    color: "#693096",
+                    fontSize: 30
+                }}>
                 {lng === "en"
                     ? "Who will you send flowers to?"
                     : "لمن سوف ترسل الورد؟"
                 }
             </DialogTitle>
-            <DialogContent >
-                <DialogContentText sx={{ fontSize: 20 }}>
+            <DialogContent>
+                <DialogContentText
+                    fontFamily={publicFontFamily}
+                    sx={{ fontSize: 20 }}>
                     {lng === "en"
                         ? "If you are sending flowers to a friend, choose a friend and enter his mobile number."
                         : "اذا كنت سوف ترسل الورد لصديق اختار صديق وادخل رقم الموبايل الخاص به."
@@ -118,11 +132,14 @@ export const Dialog = () => {
                             color: '#693096',
                         },
                     }}
-                    onChange={onChange}
-                >
-                    <FormControlLabel value="yourself" control={<Radio />}
+                    onChange={onChange}>
+                    <FormControlLabel
+                        value="yourself"
+                        control={<Radio />}
                         label={lng === "en" ? "For yourself" : "إلي نفسك"} />
-                    <FormControlLabel value="friend" control={<Radio />}
+                    <FormControlLabel
+                        value="friend"
+                        control={<Radio />}
                         label={lng === "en" ? "For Friend" : "إلي صديق لك"} />
                 </RadioGroup>
                 {value === 'friend' ?
@@ -138,7 +155,10 @@ export const Dialog = () => {
                     /> : <></>
                 }
             </DialogContent>
-            <DialogActions sx={{ gap: 4 }}>
+            <DialogActions
+                sx={{
+                    gap: 4,
+                }}>
                 <Button
                     sx={{
                         color: "#fff",
@@ -164,6 +184,6 @@ export const Dialog = () => {
                     {lng === "en" ? "Ok" : "اوافق"}
                 </Button>
             </DialogActions>
-        </DialogMui>
+        </DialogMui >
     );
 }
