@@ -1,11 +1,9 @@
-import { Box, Button, Checkbox, InputBase, Stack, Typography } from '@mui/material'
+import { Box, Button, InputBase, Stack, Typography } from '@mui/material'
 import { useTranslation } from "react-i18next";
-import * as Yup from "yup";
 import UploadFile from "./latest/UploadFile";
 import RecordVoideNew from "./latest/RecordVoiceNew";
 import { colors, publicFontFamily } from '../../components/publicStyle/publicStyle';
 import CheckTextInput from './latest/CheckTextInput';
-import { useState } from 'react';
 import CheckTextArea from './latest/CheckTextArea';
 
 const arabicTypes = {
@@ -15,6 +13,10 @@ const arabicTypes = {
 };
 
 export const Tab1 = ({
+    recordVoice,
+    setRecordVoice,
+    uploadedVideo,
+    setUploadVideo,
     values,
     handleChange,
     handleBlur,
@@ -23,8 +25,6 @@ export const Tab1 = ({
     touched,
     setFieldValue,
 }) => {
-    const [recordVoice, setRecordVoice] = useState();
-    const [uploadedVideo, setUploadVideo] = useState();
 
     const [_, { language: lang }] = useTranslation();
 

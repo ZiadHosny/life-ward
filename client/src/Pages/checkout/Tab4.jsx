@@ -1,17 +1,23 @@
-import { Box, Grid, Typography } from '@mui/material'
-import React from 'react'
-import { colors, publicFontFamily } from '../../components/publicStyle/publicStyle'
+import { Grid, Typography } from '@mui/material';
+import { PaymentMoyasar } from './PaymentMoyasar';
+import { colors, publicFontFamily } from '../../components/publicStyle/publicStyle';
 import { useTranslation } from 'react-i18next';
 
 export const Tab4 = () => {
-    const [_, { language: lang }] = useTranslation();
+    const [_, { language }] = useTranslation();
 
     return (
         <Grid
             item lg={4} xs={12}
             sx={{
-                textAlign: 'center',
-                my: 3,
+                mx: 'auto',
+                width: {
+                    lg: '70%',
+                    md: '90%',
+                    sm: '100%',
+                    xs: '100%'
+                },
+                pb: 10,
                 borderRadius: 8,
                 bgcolor: '#f2e5fc',
             }}>
@@ -23,16 +29,15 @@ export const Tab4 = () => {
                         sm: 25,
                         xs: 15,
                     },
+                    p: 5,
                     color: colors.main,
                     fontWeight: "bolder",
                     fontFamily: publicFontFamily,
 
                 }}>
-                {lang === 'en' ?
-                    "Enter the following information?"
-                    : "ادخل المعلومات التالية؟"}
+                {language == "en" ? "Select Payment Method?" : "اختر طريقة الدفع؟"}
             </Typography>
-
+            <PaymentMoyasar />
         </Grid>
     )
 }

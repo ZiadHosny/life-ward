@@ -1,8 +1,6 @@
 import { Avatar, Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ThirdTab from "./latest/ThirdTab";
-import FirstTab from "./latest/FirstTab";
-import SecondTab from "./latest/SecondTab";
 import { useTranslation } from "react-i18next";
 import { Label, TabPanel } from "./Label";
 import { Tab1 } from "./Tab1";
@@ -22,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openDialog } from "../../APIs/dialogSlice";
 
 const CheckTest = () => {
+  const [mobileTabShowed, setMobileTabShowed] = useState(false)
   const [getMe] = useLazyGetMeQuery();
   const [uploadMedia] = useUploadMediaMutation();
   const [addOrder] = useAddOrderMutation();
@@ -31,11 +30,14 @@ const CheckTest = () => {
   const dispatch = useDispatch()
   const dialog = useSelector(state => state.dialog)
 
+  const [recordVoice, setRecordVoice] = useState();
+  const [uploadedVideo, setUploadVideo] = useState();
+
+
   const formik = useFormik({
     initialValues: { ...checkoutValues.first },
     validationSchema: Yup.object(checkoutValidaions.first),
     onSubmit: ({ total: cart, ...values }) => {
-      console.log('sssssssssssssssss')
       const couponData = JSON.parse(localStorage.getItem("couponData"));
       !values.receiveDate ? delete values.receiveDate : undefined;
       if (uploadedVideo && values.congratzStatus) {
@@ -66,12 +68,7 @@ const CheckTest = () => {
                   })
                     .unwrap()
                     .then(() => {
-                      if (values.for === 'yourself') {
-                        setValue((value) => value + 1);
-                      } else {
-                        setValue((value) => value + 2);
-                      }
-                      setUserPhone(values.phone);
+                      setValue(3);
                     })
                     .catch((err) =>
                       toast.error(err.data[`error_${lang}`] || err.data)
@@ -96,12 +93,7 @@ const CheckTest = () => {
               })
                 .unwrap()
                 .then(() => {
-                  if (values.for === 'yourself') {
-                    setValue((value) => value + 1);
-                  } else {
-                    setValue((value) => value + 2);
-                  }
-                  setUserPhone(values.phone);
+                  setValue(3);
                 })
                 .catch((err) =>
                   toast.error(err.data[`error_${lang}`] || err.data)
@@ -137,12 +129,7 @@ const CheckTest = () => {
                 })
                   .unwrap()
                   .then(() => {
-                    if (values.for === 'yourself') {
-                      setValue((value) => value + 1);
-                    } else {
-                      setValue((value) => value + 2);
-                    }
-                    setUserPhone(values.phone);
+                    setValue(3);
                   })
                   .catch((err) =>
                     toast.error(err.data[`error_${lang}`] || err?.data)
@@ -168,12 +155,7 @@ const CheckTest = () => {
             })
               .unwrap()
               .then(() => {
-                if (values.for === 'yourself') {
-                  setValue((value) => value + 1);
-                } else {
-                  setValue((value) => value + 2);
-                }
-                setUserPhone(values.phone);
+                setValue(3);
               })
               .catch((err) =>
                 toast.error(err.data[`error_${lang}`] || err?.data)
@@ -190,17 +172,10 @@ const CheckTest = () => {
               toast.success(res[`success_${lang === "en" ? "en" : "ar"}`]);
               localStorage.removeItem("couponData");
 
-              // cartApi.endpoints.getAllCarts.initiate()
-
               addOrder(values)
                 .unwrap()
                 .then(() => {
-                  if (values.for === 'yourself') {
-                    setValue((value) => value + 1);
-                  } else {
-                    setValue((value) => value + 2);
-                  }
-                  setUserPhone(values.phone);
+                  setValue(3);
                 })
                 .catch((err) =>
                   toast.error(err.data[`error_${lang}`] || err?.data)
@@ -212,20 +187,16 @@ const CheckTest = () => {
                 lang === "en" ? e.data?.error_en : e?.data?.error_ar
               );
             });
-        } else
+        } else {
           addOrder(values)
             .unwrap()
             .then(() => {
-              if (values.for === 'yourself') {
-                setValue((value) => value + 1);
-              } else {
-                setValue((value) => value + 2);
-              }
-              setUserPhone(values.phone);
+              setValue(3);
             })
             .catch((err) =>
               toast.error(err.data[`error_${lang}`] || err?.data)
             );
+        }
       }
     },
   });
@@ -247,6 +218,8 @@ const CheckTest = () => {
   useEffect(() => {
     if (dialog.for !== 'friend') {
       setValue(1)
+    } else {
+      setValue(0)
     }
     if (dialog.phone) {
       setFieldValue("phone", dialog.phone)
@@ -295,8 +268,6 @@ const CheckTest = () => {
       country: lang === "en" ? "Saudi Arabia" : "السعودية",
     });
   }, [lang]);
-
-  const [userPhone, setUserPhone] = useState("");
 
   const changeTab = (_event, newValue) => {
     setValue(newValue);
@@ -373,6 +344,10 @@ const CheckTest = () => {
         </Tabs>
         <TabPanel value={value} index={0} >
           <Tab1
+            recordVoice={recordVoice}
+            setRecordVoice={setRecordVoice}
+            uploadedVideo={uploadedVideo}
+            setUploadVideo={setUploadVideo}
             values={values}
             handleChange={handleChange}
             handleBlur={handleBlur}
@@ -384,6 +359,9 @@ const CheckTest = () => {
         </TabPanel>
         <TabPanel value={value} index={1} >
           <Tab2
+            setValue={setValue}
+            mobileTabShowed={mobileTabShowed}
+            setMobileTabShowed={setMobileTabShowed}
             values={values}
             handleChange={handleChange}
             handleBlur={handleBlur}
@@ -413,11 +391,16 @@ const CheckTest = () => {
           }}>
           <Button
             onClick={() => {
-              if (value >= 3) {
-                console.log('handleSubmit()')
-                handleSubmit()
+              if (value === 1 && values.for === 'yourself') {
+                setMobileTabShowed(true)
               } else {
-                setValue((value) => value + 1)
+                if (value === 0) {
+                  setValue(1)
+                } else if (value === 1) {
+                  setValue(2)
+                } else if (value === 2) {
+                  handleSubmit()
+                }
               }
             }}
             sx={{
@@ -454,23 +437,6 @@ const CheckTest = () => {
             }
           </Button>
         </Box>
-
-
-        {/* <FirstTab
-        showed={value}
-        setValue={setValue}
-        setUserPhone={setUserPhone}
-      /> */}
-
-
-        {/* <SecondTab
-          showed={value}
-          setValue={setValue}
-          userPhone={userPhone}
-        />
-
-
-        <ThirdTab showed={value} setValue={setValue} /> */}
       </Box>
       <Dialog />
 

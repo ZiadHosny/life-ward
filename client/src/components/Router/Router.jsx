@@ -28,37 +28,36 @@ import GooglePage from "../../Pages/googlePage/GooglePage";
 import SearchPage from "../../Pages/searchPage/SearchPage";
 import NotificationsPage from "../../Pages/Notifications/index";
 import ForgetPassword from "../../Pages/ForgetPassword/ForgetPassword";
-import PaymentMoyasar from "../../Pages/PaymentMoyasar/PaymentMoyasar";
 import ThanksPage from "../../Pages/thanksOrder/ThanksPage";
 import About2 from './../../Pages/aboutUs/about2/About2';
 const AnalyticsMetaTags = lazy(() =>
   import('../../Pages/analyticsMeta/AnalyticsMeta')
 )
 const AppRoutes = () => {
-   const { currentUser } = useSelector((state) => state);
+  const { currentUser } = useSelector((state) => state);
   const location = useLocation();
 
- 
+
   useEffect(() => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }, [location.pathname]);
-  console.log(currentUser,'sdadsasd')
+  console.log(currentUser, 'sdadsasd')
 
-  const CheckCurrentUser=(user)=>{
-    if(Object.keys(currentUser).length){
-      currentUser?.role!=="guest" ?   false:true
+  const CheckCurrentUser = (user) => {
+    if (Object.keys(currentUser).length) {
+      currentUser?.role !== "guest" ? false : true
     }
   }
   const checkAuthentication =
     (currentUser &&
       Object.keys(currentUser).length > 0 &&
-      currentUser?.role!=="guest" ||
+      currentUser?.role !== "guest" ||
       currentUser?.email) ||
-    currentUser?.phone 
+    currentUser?.phone
   return (
     <AnimatePresence>
-      <AnalyticsMetaTags/>
+      <AnalyticsMetaTags />
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<About2 />} />
@@ -82,7 +81,7 @@ const AppRoutes = () => {
         <Route path="/completePayment" element={<CompletePaymentPage />} />
         <Route path="/ourTarget" element={<VedioPage />} />
         <Route path="/single-test" element={<SingleTest />} />
-        <Route path="/payment-moyasar" element={<PaymentMoyasar />} />
+        {/* <Route path="/payment-moyasar" element={<PaymentMoyasar />} /> */}
         <Route path="/notifications" element={<NotificationsPage />} />
 
         <Route path="/blogs" element={<BlogsPage />} />
@@ -94,7 +93,7 @@ const AppRoutes = () => {
         <Route
           element={
             <ProtectedRoutes
-              condition={currentUser?.role!=="guest" }
+              condition={currentUser?.role !== "guest"}
             />
           }
         >
@@ -103,8 +102,8 @@ const AppRoutes = () => {
 
         </Route>
         <Route path="/thankYou" element={<ThanksPage />} />
-        
-        <Route element={<ProtectedRoutes condition={currentUser?.role==="guest" ||!currentUser||!Object.keys(currentUser).length} />}>
+
+        <Route element={<ProtectedRoutes condition={currentUser?.role === "guest" || !currentUser || !Object.keys(currentUser).length} />}>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
         </Route>
