@@ -398,11 +398,14 @@ const CheckTest = () => {
                 sendSms({ phone: values.phone })
                   .unwrap()
                   .then((e) => {
-                    console.log(e)
+                    toast.success(
+                      lang === 'ar' ?
+                        'تم ارسال الكود بنجاح' :
+                        'The code was sent successfully'
+                    )
                   })
                   .catch(e => {
                     toast.error(e?.data[`error_${lang}`] || e?.data)
-                    console.log(e)
                   })
                 setMobileTabShowed(true)
               } else {
