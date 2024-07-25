@@ -17,6 +17,7 @@ import {
   createShippingOrderStatus,
   cancelShippingOrder,
   getMyLastOrder,
+  sendOrderSMS,
 } from "../controllers/order.controller";
 import {
   createOrderValidation,
@@ -33,6 +34,14 @@ orderRouter
     allowedTo(Role.RootAdmin, Role.AdminA, Role.AdminB),
     createItemRepository
   );
+
+orderRouter
+  .route("/sendSmsForOrder")
+  .post(
+    protectedMiddleware,
+    allowedTo(Role.USER),
+    sendOrderSMS
+  )
 
 orderRouter
   .route("/")

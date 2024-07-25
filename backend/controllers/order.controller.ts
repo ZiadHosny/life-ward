@@ -79,6 +79,34 @@ interface addressInterface {
   postalCode: string;
 }
 
+// @desc    create sms to order 
+// @route   POST /api/v1/orders/sendSmsForOrder
+// @access  Private (USER)
+export const sendOrderSMS = expressAsyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+
+    const verificationCode = "123456";
+    console.log(`966${req.body.phone}`, 'sendSmssendSms')
+
+    try {
+      await sendSMSTaqnyat({
+        recipient: parseInt(`966${req.body.phone}`),
+        message: `${process.env.MessageOrderSMS} : ${verificationCode}`,
+      });
+    } catch (err) {
+      return next(
+        new ApiError(
+          {
+            en: "There Is An Error In Sending SMS",
+            ar: "هناك خطأ في إرسال الرسالة القصيرة",
+          },
+          StatusCodes.INTERNAL_SERVER_ERROR
+        )
+      );
+    }
+  }
+)
+
 // @desc    Create Order
 // @route   POST /api/v1/orders
 // @access  Private (User)

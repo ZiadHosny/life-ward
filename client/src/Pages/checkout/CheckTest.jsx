@@ -12,14 +12,17 @@ import { useFormik } from "formik";
 import { checkoutValidaions, checkoutValues } from "./check_assets/checkout.inputs";
 import * as Yup from "yup";
 import { useUploadMediaMutation } from "../../APIs/UploadAPi";
-import { useAddOrderMutation } from "../../APIs/ordersApi";
+import { useAddOrderMutation, useSendOrderSmsMutation } from "../../APIs/ordersApi";
 import { useVerifyCartMutation } from "../../APIs/cartApi";
 import { useLazyGetMeQuery } from "../../APIs/UserApis";
 import { Dialog } from "./Dialog";
 import { useDispatch, useSelector } from "react-redux";
 import { openDialog } from "../../APIs/dialogSlice";
+import { toast } from "react-toastify";
 
 const CheckTest = () => {
+  const [sendSms] = useSendOrderSmsMutation()
+
   const [mobileTabShowed, setMobileTabShowed] = useState(false)
   const [getMe] = useLazyGetMeQuery();
   const [uploadMedia] = useUploadMediaMutation();
@@ -392,6 +395,15 @@ const CheckTest = () => {
           <Button
             onClick={() => {
               if (value === 1 && values.for === 'yourself') {
+                sendSms({ phone: values.phone })
+                  .unwrap()
+                  .then((e) => {
+                    console.log(e)
+                  })
+                  .catch(e => {
+                    toast.error(e?.data[`error_${lang}`] || e?.data)
+                    console.log(e)
+                  })
                 setMobileTabShowed(true)
               } else {
                 if (value === 0) {
@@ -440,7 +452,7 @@ const CheckTest = () => {
       </Box>
       <Dialog />
 
-    </form>
+    </form >
   );
 };
 
