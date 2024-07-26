@@ -3,12 +3,8 @@ import { colors, publicFontFamily } from '../../components/publicStyle/publicSty
 import { useTranslation } from 'react-i18next';
 import CheckTextInput from './latest/CheckTextInput';
 import SaPhoneInput from '../../components/SaPhoneInput/SaPhoneInput';
-import { MobileTab } from './MobileTab';
 
 export const Tab2 = ({
-    setValue,
-    mobileTabShowed,
-    setMobileTabShowed,
     values,
     handleChange,
     handleBlur,
@@ -18,11 +14,9 @@ export const Tab2 = ({
     const [_, { language: lang }] = useTranslation();
 
     return (
-        <>
             <Grid
                 item lg={4} xs={12}
                 sx={{
-                    display: mobileTabShowed ? 'none' : 'block',
                     mx: 'auto',
                     width: {
                         lg: '70%',
@@ -99,13 +93,5 @@ export const Tab2 = ({
                     />
                 </Stack>
             </Grid>
-
-            <MobileTab
-                setValue={setValue}
-                showed={mobileTabShowed}
-                setMobileTabShowed={setMobileTabShowed}
-                userPhone={values.phone}
-            />
-        </>
     )
 }

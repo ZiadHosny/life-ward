@@ -40,7 +40,7 @@ export const MobileTab = ({
 
           toast.success(res[`success_${language}`]);
           setMobileTabShowed(false);
-          setValue(2)
+          setValue(3)
 
           // if (res.paymentType === "cash") {
           //   navigate("/thankYou");

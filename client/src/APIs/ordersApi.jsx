@@ -9,14 +9,6 @@ const ordersApi = createApi({
   reducerPath: "order",
   tagTypes: ["Orders"],
   endpoints: (builder) => ({
-    sendOrderSms: builder.mutation({
-      query: (payload) => ({
-        url: `/orders/sendSmsForOrder`,
-        method: "POST",
-        body: payload,
-      }),
-      invalidatesTags: ["Orders"],
-    }),
     getUserOrders: builder.query({
       query: () => "/order/getOrdersByUser",
       providesTags: ["Orders"],
@@ -52,7 +44,6 @@ const ordersApi = createApi({
   }),
 });
 export const {
-  useSendOrderSmsMutation,
   useGetUserOrdersQuery,
   useAddOrderMutation,
   useVerifyOrderCodeMutation,

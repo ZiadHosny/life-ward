@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import { checkoutValidaions, checkoutValues } from "./check_assets/checkout.inputs";
 import * as Yup from "yup";
 import { useUploadMediaMutation } from "../../APIs/UploadAPi";
-import { useAddOrderMutation, useSendOrderSmsMutation } from "../../APIs/ordersApi";
+import { useAddOrderMutation } from "../../APIs/ordersApi";
 import { useVerifyCartMutation } from "../../APIs/cartApi";
 import { useLazyGetMeQuery } from "../../APIs/UserApis";
 import { Dialog } from "./Dialog";
@@ -21,8 +21,6 @@ import { openDialog } from "../../APIs/dialogSlice";
 import { toast } from "react-toastify";
 
 const CheckTest = () => {
-  const [sendSms] = useSendOrderSmsMutation()
-
   const [mobileTabShowed, setMobileTabShowed] = useState(false)
   const [getMe] = useLazyGetMeQuery();
   const [uploadMedia] = useUploadMediaMutation();
@@ -71,7 +69,11 @@ const CheckTest = () => {
                   })
                     .unwrap()
                     .then(() => {
-                      setValue(3);
+                      if (values.for === 'yourself') {
+                        setMobileTabShowed(true)
+                      } else {
+                        setValue(3);
+                      }
                     })
                     .catch((err) =>
                       toast.error(err.data[`error_${lang}`] || err.data)
@@ -96,7 +98,11 @@ const CheckTest = () => {
               })
                 .unwrap()
                 .then(() => {
-                  setValue(3);
+                  if (values.for === 'yourself') {
+                    setMobileTabShowed(true)
+                  } else {
+                    setValue(3);
+                  }
                 })
                 .catch((err) =>
                   toast.error(err.data[`error_${lang}`] || err.data)
@@ -132,7 +138,11 @@ const CheckTest = () => {
                 })
                   .unwrap()
                   .then(() => {
-                    setValue(3);
+                    if (values.for === 'yourself') {
+                      setMobileTabShowed(true)
+                    } else {
+                      setValue(3);
+                    }
                   })
                   .catch((err) =>
                     toast.error(err.data[`error_${lang}`] || err?.data)
@@ -158,7 +168,11 @@ const CheckTest = () => {
             })
               .unwrap()
               .then(() => {
-                setValue(3);
+                if (values.for === 'yourself') {
+                  setMobileTabShowed(true)
+                } else {
+                  setValue(3);
+                }
               })
               .catch((err) =>
                 toast.error(err.data[`error_${lang}`] || err?.data)
@@ -178,7 +192,11 @@ const CheckTest = () => {
               addOrder(values)
                 .unwrap()
                 .then(() => {
-                  setValue(3);
+                  if (values.for === 'yourself') {
+                    setMobileTabShowed(true)
+                  } else {
+                    setValue(3);
+                  }
                 })
                 .catch((err) =>
                   toast.error(err.data[`error_${lang}`] || err?.data)
@@ -194,7 +212,11 @@ const CheckTest = () => {
           addOrder(values)
             .unwrap()
             .then(() => {
-              setValue(3);
+              if (values.for === 'yourself') {
+                setMobileTabShowed(true)
+              } else {
+                setValue(3);
+              }
             })
             .catch((err) =>
               toast.error(err.data[`error_${lang}`] || err?.data)
@@ -362,9 +384,6 @@ const CheckTest = () => {
         </TabPanel>
         <TabPanel value={value} index={1} >
           <Tab2
-            setValue={setValue}
-            mobileTabShowed={mobileTabShowed}
-            setMobileTabShowed={setMobileTabShowed}
             values={values}
             handleChange={handleChange}
             handleBlur={handleBlur}
@@ -374,6 +393,9 @@ const CheckTest = () => {
         </TabPanel>
         <TabPanel value={value} index={2} >
           <Tab3
+            setValue={setValue}
+            mobileTabShowed={mobileTabShowed}
+            setMobileTabShowed={setMobileTabShowed}
             values={values}
             handleChange={handleChange}
             handleBlur={handleBlur}
@@ -394,28 +416,12 @@ const CheckTest = () => {
           }}>
           <Button
             onClick={() => {
-              if (value === 1 && values.for === 'yourself') {
-                sendSms({ phone: values.phone })
-                  .unwrap()
-                  .then((e) => {
-                    toast.success(
-                      lang === 'ar' ?
-                        'تم ارسال الكود بنجاح' :
-                        'The code was sent successfully'
-                    )
-                  })
-                  .catch(e => {
-                    toast.error(e?.data[`error_${lang}`] || e?.data)
-                  })
-                setMobileTabShowed(true)
-              } else {
-                if (value === 0) {
-                  setValue(1)
-                } else if (value === 1) {
-                  setValue(2)
-                } else if (value === 2) {
-                  handleSubmit()
-                }
+              if (value === 2) {
+                handleSubmit()
+              } else if (value === 0) {
+                setValue(1)
+              } else if (value === 1) {
+                setValue(2)
               }
             }}
             sx={{
