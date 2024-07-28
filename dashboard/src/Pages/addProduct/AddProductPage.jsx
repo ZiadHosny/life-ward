@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ProductAttributes from "../../Components/product/ProductAttributes";
@@ -66,6 +66,8 @@ const AddProductPage = () => {
       title: "",
       message: "",
       subSubCategory: [],
+      city: [],
+      neighborhood: [],
     },
     validationSchema: productErrors(language),
     onSubmit: (values) => {
@@ -812,6 +814,36 @@ const AddProductPage = () => {
               error={errors.subSubCategory}
               value={values.subSubCategory}
               touched={touched.subSubCategory}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              optionsData={subSubCategories}
+              itemField={`name_${language}`}
+            />
+          </Box>
+
+
+          <Box mt={"15px"}>
+            <SelectMultiTag
+              label={language === "en" ? "City" : "المدينة"}
+              name="city"
+              error={errors.city}
+              value={values.city}
+              touched={touched.city}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              optionsData={subSubCategories}
+              itemField={`name_${language}`}
+            />
+          </Box>
+
+
+          <Box mt={"15px"}>
+            <SelectMultiTag
+              label={language === "en" ? "Neighborhood" : "الحي"}
+              name="neighborhood"
+              error={errors.neighborhood}
+              value={values.neighborhood}
+              touched={touched.neighborhood}
               handleChange={handleChange}
               handleBlur={handleBlur}
               optionsData={subSubCategories}

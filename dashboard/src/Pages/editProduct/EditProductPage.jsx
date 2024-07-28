@@ -42,7 +42,7 @@ const EditProductPage = () => {
   const [productImages, setProductImages] = useState([]);
   const { colors, btnStyle, customColors, breakpoints } = useTheme();
   const staticUploadedImageName = "my-upload-file";
-  const [i18, { language }] = useTranslation();
+  const [_, { language }] = useTranslation();
   const [uploadFiles, { isLoading: uploadFilesLoading }] =
     useUploadFilesMutation();
   const [updateProductInfo, { isLoading }] = useUpdateProductInfo();
@@ -949,6 +949,35 @@ const EditProductPage = () => {
               error={errors.subSubCategory}
               value={values.subSubCategory}
               touched={touched.subSubCategory}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              optionsData={subSubCategories}
+              itemField={`name_${language}`}
+            />
+          </Box>
+
+          <Box mt={"15px"}>
+            <SelectMultiTag
+              label={language === "en" ? "City" : "المدينة"}
+              name="city"
+              error={errors.city}
+              value={values.city}
+              touched={touched.city}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              optionsData={subSubCategories}
+              itemField={`name_${language}`}
+            />
+          </Box>
+
+
+          <Box mt={"15px"}>
+            <SelectMultiTag
+              label={language === "en" ? "Neighborhood" : "الحي"}
+              name="neighborhood"
+              error={errors.neighborhood}
+              value={values.neighborhood}
+              touched={touched.neighborhood}
               handleChange={handleChange}
               handleBlur={handleBlur}
               optionsData={subSubCategories}

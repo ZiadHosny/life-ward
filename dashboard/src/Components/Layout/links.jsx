@@ -12,6 +12,7 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import SubtitlesIcon from "@mui/icons-material/Subtitles";
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import PriceChangeOutlinedIcon from "@mui/icons-material/PriceChangeOutlined";
 import ConstructionIcon from "@mui/icons-material/Construction";
@@ -140,6 +141,12 @@ export const links = [
         icon: <ArticleOutlinedIcon />,
       },
       {
+        en: "Cities",
+        ar: "المدن",
+        path: "/cities",
+        icon: <LocationCityIcon />,
+      },
+      {
         en: "Categories",
         ar: "الأقسام",
         path: "/categories",
@@ -163,7 +170,7 @@ export const links = [
         path: "/meta-tags",
         icon: <SubtitlesIcon />,
       },
-  
+
       {
         en: "Repositories",
         ar: "المستودعات",

@@ -50,6 +50,7 @@ import AttributesPage from "./Pages/attributes/AttributesPage";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallBack from "./Components/ErrorBoundary/ErrorBoundaryFallBack";
 import moment from "moment-timezone";
+import CitiesPage from "./Pages/cities/CitiesPage";
 function App() {
   moment.tz.setDefault("UTC");
   const { data, isSuccess, error } = useGetMeQuery();
@@ -118,7 +119,7 @@ function App() {
   useEffect(() => {
     document.body.style.direction = language === "en" ? "ltr" : "rtl";
   }, [language]);
- 
+
 
   return (
     <div
@@ -183,6 +184,14 @@ function App() {
                 element={
                   <ErrorBoundary FallbackComponent={ErrorBoundaryFallBack}>
                     <CategoriesPage />
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="/cities"
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorBoundaryFallBack}>
+                    <CitiesPage />
                   </ErrorBoundary>
                 }
               />

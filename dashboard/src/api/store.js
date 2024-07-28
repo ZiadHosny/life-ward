@@ -31,11 +31,15 @@ import { subSubCategoriesApi } from "./subSubCategories.api";
 import { qualitiesApi } from "./qualities.api";
 import { noteApi } from "./note.api";
 import { fastCoastApi } from "./fastCoast.api";
+import { cityApi } from "./city.api";
+import { neighborhoodApi } from "./neighborhoods.api";
 const createStore = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [attributeApi.reducerPath]: attributeApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
+    [cityApi.reducerPath]: cartApi.reducer,
+    [neighborhoodApi.reducerPath]: neighborhoodApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
     [contactApi.reducerPath]: contactApi.reducer,
     [historyApi.reducerPath]: historyApi.reducer,
