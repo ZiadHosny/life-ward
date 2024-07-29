@@ -33,6 +33,8 @@ import UploadFiles from "../../Components/globals/UploadFiles";
 import ProductQualities from "../../Components/product/ProductQualities";
 import ProductQualitiesImages from "../../Components/product/ProductQualitiesImages";
 import SelectMultiTag from "../../Components/globals/SelectMultiTag";
+import { useFetchAllCities } from "../../hooks/cities.hooks";
+import { useFetchNeighborhoodsByCityId } from "../../hooks/neighborhood.hooks";
 
 const AddProductPage = () => {
   const staticUploadedImageName = "my-upload-file";
@@ -66,8 +68,8 @@ const AddProductPage = () => {
       title: "",
       message: "",
       subSubCategory: [],
-      city: [],
-      neighborhood: [],
+      cities: [],
+      neighborhoods: [],
     },
     validationSchema: productErrors(language),
     onSubmit: (values) => {
@@ -109,6 +111,8 @@ const AddProductPage = () => {
             !temp.title ? delete temp.title : undefined;
             !temp.message ? delete temp.message : undefined;
             !temp.subSubCategory ? delete temp.subSubCategory : undefined;
+            !temp.cities ? delete temp.cities : undefined;
+            !temp.neighborhoods ? delete temp.neighborhoods : undefined;
             !temp.qualities[0] ? delete temp.qualities : undefined;
             addProduct({
               ...temp,
@@ -157,6 +161,10 @@ const AddProductPage = () => {
   const { subSubCategories } = useFetchSubSubCategoryBySubId(
     values.subCategory
   );
+  const { cities } = useFetchAllCities();
+  const { neighborhoods } = useFetchNeighborhoodsByCityId(
+    values.cities
+  );
 
   // useEffect(() => {
   //   if (values.category) {
@@ -180,7 +188,6 @@ const AddProductPage = () => {
   console.log("check images from formik", values.images);
   console.log("check images from State", productImages);
 
-  console.log(values.subCategory, 'zzzzzzzzzzz')
 
   return (
     <Box
@@ -825,13 +832,13 @@ const AddProductPage = () => {
           <Box mt={"15px"}>
             <SelectMultiTag
               label={language === "en" ? "City" : "المدينة"}
-              name="city"
-              error={errors.city}
-              value={values.city}
-              touched={touched.city}
+              name="cities"
+              error={errors.cities}
+              value={values.cities}
+              touched={touched.cities}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              optionsData={subSubCategories}
+              optionsData={cities.data}
               itemField={`name_${language}`}
             />
           </Box>
@@ -840,13 +847,13 @@ const AddProductPage = () => {
           <Box mt={"15px"}>
             <SelectMultiTag
               label={language === "en" ? "Neighborhood" : "الحي"}
-              name="neighborhood"
-              error={errors.neighborhood}
-              value={values.neighborhood}
-              touched={touched.neighborhood}
+              name="neighborhoods"
+              error={errors.neighborhoods}
+              value={values.neighborhoods}
+              touched={touched.neighborhoods}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              optionsData={subSubCategories}
+              optionsData={neighborhoods.data}
               itemField={`name_${language}`}
             />
           </Box>

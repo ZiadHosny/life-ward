@@ -11,6 +11,9 @@ import {
   useCreateCityMutation,
   useUpdateCityByIdMutation,
 } from "../../api/city.api";
+import { Map } from "./Map";
+
+const position = [24.4672, 39.6024];
 
 function CityModal({ open, setOpen, data }) {
   const [createCity, { isLoading: addLoading }] =
@@ -40,10 +43,14 @@ function CityModal({ open, setOpen, data }) {
     initialValues: {
       name_ar: "",
       name_en: "",
+      lat: data?.lat ? data.lat : position[0],
+      lng: data?.lng ? data.lng : position[1],
     },
     validationSchema: Yup.object({
       name_ar: Yup.string().required(language === "en" ? "Required" : "مطلوب"),
       name_en: Yup.string().required(language === "en" ? "Required" : "مطلوب"),
+      lat: Yup.number().required(language === "en" ? "Required" : "مطلوب"),
+      lng: Yup.number().required(language === "en" ? "Required" : "مطلوب"),
     }),
     onSubmit: (values) => {
       if (data) {
@@ -58,6 +65,8 @@ function CityModal({ open, setOpen, data }) {
     if (data && open) {
       setFieldValue("name_ar", data.name_ar);
       setFieldValue("name_en", data.name_en);
+      setFieldValue("lat", data.lat);
+      setFieldValue("lng", data.lng);
     }
   }, [data, open]);
 
@@ -93,6 +102,7 @@ function CityModal({ open, setOpen, data }) {
         toast.error(message);
       });
   };
+
   return (
     <Dialog
       open={open}
@@ -162,6 +172,11 @@ function CityModal({ open, setOpen, data }) {
               }}
             />
           </Stack>
+          <Map
+            setFieldValue={setFieldValue}
+            lat={values.lat}
+            lng={values.lng} />
+
         </FormControl>
         <Stack
           sx={{

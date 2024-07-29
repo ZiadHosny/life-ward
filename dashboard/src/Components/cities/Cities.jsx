@@ -13,9 +13,9 @@ import {
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@emotion/react";
-import { useGetAllCategoriesQuery } from "../../api/category.api";
 import CityCard from "./CityCard";
 import useSearch from "../../hooks/useSearch";
+import { useGetAllCitiesQuery } from "../../api/city.api";
 
 const OrderLoading = () => {
   const { customColors } = useTheme();
@@ -26,13 +26,10 @@ const OrderLoading = () => {
   );
 };
 
-
 function Cities() {
   const { addToSearch, search } = useSearch();
-  // const { data, isLoading, isError, isSuccess, error } =
-  //   useGetAllCitiesQuery(search);
   const { data, isLoading, isError, isSuccess, error } =
-    useGetAllCategoriesQuery(search);
+    useGetAllCitiesQuery();
   const {
     i18n: { language },
   } = useTranslation();
@@ -42,7 +39,6 @@ function Cities() {
     addToSearch({ key: "limit", value: "1000" });
   }, [search]);
 
-  console.log(error);
   if (isLoading) return <OrderLoading />;
 
   return (
@@ -77,10 +73,20 @@ function Cities() {
                     </Typography>
                   </TableCell>
 
+                  <TableCell align="center">
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {language === "en" ? "default" : "الأفتراضي"}
+                    </Typography>
+                  </TableCell>
+
                   <TableCell align="center"></TableCell>
                 </TableRow>
               </TableHead>
-
               {data?.data.length === 0 ? (
                 <TableBody>
                   <TableRow>
@@ -111,8 +117,7 @@ function Cities() {
                         fontWeight: "bold",
                         color: "red",
                         fontSize: { xs: "20px", sm: "25px", lg: "30px" },
-                      }}
-                    >
+                      }}>
                       {error?.data[`error_${language}`]}
                     </Typography>
                   )}

@@ -87,7 +87,6 @@ export const getProductById = expressAsyncHandler(
         )
       );
     }
-
     // 5- send response
     res.status(StatusCodes.OK).json({
       status: Status.SUCCESS,
@@ -125,6 +124,8 @@ export const getProductByIdDash = getOneItemById(
     "category",
     "subCategory",
     "subSubCategory",
+    "cities",
+    "neighborhoods",
     "metaDataId",
     "offer",
     "repositoryId",

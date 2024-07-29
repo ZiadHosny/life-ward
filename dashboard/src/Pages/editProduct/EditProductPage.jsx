@@ -36,6 +36,8 @@ import { useFetchSubSubCategoryBySubId } from "../../hooks/subSubCategories.hook
 import DraftEditor from "../../Components/globals/draftEditor/DraftEditor";
 import ProductQualitiesImages from "../../Components/product/ProductQualitiesImages";
 import SelectMultiTag from "../../Components/globals/SelectMultiTag";
+import { useFetchNeighborhoodsByCityId } from "../../hooks/neighborhood.hooks";
+import { useFetchAllCities } from "../../hooks/cities.hooks";
 const EditProductPage = () => {
   const { id } = useParams();
   const { product } = useGetProductById(id);
@@ -45,6 +47,7 @@ const EditProductPage = () => {
   const [_, { language }] = useTranslation();
   const [uploadFiles, { isLoading: uploadFilesLoading }] =
     useUploadFilesMutation();
+
   const [updateProductInfo, { isLoading }] = useUpdateProductInfo();
   const formik = useFormik({
     initialValues: productValues,
@@ -90,12 +93,15 @@ const EditProductPage = () => {
       }
     },
   });
+
   const updteProductHelper = (payload) => {
     const temp = JSON.parse(JSON.stringify(payload));
     !temp.title_meta ? delete temp.title_meta : undefined;
     !temp.desc_meta ? delete temp.desc_meta : undefined;
     !temp.extention ? delete temp.extention : undefined;
     !temp.subSubCategory ? delete temp.subSubCategory : undefined;
+    !temp.cities ? delete temp.cities : undefined;
+    !temp.neighborhoods ? delete temp.neighborhoods : undefined;
     delete temp.title;
     delete temp.role;
     delete temp.message;
@@ -153,6 +159,18 @@ const EditProductPage = () => {
               return setFieldValue(
                 "subCategory",
                 product.data.subCategory.map((v) => v._id) || []
+              );
+
+            case "cities":
+              return setFieldValue(
+                "cities",
+                product.data.cities.map((v) => v._id) || []
+              );
+
+            case "neighborhoods":
+              return setFieldValue(
+                "neighborhoods",
+                product.data.neighborhoods.map((v) => v._id) || []
               );
 
             case "attributes":
@@ -214,6 +232,8 @@ const EditProductPage = () => {
       });
       setFieldValue("subCategory", product.data.subCategory.map((v) => v._id) || []);
       setFieldValue("subSubCategory", product.data.subSubCategory.map((v) => v._id) || []);
+      setFieldValue("cities", product.data.cities.map((v) => v._id) || []);
+      setFieldValue("neighborhoods", product.data.neighborhoods.map((v) => v._id) || []);
     }
   }, [product]);
   const { categories } = useFetchAllCategories();
@@ -222,6 +242,12 @@ const EditProductPage = () => {
   const { subSubCategories } = useFetchSubSubCategoryBySubId(
     values.subCategory
   );
+
+  const { cities } = useFetchAllCities();
+  const { neighborhoods } = useFetchNeighborhoodsByCityId(
+    values.cities
+  );
+
   const [descriptionValues, setDescriptionValues] = useState({
     description_ar: "",
     description_en: "",
@@ -262,7 +288,7 @@ const EditProductPage = () => {
   };
 
 
-  console.log(values.subCategory, 'subCategory')
+  console.log(values, 'zzzzzzzz')
 
   return (
     <Box
@@ -956,16 +982,17 @@ const EditProductPage = () => {
             />
           </Box>
 
+
           <Box mt={"15px"}>
             <SelectMultiTag
               label={language === "en" ? "City" : "المدينة"}
-              name="city"
-              error={errors.city}
-              value={values.city}
-              touched={touched.city}
+              name="cities"
+              error={errors.cities}
+              value={values.cities}
+              touched={touched.cities}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              optionsData={subSubCategories}
+              optionsData={cities.data}
               itemField={`name_${language}`}
             />
           </Box>
@@ -974,13 +1001,13 @@ const EditProductPage = () => {
           <Box mt={"15px"}>
             <SelectMultiTag
               label={language === "en" ? "Neighborhood" : "الحي"}
-              name="neighborhood"
-              error={errors.neighborhood}
-              value={values.neighborhood}
-              touched={touched.neighborhood}
+              name="neighborhoods"
+              error={errors.neighborhoods}
+              value={values.neighborhoods}
+              touched={touched.neighborhoods}
               handleChange={handleChange}
               handleBlur={handleBlur}
-              optionsData={subSubCategories}
+              optionsData={neighborhoods.data}
               itemField={`name_${language}`}
             />
           </Box>

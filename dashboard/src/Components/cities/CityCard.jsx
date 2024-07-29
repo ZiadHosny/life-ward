@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import {
   Box,
   Button,
+  Checkbox,
   TableCell,
   TableRow,
   Typography,
@@ -13,7 +14,6 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useState } from "react";
 import CityShowNeighborhoodModal from "./CityShowNeighborhoodModal";
-import { useDeleteCategoryByIdMutation } from "../../api/category.api";
 import { toast } from "react-toastify";
 import { allowed } from "../../helper/roles";
 import { useSelector } from "react-redux";
@@ -21,14 +21,13 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import CityModal from "./CityModal";
 import CityAddNeighborhoodModal from "./CityAddNeighborhoodModal";
-// import { useDeleteCityByIdMutation } from "../../api/city.api";
+import { useChangeCityDefaultByIdMutation, useDeleteCityByIdMutation } from "../../api/city.api";
 
 function CityCard(city) {
+  const [changeCityDefault, { isLoading }] = useChangeCityDefaultByIdMutation()
   const { role } = useSelector((state) => state.user);
-  // const [deleteCity, { isLoading: deleteCityLoading }] =
-  //   useDeleteCityByIdMutation();
   const [deleteCity, { isLoading: deleteCityLoading }] =
-    useDeleteCategoryByIdMutation();
+    useDeleteCityByIdMutation();
   const { colors, customColors } = useTheme();
   const {
     i18n: { language },
@@ -73,6 +72,25 @@ function CityCard(city) {
       });
   };
 
+  const handleCheck = () => {
+    if (!city.data.default) {
+      changeCityDefault(city.data._id)
+        .unwrap()
+        .then(() => {
+          toast.success(
+            language === "en" ?
+              `Change Default City to ${city.data[`name_${language}`]} Successfully`
+              : `تم تغير المدينة الأفتراضية ل ${city.data[`name_${language}`]} بنجاح`
+          );
+        })
+        .catch((error) => {
+          const message =
+            language === "en" ? error?.data?.error_en : error?.data?.error_ar;
+          toast.error(message);
+        });
+    }
+  }
+
   return (
     <>
       <CityModal open={open} setOpen={setOpen} data={city.data} />
@@ -106,6 +124,13 @@ function CityCard(city) {
         <TableCell align="center">
           {language === "en" ? city.data.name_en : city.data.name_ar}
         </TableCell>
+
+        <TableCell align="center">
+          <Checkbox
+            onChange={handleCheck}
+            checked={city.data.default} />
+        </TableCell>
+
         <TableCell align="center">
           <Box
             sx={{

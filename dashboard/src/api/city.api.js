@@ -2,8 +2,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "./baseUrl";
 
-const cityUrl = '${cityUrl}'
-
 export const cityApi = createApi({
     reducerPath: "cityApi",
     baseQuery: fetchBaseQuery({
@@ -19,16 +17,16 @@ export const cityApi = createApi({
     tagTypes: ["cityApi"],
     endpoints: (builder) => ({
         getAllCities: builder.query({
-            query: (params) => ({ url: `/${cityUrl}${params ? params : ""}` }),
+            query: (params) => ({ url: `/city${params ? params : ""}` }),
             providesTags: ["cityApi"],
         }),
         getCityById: builder.query({
-            query: (id) => ({ url: `/${cityUrl}/${id}` }),
+            query: (id) => ({ url: `/city/${id}` }),
             providesTags: ["cityApi"],
         }),
         createCity: builder.mutation({
             query: (body) => ({
-                url: "/${cityUrl}",
+                url: "/city",
                 method: "POST",
                 body,
             }),
@@ -36,7 +34,7 @@ export const cityApi = createApi({
         }),
         updateCityById: builder.mutation({
             query: ({ body, id }) => ({
-                url: `/${cityUrl}/${id}`,
+                url: `/city/${id}`,
                 method: "PUT",
                 body,
             }),
@@ -44,8 +42,15 @@ export const cityApi = createApi({
         }),
         deleteCityById: builder.mutation({
             query: (id) => ({
-                url: `/${cityUrl}/${id}`,
+                url: `/city/${id}`,
                 method: "DELETE",
+            }),
+            invalidatesTags: ["cityApi"],
+        }),
+        changeCityDefaultById: builder.mutation({
+            query: (id) => ({
+                url: `/city/changeDefault/${id}`,
+                method: "PATCH",
             }),
             invalidatesTags: ["cityApi"],
         }),
@@ -59,4 +64,5 @@ export const {
     useCreateCityMutation,
     useUpdateCityByIdMutation,
     useDeleteCityByIdMutation,
+    useChangeCityDefaultByIdMutation,
 } = cityApi;

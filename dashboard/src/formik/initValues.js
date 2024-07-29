@@ -19,6 +19,8 @@ export const productValues = {
   title: "",
   message: "",
   subSubCategory: [],
+  cities: [],
+  neighborhoods: [],
 };
 
 export const productQualityValues = {

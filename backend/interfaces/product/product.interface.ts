@@ -7,6 +7,8 @@ import { ISubCategory } from "../subcategory/subcategory.interface";
 import IUser from "../user/user.interface";
 import { IBrand } from "../brand/brand.interface";
 import { IGeneralQuality } from "../generalQuality/generalQuality.interface";
+import { ICity } from "../city/city.interface";
+import { INeighborhood } from "../neighborhood/neighborhood.interface";
 
 export interface IProduct extends Document {
   title_en: string;
@@ -61,6 +63,8 @@ export interface IProduct extends Document {
       ];
     }
   ];
+  cities: ICity["_id"] | ICity;
+  neighborhoods: INeighborhood["_id"] | INeighborhood;
   category: ICategory["_id"] | ICategory;
   subCategory: Types.ObjectId | ISubCategory;
   subSubCategory: Types.ObjectId | ISubSubCategory;

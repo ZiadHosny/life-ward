@@ -33,12 +33,13 @@ import { noteApi } from "./note.api";
 import { fastCoastApi } from "./fastCoast.api";
 import { cityApi } from "./city.api";
 import { neighborhoodApi } from "./neighborhoods.api";
+
 const createStore = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [attributeApi.reducerPath]: attributeApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
-    [cityApi.reducerPath]: cartApi.reducer,
+    [cityApi.reducerPath]: cityApi.reducer,
     [neighborhoodApi.reducerPath]: neighborhoodApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
     [contactApi.reducerPath]: contactApi.reducer,
@@ -70,11 +71,14 @@ const createStore = configureStore({
     user: userReducer,
     repoProducts: repoProductsSlice,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
       attributeApi.middleware,
       categoryApi.middleware,
+      cityApi.middleware,
+      neighborhoodApi.middleware,
       commentApi.middleware,
       contactApi.middleware,
       historyApi.middleware,

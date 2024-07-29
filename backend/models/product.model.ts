@@ -130,6 +130,14 @@ const productSchema = new Schema<IProduct>(
       default: [],
       required: false,
     },
+    cities: {
+      type: [Types.ObjectId],
+      ref: "City",
+    },
+    neighborhoods: {
+      type: [Types.ObjectId],
+      ref: "Neighborhood",
+    },
     category: {
       type: [Types.ObjectId],
       ref: "Category",

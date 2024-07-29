@@ -17,14 +17,6 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@emotion/react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import {
-  useGetAllSubCategoriesForSpecificCategoryQuery,
-  useDeleteSubCategoryByIdMutation,
-} from "../../api/subcategories.api.js";
-// import {
-//   useGetAllNeighborhoodsForSpecificCityQuery,
-//   useDeleteNeighborhoodByIdMutation,
-// } from "../../api/neighborhoods.api.js";
 import { toast } from "react-toastify";
 import { allowed } from "../../helper/roles.js";
 import { useSelector } from "react-redux";
@@ -32,21 +24,16 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import CityAddNeighborhoodModal from "./CityAddNeighborhoodModal.jsx";
+import { useDeleteNeighborhoodByIdMutation, useGetAllNeighborhoodsForSpecificCityQuery } from "../../api/neighborhoods.api.js";
 
 function CityShowNeighborhoodModal({ open, setOpen, city }) {
   const { role } = useSelector((state) => state.user);
-  // const [deleteNeighborhood, { isLoading: DeleteNeighborhoodLoading }] =
-  //   useDeleteNeighborhoodByIdMutation()
   const [deleteNeighborhood, { isLoading: DeleteNeighborhoodLoading }] =
-    useDeleteSubCategoryByIdMutation();
-  // const { data, isSuccess } = useGetAllNeighborhoodsForSpecificCityQuery({
-  //   id: city?._id,
-  //   query: `populate=metaDataId`,
-  // });
-  const { data, isSuccess } = useGetAllSubCategoriesForSpecificCategoryQuery({
+    useDeleteNeighborhoodByIdMutation()
+  const { data, isSuccess } = useGetAllNeighborhoodsForSpecificCityQuery({
     id: city?._id,
-    query: `populate=metaDataId`,
   });
+
   const { colors, customColors } = useTheme();
   const [openUpdateSub, setOpenUpdateSub] = useState(false);
   const [selectSub, setSelectSub] = useState({});

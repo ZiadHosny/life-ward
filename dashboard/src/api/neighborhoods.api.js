@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "./baseUrl";
 
-const neighborhoodUrl = 'url'
+const neighborhoodUrl = 'neighborhood'
 
 export const neighborhoodApi = createApi({
   reducerPath: "neighborhoodApi",

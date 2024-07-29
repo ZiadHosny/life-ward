@@ -16,19 +16,12 @@ import {
   useCreateNeighborhoodMutation,
   useUpdateNeighborhoodByIdMutation,
 } from "../../api/neighborhoods.api.js";
-import {
-  useCreateSubCategoryMutation,
-  useUpdateSubCategoryByIdMutation,
-} from "../../api/subcategories.api";
 import { toast } from "react-toastify";
 
 function CityAddNeighborhoodModal({ open, setOpen, city, neighborhood }) {
-  // const [createNeighborhood, { isLoading: NeighborhoodLoading }] =
-  //   useCreateNeighborhoodMutation();
   const [createNeighborhood, { isLoading: NeighborhoodLoading }] =
-    useCreateSubCategoryMutation();
-  // const [updateNeighborhood] = useUpdateNeighborhoodByIdMutation();
-  const [updateNeighborhood] = useUpdateSubCategoryByIdMutation();
+    useCreateNeighborhoodMutation();
+  const [updateNeighborhood] = useUpdateNeighborhoodByIdMutation();
 
   const { customColors } = useTheme();
   const {

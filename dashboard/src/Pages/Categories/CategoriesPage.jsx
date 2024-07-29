@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Categories from "../../Components/categories/Categories";
 import CategoryModal from "../../Components/categories/CategoryModal";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import useSearch from "../../hooks/useSearch";
 import { useTheme } from "@emotion/react";
 import { allowed } from "../../helper/roles";
