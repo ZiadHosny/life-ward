@@ -1,18 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   Badge,
-  IconButton,
-  SvgIcon,
-  Avatar,
   Tooltip,
   CardMedia,
 } from "@mui/material";
@@ -20,25 +9,20 @@ import { customDrawerIcon } from "./nav.styes";
 import { profile_cart_likesData } from "./nav.data";
 import LanguageToggler from "./LanguageToggler";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { store } from "./../../store/Store";
+import { useNavigate } from "react-router-dom";
 import {
-  savedProductsApi,
   useGetAllSavedProductsQuery,
 } from "../../APIs/SavedProductApi";
 import { useGetAllCartsQuery } from "../../APIs/cartApi";
 import MobileProfileMenu from "./MobileProfileMenu";
 import { colors } from "../publicStyle/publicStyle";
-import SearchIcon from "@mui/icons-material/Search";
 import Notifications from "../Notifications/Notifications";
 import CartIcon from "../../assets/Cart-Icon.png";
 import SavedIcon from "../../assets/Saved-Icon.png";
-import searchSvg from "../../assets/Search-Icon.svg";
+import { LocationMenu } from "./LocationMenu";
 
 export default function Drawers() {
   const [_, { language }] = useTranslation();
-  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -86,10 +70,10 @@ export default function Drawers() {
             xs: "block",
           },
           mt: "4px",
-        }}
-      >
+        }}>
         <LanguageToggler />
       </Box>
+      <LocationMenu />
     </Box>
   );
 }
@@ -102,7 +86,6 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
       setCallDrawerData(false);
     }
   }, [callDrawerData]);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data: savedProducts, isError: isErrSaved } =
     useGetAllSavedProductsQuery();

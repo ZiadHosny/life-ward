@@ -105,27 +105,24 @@ const MostNewiestProducts = ({ title, items }) => {
             alignItems: "center",
           }}
         >
-{
-            console.log(items,items?.length,'itesndsasadda')
+          {
+            items?.length > 2 ?
+              <>
+                <ProductCard item={items[3]} />
 
-}          {
-            items?.length>2?
-          <>
-            <ProductCard item={items[3]} />
-            
-            </>
-            :null
+              </>
+              : null
           }
-     
-         {
-            items?.length>4?
-          <>
-            <ProductCard item={items[4]} />
-            
-            </>
-            :null
+
+          {
+            items?.length > 4 ?
+              <>
+                <ProductCard item={items[4]} />
+
+              </>
+              : null
           }
-     
+
         </Grid>
       </Grid>
     </Box>

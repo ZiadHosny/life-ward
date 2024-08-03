@@ -42,7 +42,6 @@ const AppRoutes = () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }, [location.pathname]);
-  console.log(currentUser, 'sdadsasd')
 
   const CheckCurrentUser = (user) => {
     if (Object.keys(currentUser).length) {

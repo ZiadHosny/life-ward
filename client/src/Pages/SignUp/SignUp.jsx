@@ -159,7 +159,6 @@ const SignUp = () => {
       window.location.href = `${baseUrl}/auth/google`;
     }
   };
-  console.log("mohamed qhwqh jwq w", formik.errors);
   return (
     <Stack
       sx={{

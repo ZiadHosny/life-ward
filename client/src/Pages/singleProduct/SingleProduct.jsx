@@ -515,7 +515,6 @@ function SingleProduct() {
         )
         .catch((e) => {
           const rating = document.querySelector("#rating span");
-          console.log(rating, "ratingrating");
 
           toast.error(lang === "en" ? e.data.error_en : e.data.error_ar);
         });

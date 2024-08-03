@@ -38,6 +38,7 @@ import fastCostRouter from "./routes/fastCost.router";
 import noteRouter from "./routes/note.router";
 import cityRouter from "./routes/city.router";
 import neighborhoodRouter from "./routes/neighborhood.router";
+import generalRouter from "./routes/general.router";
 
 const router = Router();
 
@@ -87,6 +88,8 @@ router.use('/repositories', repositoryRouter);
 router.use("/subscribers", subscriberRouter);
 router.use("/city", cityRouter);
 router.use("/neighborhood", neighborhoodRouter);
+router.use("/general", generalRouter);
+
 
 
 router.use("/occasions", OccasionsRouter);

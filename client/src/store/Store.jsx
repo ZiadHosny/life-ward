@@ -17,6 +17,7 @@ import refetchReducer from "../APIs/refetchSlice";
 import privacyApi from "../APIs/privacyApi";
 import bannerApi from "../APIs/bannerApi";
 import userSlice from "../APIs/userSlice";
+import citySlice from "../APIs/citySlice";
 import occasionsApi from "../APIs/occasionsApi";
 import { verifySmsApi } from "../APIs/verifySmsApi";
 import { uploadApi } from "../APIs/UploadAPi";
@@ -30,6 +31,9 @@ import forgetPassApi from "../APIs/forgetPassApi";
 import commentsApi from "../APIs/commentApi";
 import PointsApi from "../APIs/pointsApi";
 import analyticsMetaApi from "../APIs/analyticsMetaApi";
+import { cityApi } from "../APIs/city.api";
+import { locationApi } from "../APIs/locationApi";
+
 const RootReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [ProductsApi.reducerPath]: ProductsApi.reducer,
@@ -55,7 +59,11 @@ const RootReducer = combineReducers({
   [commentsApi.reducerPath]: commentsApi.reducer,
   [PointsApi.reducerPath]: PointsApi.reducer,
   [analyticsMetaApi.reducerPath]: analyticsMetaApi.reducer,
+  [cityApi.reducerPath]: cityApi.reducer,
+  [locationApi.reducerPath]: locationApi.reducer,
 
+
+  city: citySlice,
   saved: savedReducer,
   dialog: dialogReducer,
   cart: cartReducer,
@@ -95,7 +103,8 @@ export const store = configureStore({
       commentsApi.middleware,
       PointsApi.middleware,
       analyticsMetaApi.middleware,
-
+      cityApi.middleware,
+      locationApi.middleware,
     );
   },
 });

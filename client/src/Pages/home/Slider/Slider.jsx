@@ -7,10 +7,9 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { imageBaseUrl } from "../../../components/service";
 const Slider = ({ sliders }) => {
-  console.log('what is inside: ',sliders)
   const [_, { language }] = useTranslation();
   return (
-    <Box ml={-16} style={{position:'relative',lef:0,right:0}}>
+    <Box ml={-16} style={{ position: 'relative', lef: 0, right: 0 }}>
       <Splide
         options={{
           type: 'loop',
@@ -35,7 +34,7 @@ const Slider = ({ sliders }) => {
           sliders?.map((slider) => {
             return (
               <SplideSlide>
-                <img src={imageBaseUrl+ slider?.image} alt="Image 1" />
+                <img src={imageBaseUrl + slider?.image} alt="Image 1" />
               </SplideSlide>
             );
           })}

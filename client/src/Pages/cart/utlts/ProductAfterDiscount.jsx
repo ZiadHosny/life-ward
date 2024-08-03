@@ -8,10 +8,8 @@ export const ProductDiscountForProduct = (product) => {
 
 
         if (products?.length && couponEnter !== '') {
-            console.log(product, 'adssadsadsad')
             const FoundedProduct = products?.some((item) => item === product?.product?._id);
             if (FoundedProduct) {
-                console.log(product, 'adssadsadsad')
                 const { total, product: { shippingPrice } } = product;
                 const TotalItemBeforeShipping = Math.abs(total - shippingPrice)
                 const itemAfterDiscount = Math.abs(TotalItemBeforeShipping - (TotalItemBeforeShipping * (persentage / 100)))
