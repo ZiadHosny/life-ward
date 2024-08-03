@@ -38,7 +38,11 @@ import fastCostRouter from "./routes/fastCost.router";
 import noteRouter from "./routes/note.router";
 import cityRouter from "./routes/city.router";
 import neighborhoodRouter from "./routes/neighborhood.router";
+<<<<<<< Updated upstream
 import generalRouter from "./routes/general.router";
+=======
+import traderRouter from "./routes/traders.router";
+>>>>>>> Stashed changes
 
 const router = Router();
 
@@ -77,23 +81,23 @@ router.use("/offers", offerRouter);
 router.use("/coupons", couponRouter);
 router.use("/marketers", marketerRouter);
 router.use("/blogs", blogRouter);
-router.use('/webhook', webhookRouter);
-router.use('/points-management', PointsManagementsRouter);
-router.use('/static-point-request', staticPointsRequestRouter);
-router.use("/changeCurrency", changeCurrencyRouter)
-router.use('/sendNews', sendNewsViaEmailAndSMSRouter);
-router.use('/analyticsMeta', AnalyticsMetaRouter);
-router.use('/visitorHistory', visitorHistoryRouter);
-router.use('/repositories', repositoryRouter);
+router.use("/webhook", webhookRouter);
+router.use("/points-management", PointsManagementsRouter);
+router.use("/static-point-request", staticPointsRequestRouter);
+router.use("/changeCurrency", changeCurrencyRouter);
+router.use("/sendNews", sendNewsViaEmailAndSMSRouter);
+router.use("/analyticsMeta", AnalyticsMetaRouter);
+router.use("/visitorHistory", visitorHistoryRouter);
+router.use("/repositories", repositoryRouter);
 router.use("/subscribers", subscriberRouter);
 router.use("/city", cityRouter);
 router.use("/neighborhood", neighborhoodRouter);
 router.use("/general", generalRouter);
 
 
-
 router.use("/occasions", OccasionsRouter);
 router.use("/fastCost", fastCostRouter);
 router.use("/notes", noteRouter);
+router.use("/traders", traderRouter);
 
 export default router;
