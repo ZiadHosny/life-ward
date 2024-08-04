@@ -38,11 +38,8 @@ import fastCostRouter from "./routes/fastCost.router";
 import noteRouter from "./routes/note.router";
 import cityRouter from "./routes/city.router";
 import neighborhoodRouter from "./routes/neighborhood.router";
-<<<<<<< Updated upstream
 import generalRouter from "./routes/general.router";
-=======
 import traderRouter from "./routes/traders.router";
->>>>>>> Stashed changes
 
 const router = Router();
 
