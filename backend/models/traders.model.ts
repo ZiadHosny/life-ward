@@ -1,4 +1,4 @@
-import mongoose, { Document, ObjectId, Schema, model } from "mongoose";
+import { Document, ObjectId, Schema, SchemaType, Types, model } from "mongoose";
 import { IOrder } from "../interfaces/order/order.interface";
 
 export interface ITrader extends Document {
@@ -6,17 +6,19 @@ export interface ITrader extends Document {
   email: string;
   password: string;
   country: string;
-  city: string;
-  assignedOrders: IOrder[] | IOrder["_id"];
+  city: SchemaType;
+  assignedOrders: SchemaType;
 }
 
 const traderSchema = new Schema<ITrader>({
   name: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
-  country: { type: String },
-  city: { type: String },
-  assignedOrders: [{ orderId: mongoose.Schema.Types.ObjectId, ref: "Order" }],
+  country: { type: String, ref: 'Neighborhood' },
+  city: { type: Types.ObjectId, ref: 'City' },
+  assignedOrders: [
+    { type: Types.ObjectId, ref: "Order" },
+  ],
 });
 
 export const Trader = model<ITrader>("Trader", traderSchema);

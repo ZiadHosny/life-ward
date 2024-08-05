@@ -11,12 +11,12 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import NavbarContent from "./NavbarContent";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { links } from "./links";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Button, FormControlLabel, Stack } from "@mui/material";
+import { FormControlLabel, Stack } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import lightSide from "../../assets/lightSideV2.png";
 import darkSide from "../../assets/darkBgV2.png";
@@ -74,8 +74,6 @@ function ResponsiveDrawer(props) {
       nav(link.path);
     }
   };
-  const { currentUser } = useSelector((state) => state);
-  console.log('currentUsercurrentUser In APP',currentUser);
   const drawer = (
     <Box>
       <Toolbar>
@@ -92,9 +90,8 @@ function ResponsiveDrawer(props) {
 
       <List>
         {filterAndModifyLinks(links, role).map((link, index) => (
-          <>
+          <Fragment key={`${index}+1`}>
             <ListItem
-              key={`${index}+1`}
               disablePadding
               onClick={() => handleClick(link)}
               sx={{
@@ -176,7 +173,7 @@ function ResponsiveDrawer(props) {
                   </ListItemButton>
                 </ListItem>
               ))}
-          </>
+          </Fragment>
         ))}
       </List>
     </Box>
@@ -207,11 +204,10 @@ function ResponsiveDrawer(props) {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
-                background: `url("${
-                  JSON.parse(localStorage.getItem("darkMode"))
-                    ? darkSide
-                    : lightSide
-                }")`,
+                background: `url("${JSON.parse(localStorage.getItem("darkMode"))
+                  ? darkSide
+                  : lightSide
+                  }")`,
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 direction: language === "en" ? "ltr" : "rtl",
@@ -251,11 +247,10 @@ function ResponsiveDrawer(props) {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
-                background: `url("${
-                  JSON.parse(localStorage.getItem("darkMode"))
-                    ? darkSide
-                    : lightSide
-                }")`,
+                background: `url("${JSON.parse(localStorage.getItem("darkMode"))
+                  ? darkSide
+                  : lightSide
+                  }")`,
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 left: language === "en" ? "0 !important" : undefined,

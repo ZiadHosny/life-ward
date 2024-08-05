@@ -89,6 +89,7 @@ export const createOrder = expressAsyncHandler(
     const { _id } = req.user! as any;
     const {
       city,
+      neighborhood,
       orderNotes,
       phone,
       email,
@@ -106,10 +107,8 @@ export const createOrder = expressAsyncHandler(
       congratz,
     } = req.body;
 
-    console.log(req.body)
-
     // 2- add address in database for user
-    const newAddress = { city, area, address, postalCode } as addressInterface;
+    const newAddress = { city, neighborhood, area, address, postalCode } as addressInterface;
     const addresses = await User.findById((req.user! as any).id).select(
       "addressesList"
     );
@@ -118,6 +117,7 @@ export const createOrder = expressAsyncHandler(
       resultAddresses = addresses.addressesList.filter((item) => {
         if (
           item.city === city &&
+          item.neighborhood === neighborhood &&
           item.area === area &&
           item.address === address &&
           item.postalCode === postalCode
@@ -347,6 +347,7 @@ export const createOrder = expressAsyncHandler(
       totalPrice,
       totalQuantity,
       city,
+      neighborhood,
       phone,
       email: emailLowercase,
       name,
@@ -558,7 +559,7 @@ export const verifyOrder = expressAsyncHandler(
         });
         break;
       default:
-        const { city, orderNotes, phone, email } = order;
+        const { city, neighborhood, orderNotes, phone, email } = order;
 
         await order.save();
         res.status(StatusCodes.CREATED).json({
@@ -571,8 +572,9 @@ export const verifyOrder = expressAsyncHandler(
             total_quantity: order.totalQuantity,
             total_price: order.onlineItems.totalPrice,
             city,
+            neighborhood,
             orderNotes,
-            description: `Payment for order: ${phone}, ${email}, ${city}, pay ${order.onlineItems.totalPrice} from the total price ${order.totalPrice}`,
+            description: `Payment for order: ${phone}, ${email}, ${city}, ${neighborhood}, pay ${order.onlineItems.totalPrice} from the total price ${order.totalPrice}`,
             phone,
             email,
             paymentType: "online",
@@ -747,6 +749,8 @@ export const getAllOrders = expressAsyncHandler(
     const query = req.query as IQuery;
     const mongoQuery = Order.find({ active: true });
     const orders = await Order.find({ active: true }).populate([
+      'city',
+      'neighborhood',
       {
         path: "onlineItems.items.product",
         model: "Product",

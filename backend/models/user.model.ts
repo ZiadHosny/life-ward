@@ -61,6 +61,7 @@ const userSchema = new mongoose.Schema<IUser>(
       {
         id: { type: mongoose.Schema.Types.ObjectId },
         city: String,
+        neighborhood: String,
         area: String,
         address: String,
         postalCode: String,

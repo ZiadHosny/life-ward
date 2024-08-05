@@ -1,4 +1,4 @@
-import { Document, Types } from "mongoose";
+import { Document, Schema, Types } from "mongoose";
 import { IProduct } from "../product/product.interface";
 import IUser from "../user/user.interface";
 
@@ -21,7 +21,8 @@ export interface IOrder extends Document {
   paymentStatus: "payment_not_paid" | "payment_paid" | "payment_failed";
   totalPrice: number;
   totalQuantity: number;
-  city: string;
+  city: Schema;
+  neighborhood: Schema,
   phone: string;
   active: boolean;
   tracking?: { path: string; orderNumberTracking: string }[];
@@ -66,24 +67,24 @@ export interface IOrder extends Document {
       transaction_url: string;
     } & (
       | ({
-          type: "creditcard";
-        } & {
-          company: string;
-          name: string;
-          number: string;
-          message?: string;
-          reference_number?: string;
-        })
+        type: "creditcard";
+      } & {
+        company: string;
+        name: string;
+        number: string;
+        message?: string;
+        reference_number?: string;
+      })
       | ({
-          type: "applepay";
-        } & {
-          transaction: {};
-        })
+        type: "applepay";
+      } & {
+        transaction: {};
+      })
       | ({
-          type: "stcpay";
-        } & {
-          transaction: {};
-        })
+        type: "stcpay";
+      } & {
+        transaction: {};
+      })
     );
   };
   onlineItems: {

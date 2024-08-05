@@ -51,6 +51,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallBack from "./Components/ErrorBoundary/ErrorBoundaryFallBack";
 import moment from "moment-timezone";
 import CitiesPage from "./Pages/cities/CitiesPage";
+import TradersPage from "./Pages/Sales/Traders";
+
 function App() {
   moment.tz.setDefault("UTC");
   const { data, isSuccess, error } = useGetMeQuery();
@@ -216,6 +218,14 @@ function App() {
                 element={
                   <ErrorBoundary FallbackComponent={ErrorBoundaryFallBack}>
                     <UsersSales />
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="/traders"
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorBoundaryFallBack}>
+                    <TradersPage />
                   </ErrorBoundary>
                 }
               />

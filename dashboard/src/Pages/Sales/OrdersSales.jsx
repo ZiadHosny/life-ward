@@ -11,11 +11,15 @@ import {
   Paper,
   TableBody,
   TextField,
-  Container,
   useTheme,
+  IconButton,
+  Collapse,
 } from "@mui/material";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CircularProgress from "@mui/material/CircularProgress";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
@@ -25,16 +29,21 @@ import {
   useDeleteOrderByIdMutation,
   useGetAllOrdersQuery,
 } from "../../api/order.api";
+import {
+  useGetAllTradersQuery
+} from "../../api/traders.api";
 import { toast } from "react-toastify";
 import { ORDER_STATUS } from "../../helper/order-status";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
 const OrdersSales = () => {
+
   const { data, isSuccess, isError, isLoading, error } =
     useGetAllOrdersQuery("?limit=1000");
-  const navigate = useNavigate();
-  const [deleteOrderById, { isLoading: deleteOrderByIdLoading }] =
-    useDeleteOrderByIdMutation();
+
+  const { data: traders } = useGetAllTradersQuery()
   const [UsersDataOrder, setUsersDataOrder] = useState([]);
   const { customColors, colors } = useTheme();
   useEffect(() => {
@@ -43,18 +52,7 @@ const OrdersSales = () => {
     }
   }, [data]);
   const [_, { language: lang }] = useTranslation();
-  const handleDelete = (order) => {
-    setUsersDataOrder(UsersDataOrder.filter((item) => item._id !== order._id));
-    deleteOrderById(order._id)
-      .unwrap()
-      .then((res) => {
-        toast.success(res[`success_${lang}`]);
-      })
-      .catch((err) => {
-        setUsersDataOrder(data?.orders);
-        toast.error(err?.data[`error_${lang}`]);
-      });
-  };
+
   // search function
   const handleSearch = (value) => {
     if (value === "") {
@@ -69,27 +67,7 @@ const OrdersSales = () => {
     });
     setUsersDataOrder(newData);
   };
-  const [changeOrderStatusById] = useChangeOrderStatusByIdMutation();
-  function handleToggleOrderState(item) {
-    changeOrderStatusById({
-      payload: item.orderStatus,
-      id: item._id,
-    })
-      .unwrap()
-      .then((res) => {
-        const findedUpdatdItem = UsersDataOrder.find(
-          (order) => order._id === item._id
-        );
-        toast.success(res[`success_${lang}`]);
-        const newArray = UsersDataOrder.map((order) => {
-          if (findedUpdatdItem) {
-            return res.order;
-          }
-          return order;
-        });
-        setUsersDataOrder(newArray);
-      });
-  }
+
   return (
     <Box
       sx={{
@@ -149,11 +127,11 @@ const OrdersSales = () => {
                   sx={{
                     width: "auto",
                     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline":
-                      {
-                        borderColor: "transparent !important",
-                        outline: "none !important",
-                        backgroundColor: "transparent !important",
-                      },
+                    {
+                      borderColor: "transparent !important",
+                      outline: "none !important",
+                      backgroundColor: "transparent !important",
+                    },
                   }}
                   placeholder={lang === "en" ? "Search" : "ابحث هنا"}
                   name="search"
@@ -273,7 +251,7 @@ const OrdersSales = () => {
                               textAlign: "center",
                             }}
                           >
-                            {lang === "en" ? "Statue" : " الحالة"}
+                            {lang === "en" ? "Status" : " الحالة"}
                           </Typography>
                         </TableCell>
                         <TableCell>
@@ -339,105 +317,15 @@ const OrdersSales = () => {
                     ) : (
                       <TableBody>
                         {UsersDataOrder.map((item, index) => (
-                          <TableRow
+                          <Row
+                            index={index}
                             key={index}
-                            sx={{
-                              bgcolor: customColors.bg,
-                              borderRadius: "10px",
-                            }}
-                          >
-                            <TableCell align="center">{index + 1}</TableCell>
-                            <TableCell
-                              onClick={() => {
-                                navigate(`/orders/${item._id}`);
-                              }}
-                              sx={{
-                                cursor: "pointer",
-                                textDecoration: "underline",
-                              }}
-                              align="center"
-                            >
-                              {item.name}
-                            </TableCell>
-                            <TableCell align="center">
-                              {item?.email ||
-                                (lang === "en" ? "No Email" : "لا يوجد بريد")}
-                            </TableCell>
-
-                            <TableCell align="center">
-                              {item.totalQuantity}
-                            </TableCell>
-                            <TableCell align="center">
-                              {lang === "en"
-                                ? `${item.totalPrice} SAR`
-                                : `${item.totalPrice}ر.س`}
-                            </TableCell>
-                            <TableCell align="center">
-                              {item.payInCash
-                                ? lang === "en"
-                                  ? "Pay in delivery"
-                                  : "الدفع عند التوصيل"
-                                : lang === "en"
-                                ? `Online`
-                                : `اونلاين`}
-                            </TableCell>
-
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  // width: { xs: "100%", sm: "80%", xl: "100%" },
-                                  p: "3px 20px",
-
-                                  backgroundColor:
-                                    item.orderStatus === "pending"
-                                      ? "#f7ce70"
-                                      : "#7DDDCD",
-                                  color:
-                                    item.orderStatus === "pending"
-                                      ? "#000"
-                                      : "#fff",
-                                  fontWeight: "bold",
-                                  borderRadius: "25px",
-                                  textAlign: "center",
-                                  fontSize: {
-                                    xs: "12px",
-                                    sm: "14px",
-                                    lg: "16px",
-                                  },
-                                  cursor: "pointer",
-                                }}
-                                onClick={() => handleToggleOrderState(item)}
-                              >
-                                {console.log("lang",lang)}
-                                {console.log("item",item)}
-                                {ORDER_STATUS[item?.status][lang]}
-                              </Typography>
-                            </TableCell>
-
-                            <TableCell align="center">
-                              {
-                                item?.updatedAt ? item.updatedAt.slice(0, 10): item?.createdAt.slice(0, 10)
-                                }
-                            </TableCell>
-
-                            <TableCell align="center">
-                              <Button
-                                size="small"
-                                onClick={() => {
-                                  handleDelete(item);
-                                }}
-                                disabled={deleteOrderByIdLoading}
-                                sx={{
-                                  backgroundColor: "transparent !important",
-
-                                  color: colors.dangerous,
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                <DeleteIcon />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
+                            item={item}
+                            traders={traders?.data ?? []}
+                            UsersDataOrder={UsersDataOrder}
+                            setUsersDataOrder={setUsersDataOrder}
+                            data={data}
+                          />
                         ))}
                       </TableBody>
                     )}
@@ -453,3 +341,234 @@ const OrdersSales = () => {
 };
 
 export default OrdersSales;
+
+
+const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+  const { customColors, colors } = useTheme();
+  const [openDetails, setOpenDetails] = useState(false);
+  const navigate = useNavigate();
+  const [deleteOrderById, { isLoading: deleteOrderByIdLoading }] =
+    useDeleteOrderByIdMutation();
+  const [_, { language: lang }] = useTranslation();
+
+  const handleDelete = (order) => {
+    setUsersDataOrder(UsersDataOrder.filter((item) => item._id !== order._id));
+    deleteOrderById(order._id)
+      .unwrap()
+      .then((res) => {
+        toast.success(res[`success_${lang}`]);
+      })
+      .catch((err) => {
+        setUsersDataOrder(data?.orders);
+        toast.error(err?.data[`error_${lang}`]);
+      });
+  };
+
+  const [changeOrderStatusById] = useChangeOrderStatusByIdMutation();
+  function handleToggleOrderState(item) {
+    changeOrderStatusById({
+      payload: item.orderStatus,
+      id: item._id,
+    })
+      .unwrap()
+      .then((res) => {
+        const findedUpdatdItem = UsersDataOrder.find(
+          (order) => order._id === item._id
+        );
+        toast.success(res[`success_${lang}`]);
+        const newArray = UsersDataOrder.map((order) => {
+          if (findedUpdatdItem) {
+            return res.order;
+          }
+          return order;
+        });
+        setUsersDataOrder(newArray);
+      });
+  }
+
+  return (
+    <>
+      <TableRow
+        key={index}
+        sx={{
+          bgcolor: customColors.bg,
+          borderRadius: "10px",
+        }}
+      >
+        <TableCell align="center">{index + 1}</TableCell>
+        <TableCell
+          onClick={() => {
+            navigate(`/orders/${item._id}`);
+          }}
+          sx={{
+            cursor: "pointer",
+            textDecoration: "underline",
+          }}
+          align="center"
+        >
+          {item.name}
+        </TableCell>
+        <TableCell align="center">
+          {item?.email ||
+            (lang === "en" ? "No Email" : "لا يوجد بريد")}
+        </TableCell>
+
+        <TableCell align="center">
+          {item.totalQuantity}
+        </TableCell>
+        <TableCell align="center">
+          {lang === "en"
+            ? `${item.totalPrice} SAR`
+            : `${item.totalPrice}ر.س`}
+        </TableCell>
+        <TableCell align="center">
+          {item.payInCash
+            ? lang === "en"
+              ? "Pay in delivery"
+              : "الدفع عند التوصيل"
+            : lang === "en"
+              ? `Online`
+              : `اونلاين`}
+        </TableCell>
+
+        <TableCell align="center">
+          <Typography
+            sx={{
+              // width: { xs: "100%", sm: "80%", xl: "100%" },
+              p: "3px 20px",
+
+              backgroundColor:
+                item.orderStatus === "pending"
+                  ? "#f7ce70"
+                  : "#7DDDCD",
+              color:
+                item.orderStatus === "pending"
+                  ? "#000"
+                  : "#fff",
+              fontWeight: "bold",
+              borderRadius: "25px",
+              textAlign: "center",
+              fontSize: {
+                xs: "12px",
+                sm: "14px",
+                lg: "16px",
+              },
+              cursor: "pointer",
+            }}
+            onClick={() => handleToggleOrderState(item)}
+          >
+            {ORDER_STATUS[item?.status][lang]}
+          </Typography>
+        </TableCell>
+
+        <TableCell align="center">
+          {
+            item?.updatedAt ? item.updatedAt.slice(0, 10) : item?.createdAt.slice(0, 10)
+          }
+        </TableCell>
+
+        <TableCell align="center" sx={{ display: 'flex' }}>
+          <Button
+            size="small"
+            onClick={() => {
+              handleDelete(item);
+            }}
+            disabled={deleteOrderByIdLoading}
+            sx={{
+              backgroundColor: "transparent !important",
+
+              color: colors.dangerous,
+              fontWeight: "bold",
+            }}
+          >
+            <DeleteIcon />
+          </Button>
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? 'long-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpenDetails(!openDetails)}
+          >
+            {openDetails ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              'aria-labelledby': 'long-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: 48 * 4.5,
+                width: '20ch',
+              },
+            }}
+          >
+            {traders.map((option, i) => (
+              <MenuItem key={i} selected={i === 'Pyxis'} onClick={handleClose}>
+                {i}
+              </MenuItem>
+            ))}
+          </Menu>
+        </TableCell>
+      </TableRow>
+      <TableRow sx={{
+        bgcolor: customColors.bg,
+        borderRadius: "10px",
+      }}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
+          <Collapse in={openDetails} timeout="auto" unmountOnExit>
+            <TableRow sx={{ textAlign: 'center', display: 'flex', alignItems: 'center' }}>
+              {
+                item.city ?
+                  <>
+                    <TableCell sx={{ paddingBottom: '10px', paddingTop: '10px' }}>
+                      {lang === 'en' ? 'City' : 'المدينة'} : {item.city['name_ar']}
+                    </TableCell>
+                    <Box sx={{ height: '30px', borderRight: 2 }}></Box>
+                  </>
+                  :
+                  <></>
+              }
+              {
+                item.neighborhood ?
+                  <>
+                    <TableCell sx={{ paddingBottom: '10px', paddingTop: '10px' }}>
+                      {lang === 'en' ? 'Neighborhood' : 'الحي'} : {item.neighborhood['name_ar']}
+                    </TableCell>
+                    <Box sx={{ height: '30px', borderRight: 2 }}></Box>
+                  </>
+                  :
+                  <></>
+              }
+              <TableCell sx={{ paddingBottom: '10px', paddingTop: '10px' }}>
+                {lang === 'en' ? 'Address' : 'العنوان'} : {item.address}
+              </TableCell>
+            </TableRow>
+          </Collapse>
+        </TableCell>
+      </TableRow >
+    </>
+  )
+}

@@ -22,7 +22,13 @@ const orderSchema = new Schema<IOrder>(
       required: true,
     },
     city: {
-      type: String,
+      type: Types.ObjectId,
+      ref: "City",
+      required: true,
+    },
+    neighborhood: {
+      type: Types.ObjectId,
+      ref: "Neighborhood",
       required: true,
     },
     phone: {

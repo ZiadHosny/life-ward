@@ -31,7 +31,7 @@ export interface IRole {
 
 
 export default interface IUser extends Document {
-  points:number,
+  points: number,
   _id: Types.ObjectId;
   registrationType: string;
   verificationCode: string | undefined;
@@ -48,11 +48,12 @@ export default interface IUser extends Document {
   imageUrl?: string;
   orders: string[];
   addressesList: [{
-          _id: string,
-          city: String,
-          area: String,
-          address: String,
-          postalCode: String,
+    _id: string,
+    city: String,
+    neighborhood: String,
+    area: String,
+    address: String,
+    postalCode: String,
   }];
   favourite: string[];
   changePasswordAt?: Date;

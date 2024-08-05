@@ -20,9 +20,17 @@ export const cityApi = createApi({
             query: () => ({ url: `/city` }),
             providesTags: ["cityApi"],
         }),
+        getAllNeighborhoodsForSpecificCity: builder.query({
+            query: ({ id, query }) => ({
+                url: `/neighborhood/forSpecificCity/${id}${query ? `?${query}` : ""
+                    }`,
+            }),
+            providesTags: ["neighborhoodApi"],
+        }),
     }),
 });
 
 export const {
     useGetAllCitiesQuery,
+    useGetAllNeighborhoodsForSpecificCityQuery
 } = cityApi;

@@ -89,8 +89,8 @@ const OrderDelivery = ({
               ? "Cash"
               : "عند الإستلام"
             : language === "en"
-            ? "Online"
-            : "اونلاين"}
+              ? "Online"
+              : "اونلاين"}
         </Typography>
         <Typography variant={"body1"} sx={{ m: "0 !important" }}>
           {language === "en" ? "Order history" : "تاريخ الطلب"}:{" "}
@@ -103,16 +103,16 @@ const OrderDelivery = ({
               ? "Pending"
               : "معلق"
             : language === "en"
-            ? "Done"
-            : "تم"}
+              ? "Done"
+              : "تم"}
         </Typography>
         <Typography variant={"body1"} sx={{ m: "0 !important" }}>
           {language === "en" ? `receipt: ` : `الإستلام: `}{" "}
           {!fastDelivery
             ? moment(receiveDate).format("YYYY-MM-DD")
             : language === "en"
-            ? " fast delivery"
-            : "توصيل سريع"}
+              ? " fast delivery"
+              : "توصيل سريع"}
         </Typography>
       </Stack>
       <LocalShippingIcon
@@ -547,103 +547,103 @@ function BasicTable({ data, orderShipping }) {
       >
         {order?.length
           ? order?.map((Branch) => {
-              return (
+            return (
+              <Grid
+                item
+                xs={12}
+                md={3}
+                key={Branch?.BranchInforemotion?.name_en}
+                sx={{
+                  margin: "10px",
+                  padding: "10px",
+                }}
+              >
                 <Grid
-                  item
-                  xs={12}
-                  md={3}
-                  key={Branch?.BranchInforemotion?.name_en}
+                  container
                   sx={{
-                    margin: "10px",
-                    padding: "10px",
+                    justifyContent: "space-between",
+                    display: "flex",
                   }}
                 >
                   <Grid
-                    container
+                    item
+                    xs={6}
+                    sm={6}
+                    md={6}
                     sx={{
-                      justifyContent: "space-between",
-                      display: "flex",
+                      margin: "10px 0px",
                     }}
                   >
-                    <Grid
-                      item
-                      xs={6}
-                      sm={6}
-                      md={6}
-                      sx={{
-                        margin: "10px 0px",
-                      }}
-                    >
-                      {language === "en" ? "name" : "الاسم"}:
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sm={6}
-                      md={6}
-                      sx={{
-                        margin: "10px 0px",
-                      }}
-                    >
-                      {language === "en"
-                        ? Branch?.BranchInforemotion?.name_en
-                        : Branch?.BranchInforemotion?.name_ar}
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sm={6}
-                      md={6}
-                      sx={{
-                        margin: "10px 0px",
-                      }}
-                    >
-                      {language === "en" ? "city" : "المدينه"}:
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sm={6}
-                      md={6}
-                      sx={{
-                        margin: "10px 0px",
-                      }}
-                    >
-                      {language === "en"
-                        ? Branch?.BranchInforemotion?.city
-                        : Branch?.BranchInforemotion?.city}
-                    </Grid>
-                    <Card
-                      sx={{
-                        bgcolor: customColors.container,
-                        cursor: "pointer",
-                        padding: "20px",
-                        height: "30px",
-                        display: "flex",
-                        alignItems: "center",
-                        margin: "10px",
-                        width: "100%",
-                        textAlign: "center",
-                        justifyContent: "center",
-                      }}
-                      onClick={() => openDialoge(Branch)}
-                    >
-                      <Typography
-                        variant={"p"}
-                        sx={{
-                          color: customColors.text,
-                        }}
-                        textAlign={"center"}
-                      >
-                        {language === "en"
-                          ? "Order Tracking  "
-                          : "  تتبع الطلب"}
-                      </Typography>
-                    </Card>
+                    {language === "en" ? "name" : "الاسم"}:
                   </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    sx={{
+                      margin: "10px 0px",
+                    }}
+                  >
+                    {language === "en"
+                      ? Branch?.BranchInforemotion?.name_en
+                      : Branch?.BranchInforemotion?.name_ar}
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    sx={{
+                      margin: "10px 0px",
+                    }}
+                  >
+                    {language === "en" ? "city" : "المدينه"}:
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    sx={{
+                      margin: "10px 0px",
+                    }}
+                  >
+                    {language === "en"
+                      ? Branch?.BranchInforemotion?.city
+                      : Branch?.BranchInforemotion?.city}
+                  </Grid>
+                  <Card
+                    sx={{
+                      bgcolor: customColors.container,
+                      cursor: "pointer",
+                      padding: "20px",
+                      height: "30px",
+                      display: "flex",
+                      alignItems: "center",
+                      margin: "10px",
+                      width: "100%",
+                      textAlign: "center",
+                      justifyContent: "center",
+                    }}
+                    onClick={() => openDialoge(Branch)}
+                  >
+                    <Typography
+                      variant={"p"}
+                      sx={{
+                        color: customColors.text,
+                      }}
+                      textAlign={"center"}
+                    >
+                      {language === "en"
+                        ? "Order Tracking  "
+                        : "  تتبع الطلب"}
+                    </Typography>
+                  </Card>
                 </Grid>
-              );
-            })
+              </Grid>
+            );
+          })
           : null}
       </Grid>
 
@@ -704,6 +704,9 @@ const CardAddress = ({ address, city, country }) => {
         </Typography>
         <Typography variant={"body1"} sx={{ m: "0 !important" }}>
           {language === "en" ? "City" : "المدينة"}: {city}
+        </Typography>
+        <Typography variant={"body1"} sx={{ m: "0 !important" }}>
+          {language === "en" ? "Neighborhood" : "الحي"}: {city}
         </Typography>
       </Stack>
       <NearMeOutlinedIcon

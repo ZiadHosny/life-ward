@@ -2,7 +2,6 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import EqualizerOutlinedIcon from "@mui/icons-material/EqualizerOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
@@ -10,7 +9,6 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import SubtitlesIcon from "@mui/icons-material/Subtitles";
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -27,6 +25,8 @@ import blogsIcon from "../../assets/blog.svg";
 import StoreIcon from "@mui/icons-material/Store";
 import { CardMedia } from "@mui/material";
 import EditAttributesIcon from "@mui/icons-material/EditAttributes";
+import GroupsOutlined from '@mui/icons-material/GroupsOutlined';
+
 export const links = [
   {
     en: "Home",
@@ -39,6 +39,12 @@ export const links = [
     ar: "المبيعات",
     icon: <EqualizerOutlinedIcon />,
     nested: [
+      {
+        en: "Traders",
+        ar: "التجار",
+        path: "/traders",
+        icon: <GroupsOutlined />,
+      },
       {
         en: "Users",
         ar: "المستخدمين",

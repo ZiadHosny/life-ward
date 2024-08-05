@@ -156,6 +156,7 @@ export const checkoutValues = {
     email: "",
     country: "Saudi Arabia",
     city: "",
+    neighborhood: "",
     for: 'yourself',
     address: "",
     receiveDate: "",
@@ -217,6 +218,9 @@ export const checkoutValidaions = {
     ),
     city: Yup.string().required(
       language === "en" ? "City is required" : "المدينة مطلوبة"
+    ),
+    neighborhood: Yup.string().required(
+      language === "en" ? "Neighborhood is required" : "الحي مطلوب"
     ),
     time: Yup.string().required(
       language === "en" ? "Time is required" : "الوقت مطلوب"

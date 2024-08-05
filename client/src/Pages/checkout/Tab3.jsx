@@ -5,6 +5,8 @@ import { colors, publicFontFamily } from '../../components/publicStyle/publicSty
 import { useTranslation } from 'react-i18next';
 import { useGetFastCoast, useGetNote } from './latest/FirstHooks';
 import { MobileTab } from './MobileTab';
+import { useFetchAllCities } from '../../hooks/cities.hooks';
+import { useGetAllNeighborhoodsForSpecificCityQuery } from '../../APIs/city.api';
 
 const timesAr = ["٤ عصراً - ٧ مساءً", "٧ مساءً - ٩ مساءً", "٩ مساءً- ١٢ مساءً"]
 const timesEn = ["4pm - 7pm", "7pm - 9pm", "9pm - 12pm"]
@@ -22,6 +24,11 @@ export const Tab3 = ({
 }) => {
     const { fastCoast } = useGetFastCoast();
     const { noteMessage } = useGetNote();
+
+    const { cities } = useFetchAllCities();
+    const { data: neighborhoods } = useGetAllNeighborhoodsForSpecificCityQuery({
+        id: values.city,
+    });
 
     const [_, { language: lang }] = useTranslation();
     const times = lang === 'en' ? timesEn : timesAr
@@ -104,6 +111,7 @@ export const Tab3 = ({
                             onChange={(e) => {
                                 handleChange(e);
                                 setFieldValue("address", "");
+                                setFieldValue("neighborhood", "");
                             }}
                             onBlur={handleBlur}
                             value={values.city}
@@ -123,7 +131,7 @@ export const Tab3 = ({
                                 py="15px" component="option" selected hidden>
                                 {lang === "en" ? "Select a city" : "أختر مدينة"}
                             </Typography>
-                            {["المدينة المنورة", "جدة"].map((option) => (
+                            {cities?.data.map((option) => (
                                 <Typography
                                     fontFamily={publicFontFamily}
                                     sx={{
@@ -133,9 +141,9 @@ export const Tab3 = ({
                                         borderWidth: 1,
                                         fontSize: 20,
                                     }}
-                                    value={option}
+                                    value={option._id}
                                     component="option">
-                                    {option}
+                                    {option[`name_${lang}`]}
                                 </Typography>
                             ))}
                         </select>
@@ -153,23 +161,101 @@ export const Tab3 = ({
                         ) : undefined}
                     </Stack>
 
+                    <Stack
+                        sx={{
+                            flexDirection: 'column',
+                            width: {
+                                md: 0.49,
+                                xs: 1,
+                            },
+                            alignItems: "flex-start",
+                            justifyContent: "space-between",
+                        }}>
+                        <Typography
+                            fontFamily={publicFontFamily}
+                            fontWeight={"bold"}
+                            sx={{
+                                color: colors.main,
+                                fontSize: {
+                                    md: "19px",
+                                    xs: "17.5px",
+                                },
+                            }}
+                        >
+                            {lang === "en" ? "Neighborhood" : "الحي"}
+                        </Typography>
+                        <select
+                            name="neighborhood"
+                            onChange={(e) => {
+                                handleChange(e);
+                                setFieldValue("address", "");
+                            }}
+                            onBlur={handleBlur}
+                            value={values.neighborhood}
+                            style={{
+                                width: "100%",
+                                border: `1px solid ${errors.neighborhood && touched.neighborhood ? "red" : colors.main
+                                    }`,
+                                borderRadius: "20px",
+                                fontSize: "20px",
+                                padding: "8px 15px",
+                                fontFamily: publicFontFamily,
+                                fontWeight: "bold",
+                                outline: 0,
+                            }}>
+                            <Typography
+                                fontFamily={publicFontFamily}
+                                py="15px" component="option" selected hidden>
+                                {lang === "en" ? "Select a Neighborhood" : "أختر حي"}
+                            </Typography>
+                            {neighborhoods?.data.map((option) => (
+                                <Typography
+                                    fontFamily={publicFontFamily}
+                                    sx={{
+                                        cursor: 'pointer',
+                                        color: colors.main,
+                                        borderColor: colors.main,
+                                        borderWidth: 1,
+                                        fontSize: 20,
+                                    }}
+                                    value={option._id}
+                                    component="option">
+                                    {option[`name_${lang}`]}
+                                </Typography>
+                            ))}
+                        </select>
+                        {errors.neighborhood && touched.neighborhood ? (
+                            <Typography
+                                sx={{
+                                    fontFamily: publicFontFamily,
+                                    fontSize: "17px",
+                                    fontWeight: "bold",
+                                    color: "red",
+                                }}
+                            >
+                                {errors.neighborhood}
+                            </Typography>
+                        ) : undefined}
+                    </Stack>
+
+
                     <CheckTextInput
                         type="text"
                         name="address"
                         label={lang === "en" ? "Address" : "العنوان"}
-                        nestedLabel={
-                            <Typography
-                                sx={{
-                                    fontSize: "13px",
-                                    mx: "5px",
-                                    display: "inline",
-                                    fontWeight: "bold",
-                                    fontFamily: publicFontFamily,
-                                }}
-                            >
-                                {values?.city ? `(${values.city})` : undefined}
-                            </Typography>
-                        }
+                        // nestedLabel={
+                        //     <Typography
+                        //         sx={{
+                        //             fontSize: "13px",
+                        //             mx: "5px",
+                        //             display: "inline",
+                        //             fontWeight: "bold",
+                        //             fontFamily: publicFontFamily,
+                        //         }}
+                        //     >
+                        //         {values?.city ? `(${values.city})` : undefined}
+                        //     </Typography>
+                        // }
                         value={values.address}
                         error={errors.address}
                         touched={touched.address}

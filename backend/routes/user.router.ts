@@ -90,8 +90,6 @@ userRouter
     addRole
   );
 
-
-
 userRouter
   .route("/deleteAddressForLoggedUser/:id")
   .delete(protectedMiddleware, deleteAddressForLoggedUserById);

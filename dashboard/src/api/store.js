@@ -33,6 +33,7 @@ import { noteApi } from "./note.api";
 import { fastCoastApi } from "./fastCoast.api";
 import { cityApi } from "./city.api";
 import { neighborhoodApi } from "./neighborhoods.api";
+import { traderApi } from "./traders.api";
 
 const createStore = configureStore({
   reducer: {
@@ -68,6 +69,8 @@ const createStore = configureStore({
     [qualitiesApi.reducerPath]: qualitiesApi.reducer,
     [noteApi.reducerPath]: noteApi.reducer,
     [fastCoastApi.reducerPath]: fastCoastApi.reducer,
+    [traderApi.reducerPath]: traderApi.reducer,
+
     user: userReducer,
     repoProducts: repoProductsSlice,
   },
@@ -105,7 +108,8 @@ const createStore = configureStore({
       subSubCategoriesApi.middleware,
       qualitiesApi.middleware,
       noteApi.middleware,
-      fastCoastApi.middleware
+      fastCoastApi.middleware,
+      traderApi.middleware,
     ),
 });
 

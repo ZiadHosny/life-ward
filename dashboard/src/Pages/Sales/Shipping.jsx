@@ -40,16 +40,16 @@ import ShippingModal_2 from '../../Components/shippingv2/shippingModal_v2';
 import { useGetAllReposQuery, useLazyGetProductsDataQuery } from "../../api/repos.api";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
- const Shipping = () => {
+const Shipping = () => {
   const { customColors, colors } = useTheme();
-  const [getOrderM,{
+  const [getOrderM, {
     data: shipping,
     isSuccess,
     isError,
     isLoading,
     error,
-  } ]= useLazyGetAllOrdersQuery(
-  );
+  }] = useLazyGetAllOrdersQuery(
+    );
   //
   const [data, setData] = useState([]);
   const [_, { language: lang }] = useTranslation();
@@ -76,14 +76,15 @@ import { toast } from "react-toastify";
     setOpen(!open);
   };
 
-useEffect(()=>{
-  getOrderM( "?limit=1000&sendToDelivery=false&status[ne]=initiated").unwrap().then((res) => { 
-    setData(res?.data) }).catch(err=>{
-      
-  })
- 
+  useEffect(() => {
+    getOrderM("?limit=1000&sendToDelivery=false&status[ne]=initiated").unwrap().then((res) => {
+      setData(res?.data)
+    }).catch(err => {
 
-},[data])
+    })
+
+
+  }, [data])
 
   // فكر جديد
 
@@ -96,25 +97,25 @@ useEffect(()=>{
   const handleShipping = (order) => {
     getOrder(order._id).then((res) => {
       let dataArray = Object.entries(res?.data?.data).map(([key, value]) => ({ id: key, items: value }));
-      console.log(dataArray,'orderordesadsdadsr')
+      console.log(dataArray, 'orderordesadsdadsr')
 
-      const ResturctureOrderShipping = order?.ordersShipping?.map(ordersShipping=>{
-        return{
-       
-          RepoId:ordersShipping?.repoId ,
-          status:ordersShipping?.status,
+      const ResturctureOrderShipping = order?.ordersShipping?.map(ordersShipping => {
+        return {
+
+          RepoId: ordersShipping?.repoId,
+          status: ordersShipping?.status,
 
         }
       })
 
-      console.log(res,'resasdsaddsa')
+      console.log(res, 'resasdsaddsa')
 
 
       let NewPopulateArray = {
         order: [],
         ordersShipping: [],
-        shippingInferomation:{},
-        stepperRepos:[],
+        shippingInferomation: {},
+        stepperRepos: [],
       }
 
       if (ReposSuccess && !ReposLoading && !ReposError) {
@@ -126,48 +127,48 @@ useEffect(()=>{
             return {
               ...orderItem,
               RepoInferomation: Repo,
-              orderID:order?._id
+              orderID: order?._id
             }
           }
           return
-        }).filter(item=>item!==undefined);
+        }).filter(item => item !== undefined);
 
         const ReposArray = dataArray?.map(orderItem => {
 
           const Repo = ReposData?.data?.find(item => item?._id === orderItem?.id);
           if (Repo) {
-            return   Repo
-            
+            return Repo
+
           }
           return
-        }).filter(item=>item!==undefined);
+        }).filter(item => item !== undefined);
 
-         NewPopulateArray = {
+        NewPopulateArray = {
           order: populateArray,
-          ordersShipping: ResturctureOrderShipping||[],
-          shippingInferomation:order  ,
-          stepperRepos:ReposArray
+          ordersShipping: ResturctureOrderShipping || [],
+          shippingInferomation: order,
+          stepperRepos: ReposArray
         }
-        console.log(NewPopulateArray,'ReposData?.data')
+        console.log(NewPopulateArray, 'ReposData?.data')
 
- if(!NewPopulateArray?.order?.length){
- 
-  toast.error(lang === "en" ? "there is a problem  while getting Your Repositories " :
-   "  هناك مشكله في استرداد المستودعات")
+        if (!NewPopulateArray?.order?.length) {
 
-  return
-}
-        console.log(NewPopulateArray,'NewPopulateArrayasdsad')
+          toast.error(lang === "en" ? "there is a problem  while getting Your Repositories " :
+            "  هناك مشكله في استرداد المستودعات")
+
+          return
+        }
+        console.log(NewPopulateArray, 'NewPopulateArrayasdsad')
         setOrder(NewPopulateArray)
         setOpenDialoge(true);
-        
+
       } else if (ReposError) {
         toast.error(lang === "en" ? "there is a problem Please check Your internet connection and Try again" : "هناك مشكله في الاتصال بالانترنت ")
       }
 
 
-       
- 
+
+
 
 
 
@@ -429,7 +430,7 @@ useEffect(()=>{
                                         textAlign: "center",
                                       }}
                                     >
-                                      {lang === "en" ? "Statue" : " الحالة"}
+                                      {lang === "en" ? "Status" : " الحالة"}
                                     </Typography>
                                   </TableCell>
                                   <TableCell></TableCell>
@@ -750,7 +751,7 @@ useEffect(()=>{
         order={order}
         setOrder={setOrder}
         setData={setData}
-       />
+      />
     </Box>
   );
 };

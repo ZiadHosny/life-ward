@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Trader } from "../models/traders.model";
 import { Order } from "../models/order.model";
 import { Error } from "mongoose";
+import { getAllItems } from "./factory.controller";
 
 // Create a new trader
 export const createTrader = async (req: Request, res: Response) => {
@@ -15,14 +16,7 @@ export const createTrader = async (req: Request, res: Response) => {
 };
 
 // Get all traders
-export const getTraders = async (req: Request, res: Response) => {
-  try {
-    const traders = await Trader.find();
-    res.status(200).json(traders);
-  } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
-  }
-};
+export const getTraders = getAllItems(Trader, ['city', 'country'])
 
 // Get a trader by ID
 export const getTraderById = async (req: Request, res: Response) => {
@@ -71,7 +65,6 @@ export const assignOrdersToTraders = async (req: Request, res: Response) => {
     if (orders.length === 0 || traders.length === 0) {
       return res.status(404).json({ message: "Orders or traders not found" });
     }
-
     // Update traders with assigned orders
     for (let trader of traders) {
       trader.assignedOrders = [

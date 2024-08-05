@@ -128,7 +128,7 @@ const HomeOrders = () => {
                     textAlign: "center",
                   }}
                 >
-                  {lang === "en" ? "Statue" : " الحالة"}
+                  {lang === "en" ? "Status" : " الحالة"}
                 </Typography>
               </TableCell>
               <TableCell>
