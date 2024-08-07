@@ -287,9 +287,6 @@ const EditProductPage = () => {
     }
   };
 
-
-  console.log(values, 'zzzzzzzz')
-
   return (
     <Box
       sx={{

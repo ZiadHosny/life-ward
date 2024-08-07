@@ -48,7 +48,6 @@ export default function SmsMessages() {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectError, setSelectError] = useState("");
   const [usersNumbers, setUsersNumbers] = useState([]);
-  console.log(selectedUsers, "selectedUsersselectedUsers");
   useEffect(() => {
     if ((!usersError, !isLoading)) {
       setUsersNumbers(users?.data);

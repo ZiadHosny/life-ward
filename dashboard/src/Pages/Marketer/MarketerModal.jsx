@@ -140,7 +140,6 @@ function MarketerModal({ open, setOpen, dataMarketer, setDataMarketer }) {
     }),
     onSubmit: (values) => {
       if (!dataMarketer) {
-        console.log("aaaaaa");
         createMarketer(values)
           .unwrap()
           .then((res) => {
@@ -164,7 +163,6 @@ function MarketerModal({ open, setOpen, dataMarketer, setDataMarketer }) {
           });
       } else {
         delete values.password,
-        console.log("test 1");
           updateMarketer({ body: values, id: dataMarketer._id })
             .unwrap()
             .then((res) => {
@@ -183,8 +181,6 @@ function MarketerModal({ open, setOpen, dataMarketer, setDataMarketer }) {
                 message = `الخصم علي) يجب ان يحتوي على 1 قيمة علي الاقل)`;
               toast.error(message);
             });
-            console.log("test 2");
-
       }
     },
   });

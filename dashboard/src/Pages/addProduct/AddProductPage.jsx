@@ -185,10 +185,7 @@ const AddProductPage = () => {
       setFieldValue("images", [...values.images, staticUploadedImageName]);
     }
   };
-  console.log("check images from formik", values.images);
-  console.log("check images from State", productImages);
-
-
+  
   return (
     <Box
       sx={{

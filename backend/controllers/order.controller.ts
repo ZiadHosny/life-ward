@@ -632,6 +632,8 @@ export const getOrderById = expressAsyncHandler(
     const { id } = req.params;
     const order = await Order.findById({ _id: id, active: true }).populate([
       { path: "user", model: "User", select: "name email phone image" },
+      'city',
+      'neighborhood',
       {
         path: "onlineItems.items.product",
         model: "Product",

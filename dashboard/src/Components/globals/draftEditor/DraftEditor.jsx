@@ -21,7 +21,6 @@ const DraftEditor = (props) => {
   const [_, { language: lang }] = useTranslation();
   useEffect(() => {
     if (props?.edit) {
-      console.log(props?.value,'sadsadqeqe');
       // const doc = new DOMParser().parseFromString(props?.value, "text/html");
       // const textContent = doc.body.textContent;
       // const contentState = ContentState.createFromText(textContent);

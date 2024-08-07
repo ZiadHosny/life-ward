@@ -78,8 +78,8 @@ const ProductGeneralQualities = ({
               ? `Add ${sortedQualities.length}  values to quality`
               : `add value to quality`
             : sortedQualities.length >= 1
-            ? `أضف ${sortedQualities.length} قيم للمعيار`
-            : `أضف قيمة للمعيار`
+              ? `أضف ${sortedQualities.length} قيم للمعيار`
+              : `أضف قيمة للمعيار`
         )
         .required(language === "en" ? "Required!" : "مطلوب!"),
     }),
@@ -166,18 +166,18 @@ const ProductGeneralQualities = ({
           item.key_en === selectedQuality.key_en
             ? findValueObject?.color
               ? {
-                  key_en: selectedQuality.key_en,
-                  key_ar: selectedQuality.key_ar,
-                  value_en: findValueObject.value_en,
-                  value_ar: findValueObject.value_ar,
-                  color: findValueObject?.color,
-                }
+                key_en: selectedQuality.key_en,
+                key_ar: selectedQuality.key_ar,
+                value_en: findValueObject.value_en,
+                value_ar: findValueObject.value_ar,
+                color: findValueObject?.color,
+              }
               : {
-                  key_en: selectedQuality.key_en,
-                  key_ar: selectedQuality.key_ar,
-                  value_en: findValueObject.value_en,
-                  value_ar: findValueObject.value_ar,
-                }
+                key_en: selectedQuality.key_en,
+                key_ar: selectedQuality.key_ar,
+                value_en: findValueObject.value_en,
+                value_ar: findValueObject.value_ar,
+              }
             : item
         );
         return updateQualities;
@@ -197,7 +197,6 @@ const ProductGeneralQualities = ({
   }, [sortedQualities]);
 
   const handleDeleteSelectedSortedQuality = (selectedItem) => {
-    console.log("handleDelete skdhas gdash gdashd", selectedItem);
     setSortedQualities((prevQual) => {
       return prevQual.filter((item) => item.key_en !== selectedItem.key_en);
     });
@@ -216,11 +215,11 @@ const ProductGeneralQualities = ({
       return prevQual.map((item) =>
         item.key_en === selectedItem.key_en
           ? {
-              key_en: selectedItem.key_en,
-              key_ar: selectedItem.key_ar,
-              value_en: "",
-              value_ar: "",
-            }
+            key_en: selectedItem.key_en,
+            key_ar: selectedItem.key_ar,
+            value_en: "",
+            value_ar: "",
+          }
           : item
       );
     });
@@ -333,11 +332,11 @@ const ProductGeneralQualities = ({
         errorQualities && !dataQualities
           ? []
           : dataQualities?.data?.filter((el) => {
-              const findedMatchKey = editedProduct.qualities?.find((item) =>
-                item?.values?.find((v) => v?.key_en === el?.key_en)
-              );
-              return findedMatchKey;
-            });
+            const findedMatchKey = editedProduct.qualities?.find((item) =>
+              item?.values?.find((v) => v?.key_en === el?.key_en)
+            );
+            return findedMatchKey;
+          });
       const sortedFiltereds = filterSelectedGeneralQualities.map((el) => ({
         key_en: el.key_en,
         key_ar: el.key_ar,
@@ -525,11 +524,11 @@ const ProductGeneralQualities = ({
                         <MenuItem
                           key={idx}
                           value={el._id}
-                          // disabled={() => {
-                          //   sortedQualities?.find(
-                          //     (sorted) => sorted?.key_en === el?.key_en
-                          //   );
-                          // }}
+                        // disabled={() => {
+                        //   sortedQualities?.find(
+                        //     (sorted) => sorted?.key_en === el?.key_en
+                        //   );
+                        // }}
                         >
                           {el[`key_${language}`]}
                         </MenuItem>
@@ -607,7 +606,7 @@ const ProductGeneralQualities = ({
                 border: 1,
                 borderColor:
                   (errors.values && touched?.values?.length === 0) ||
-                  (errors.values && touched?.values?.length > 0)
+                    (errors.values && touched?.values?.length > 0)
                     ? colors.dangerous
                     : "divider",
                 mt: "20px",
@@ -633,8 +632,8 @@ const ProductGeneralQualities = ({
                         ? "there are no qualities"
                         : "لا توجد معايير"
                       : language === "en"
-                      ? "failed to fetch qualities"
-                      : "فشل في جلب المعاير"}
+                        ? "failed to fetch qualities"
+                        : "فشل في جلب المعاير"}
                   </Typography>
                 </Stack>
               ) : (
@@ -714,13 +713,12 @@ const ProductGeneralQualities = ({
 
                   <Button
                     sx={{
-                      bgcolor: `${
-                        Object.values(optionQuality).some(
-                          (value) => value === ""
-                        )
+                      bgcolor: `${Object.values(optionQuality).some(
+                        (value) => value === ""
+                      )
                           ? "#00d5c55e"
                           : "#00D5C5"
-                      } !important`,
+                        } !important`,
                       mt: "20px",
                     }}
                     disabled={Object.values(optionQuality).some(
@@ -738,7 +736,7 @@ const ProductGeneralQualities = ({
               )}
             </Box>
             {(errors.values && touched?.values?.length === 0) ||
-            (errors.values && touched?.values?.length > 0) ? (
+              (errors.values && touched?.values?.length > 0) ? (
               <Typography
                 sx={{
                   color: colors.dangerous,
@@ -802,8 +800,8 @@ const ProductGeneralQualities = ({
                     ? "Edit quality"
                     : "تعديل معيار"
                   : language === "en"
-                  ? "Add quality"
-                  : "إضافة معيار"}
+                    ? "Add quality"
+                    : "إضافة معيار"}
               </Button>
             </Stack>
           </Box>

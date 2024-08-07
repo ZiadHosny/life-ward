@@ -300,14 +300,12 @@ function BasicTable({ data, orderShipping }) {
   const [TrackOrderM] = useTrackOrderRepoMutation();
   const { id } = useParams();
   const [statues, setStatus] = useState({});
-  console.log(id, "id");
 
   useEffect(() => {
     setOrder(data);
     if (ReposSuccess && !ReposError) {
       const OrderDatas = ReposData?.data
         ?.map((item) => {
-          console.log(item._id, orderShipping, "asd");
 
           const RepoData = orderShipping?.data?.ordersShipping?.find(
             ({ repoId }) => {
@@ -323,7 +321,6 @@ function BasicTable({ data, orderShipping }) {
           return;
         })
         .filter((item) => item !== undefined);
-      console.log();
       setOrder(OrderDatas);
     }
   }, [orderShipping, data, data?.data, ReposData]);
@@ -668,7 +665,7 @@ function BasicTable({ data, orderShipping }) {
             </Typography>
           </Card> */
 }
-const CardAddress = ({ address, city, country }) => {
+const CardAddress = ({ address, city, neighborhood, country }) => {
   const { customColors } = useTheme();
   const {
     i18n: { language },
@@ -702,12 +699,20 @@ const CardAddress = ({ address, city, country }) => {
         <Typography variant={"body1"} sx={{ m: "0 !important" }}>
           {language === "en" ? "Address" : "العنوان"}: {address}
         </Typography>
-        <Typography variant={"body1"} sx={{ m: "0 !important" }}>
-          {language === "en" ? "City" : "المدينة"}: {city}
-        </Typography>
-        <Typography variant={"body1"} sx={{ m: "0 !important" }}>
-          {language === "en" ? "Neighborhood" : "الحي"}: {city}
-        </Typography>
+        {city ?
+          <Typography variant={"body1"} sx={{ m: "0 !important" }}>
+            {language === "en" ? "City" : "المدينة"}: {city['name_ar']}
+          </Typography>
+          :
+          <></>
+        }
+        {neighborhood ?
+          <Typography variant={"body1"} sx={{ m: "0 !important" }}>
+            {language === "en" ? "Neighborhood" : "الحي"}: {neighborhood['name_ar']}
+          </Typography>
+          :
+          <></>
+        }
       </Stack>
       <NearMeOutlinedIcon
         sx={{
@@ -829,6 +834,7 @@ function OrderPage() {
     address,
     area,
     city,
+    neighborhood,
     postalCode,
     country,
     name,
@@ -888,7 +894,7 @@ function OrderPage() {
           />
         </Grid>
         <Grid item xs={12} lg={4}>
-          <CardAddress address={address} city={city} country={country} />
+          <CardAddress address={address} city={city} neighborhood={neighborhood} country={country} />
         </Grid>
         <Grid item xs={12} lg={4}>
           <OrderDelivery

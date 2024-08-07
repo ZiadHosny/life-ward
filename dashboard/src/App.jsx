@@ -111,10 +111,6 @@ function App() {
   }, [isSuccess]);
   useEffect(() => {
     if (localStorage?.i18nextLng) {
-      console.log(
-        localStorage?.i18nextLng,
-        "localStorage?.i18nextLnglocalStorage?.i18nextLng"
-      );
       changeLanguage(localStorage?.i18nextLng);
     }
   }, []);

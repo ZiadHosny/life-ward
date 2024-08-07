@@ -24,7 +24,6 @@ export const salahCustomization = {
 }
 
 export const ReturnedIcon = ({ status, lng }) => {
-  console.log(status, 'statusstatusstatusstatus')
 
   if(status==="pending"){
     console.log(status,'status')
