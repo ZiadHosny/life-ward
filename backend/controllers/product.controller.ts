@@ -54,12 +54,33 @@ const populateDocument = async (query: any, populate: any) => {
 //   "-__v -directDownloadLink -link"
 // );
 
+export const findCategoryMetaData = async (query: any) => {
+  let categoryMeta;
+  let subcategoryMeta;
+  if (query && (query.category || query.subcategory)) {
+    categoryMeta = await Meta.findOne({ reference: query.category });
+    subcategoryMeta = await Meta.findOne({ reference: query.subcategory });
+  }
+  let MetaData = {
+    categoryMeta,
+    subcategoryMeta,
+  };
+  return MetaData;
+};
 export const getAllProducts = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const { limit, page } = req.query;
+  const pageNumber = page ? +page : 1;
+  const limitNumber = limit ? +limit : 10;
+  const skip = (pageNumber - 1) * limitNumber;
   try {
+    const total = await Product.countDocuments();
+    const totalPages = Math.ceil(total / limitNumber);
+    const categoryMeta = findCategoryMetaData(req.query);
+
     // Define the population options
     const populateOptions = [
       { path: "category", select: "name" },
@@ -74,11 +95,21 @@ export const getAllProducts = async (
     let temp = city ? { city } : {};
     const products = await Product.find(temp)
       .populate(populateOptions) // Apply population options
-      .select("-__v -directDownloadLink -link") // Apply projection
+      .select("-__v -directDownloadLink -link")
+      .skip(skip)
+      .limit(Number(limit)) // Apply projection
       .exec(); // Execute the query
 
     // Send the response
-    res.json(products);
+    res.json({
+      status: Status.SUCCESS,
+      results: products.length,
+      paginationResult: { totalPages, page, limit },
+      data: products,
+      MetaData: categoryMeta,
+      success_en: "found successfully",
+      success_ar: "تم العثور بنجاح",
+    });
   } catch (error) {
     next(error);
   }
