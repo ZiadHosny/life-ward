@@ -6,9 +6,9 @@ export interface ITrader extends Document {
   email: string;
   password: string;
   telPass: string;
-  country: string;
-  city: SchemaType;
-  assignedOrders: any;
+  country: Schema.Types.ObjectId;
+  city: Schema.Types.ObjectId;
+  assignedOrders: Schema.Types.ObjectId[];
 }
 
 const traderSchema = new Schema<ITrader>({
@@ -20,9 +20,9 @@ const traderSchema = new Schema<ITrader>({
   city: { type: Types.ObjectId, ref: "City" },
   assignedOrders: [
     {
-      id: String,
+      id: Types.ObjectId,
       status: String,
-      data: SchemaType,
+      data: Schema.Types.Mixed,
     },
   ],
 });
