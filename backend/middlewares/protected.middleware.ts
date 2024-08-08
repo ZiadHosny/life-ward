@@ -41,7 +41,7 @@ export const protectedMiddleware = expressAsyncHandler(
         new ApiError(
           {
             en: "please login again first",
-            ar: "يرجى تسجيل الدخول اولا"
+            ar: "يرجى تسجيل الدخول اولا",
           },
           StatusCodes.UNAUTHORIZED
         )
@@ -71,5 +71,3 @@ export const protectedMiddleware = expressAsyncHandler(
     next();
   }
 );
-
-

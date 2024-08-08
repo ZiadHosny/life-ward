@@ -1,42 +1,35 @@
 import { Notification } from "../models/notification.model";
+import { Request, Response } from "express";
+import expressAsyncHandler from "express-async-handler";
 // import { io } from "../config/io_connection";
 import { io } from "../index";
-import { User } from "../models/user.model";
 import ApiError from "../utils/ApiError";
 import { StatusCodes } from "http-status-codes";
 import { Status } from "../interfaces/status/status.enum";
-
-export const notificationUtils = async (
-  title: string,
-  message: string,
-  sender: string,
-  receiver: string
-) => {
-  try {
-    let notification = {};
-    const receivers = receiver.split(",");
-    for (const receiver of receivers) {
-      notification = await Notification.create({
-        title,
-        message,
-        sender,
-        receiver: receiver.toString(),
-      });
-      io.emit(receiver.toString(), notification);
-    }
-    notification = {
-      title,
-      message,
-      sender,
-      receiver,
-    };
-    return notification; // Continue to the next middleware or route
-  } catch (error) {
-    return -1; // Pass any errors to the error-handling middleware
-  }
-};
+import IUser from "../interfaces/user/user.interface";
+import { createNotification as notificationUtils } from "../utils/notification";
 
 // create notification controller
+
+export const createNotificationController = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const { title, message, receiver } = req.body;
+    const sender = (req.user as IUser)?._id; // add type guard to check if req.user exists
+    const notification = await notificationUtils(
+      title,
+      message,
+      sender.toString(),
+      receiver
+    );
+    // Broadcast the notification to all connected clients
+    res.status(StatusCodes.CREATED).json({
+      status: Status.SUCCESS,
+      data: notification,
+      success_en: "created successfully",
+      success_ar: "تم الانشاء بنجاح",
+    });
+  }
+);
 
 export const markNotificationAsReadSocket = async (Id: string) => {
   // Update the notification by its ID to set 'read' to true
