@@ -82,9 +82,11 @@ export const getAllSubSubCategoriesWithProducts = expressAsyncHandler(
     }[] = [];
     await Promise.all(
       subSubCategory.map(async (SubSub) => {
-        const mongoQuery = Product.find({
-          subSubCategory: SubSub._id.toString(),
-        });
+        let city = req.body.city;
+        let temp = city
+          ? { city, subSubCategory: SubSub._id.toString() }
+          : { subSubCategory: SubSub._id.toString() };
+        const mongoQuery = Product.find(temp);
         const query = req.query as IQuery;
 
         const { data } = await new ApiFeatures(mongoQuery, query)

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Trader } from "../models/traders.model";
+import { ITrader, Trader } from "../models/traders.model";
 import { Order } from "../models/order.model";
 import { Error } from "mongoose";
 import { getAllItems } from "./factory.controller";
@@ -16,7 +16,7 @@ export const createTrader = async (req: Request, res: Response) => {
 };
 
 // Get all traders
-export const getTraders = getAllItems(Trader, ['city', 'country'])
+export const getTraders = getAllItems(Trader, ["city", "country"]);
 
 // Get a trader by ID
 export const getTraderById = async (req: Request, res: Response) => {
@@ -60,7 +60,7 @@ export const assignOrdersToTraders = async (req: Request, res: Response) => {
 
     // Find orders and traders
     const orders = await Order.find({ _id: { $in: orderIds } });
-    const traders = await Trader.find({ _id: { $in: traderIds } });
+    const traders: ITrader[] = await Trader.find({ _id: { $in: traderIds } });
 
     if (orders.length === 0 || traders.length === 0) {
       return res.status(404).json({ message: "Orders or traders not found" });

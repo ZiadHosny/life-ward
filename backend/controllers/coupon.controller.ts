@@ -43,6 +43,7 @@ export const createCoupon = expressAsyncHandler(
     }
     // 1- check if coupon with same code is exist
     let products: any = [];
+    let temp;
     switch (req.body.discountDepartment.key) {
       case "allProducts":
         products = await Product.find({});
@@ -51,14 +52,17 @@ export const createCoupon = expressAsyncHandler(
         products = req.body.discountDepartment.value;
         break;
       case "categories":
-        products = await Product.find({
-          category: [...req.body.discountDepartment.value ],
-        });
+        let city = req.body.city;
+        temp = city
+          ? { city, category: [...req.body.discountDepartment.value] }
+          : { category: [...req.body.discountDepartment.value] };
+        products = await Product.find(temp);
         break;
       case "subcategories":
-        products = await Product.find({
-          subCategory: [...req.body.discountDepartment.value],
-        });
+        temp = city
+          ? { city, subCategory: [...req.body.discountDepartment.value] }
+          : { subCategory: [...req.body.discountDepartment.value] };
+        products = await Product.find(temp);
         break;
       default:
         break;
@@ -115,22 +119,28 @@ export const updateCoupon = expressAsyncHandler(
     }
     // 2- check if coupon with same code is exist
     let products: any = [];
+    let city = req.body.city;
+    let temp;
     switch (req.body.discountDepartment.key) {
       case "allProducts":
-        products = await Product.find({});
+        temp = city ? { city } : {};
+        products = await Product.find(temp);
         break;
       case "products":
         products = req.body.discountDepartment.value;
         break;
       case "categories":
-        products = await Product.find({
-          category: [...req.body.discountDepartment.value ],
-        });
+        temp = city
+          ? { city, category: [...req.body.discountDepartment.value] }
+          : { category: [...req.body.discountDepartment.value] };
+        products = await Product.find(temp);
         break;
       case "subcategories":
-        products = await Product.find({
-          subCategory: [...req.body.discountDepartment.value],
-        });
+        temp = city
+          ? { city, subCategory: [...req.body.discountDepartment.value] }
+          : { subCategory: [...req.body.discountDepartment.value] };
+        products = await Product.find(temp);
+
         break;
       default:
         break;
@@ -191,10 +201,8 @@ export const deleteCoupon = deleteOneItemById(Coupon);
 // @access  Private (Admin)
 export const getCouponByNameAndProducts = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    
     // 1- get coupon name from req.query
     const couponCode = req.body.code as string;
-
 
     // 2- find coupon by name
     const coupon = await Coupon.findOne({ code: couponCode });
@@ -211,7 +219,7 @@ export const getCouponByNameAndProducts = expressAsyncHandler(
     }
 
     console.log();
-    
+
     const date = new Date();
     if (coupon.type === "normal") {
       // 3- check if coupon is valid date

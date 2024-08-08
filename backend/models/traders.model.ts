@@ -7,18 +7,16 @@ export interface ITrader extends Document {
   password: string;
   country: string;
   city: SchemaType;
-  assignedOrders: SchemaType;
+  assignedOrders: IOrder[] | IOrder["_id"];
 }
 
 const traderSchema = new Schema<ITrader>({
   name: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
-  country: { type: String, ref: 'Neighborhood' },
-  city: { type: Types.ObjectId, ref: 'City' },
-  assignedOrders: [
-    { type: Types.ObjectId, ref: "Order" },
-  ],
+  country: { type: String, ref: "Neighborhood" },
+  city: { type: Types.ObjectId, ref: "City" },
+  assignedOrders: [{ type: Types.ObjectId, ref: "Order" }],
 });
 
 export const Trader = model<ITrader>("Trader", traderSchema);

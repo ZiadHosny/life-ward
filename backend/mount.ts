@@ -91,7 +91,6 @@ router.use("/city", cityRouter);
 router.use("/neighborhood", neighborhoodRouter);
 router.use("/general", generalRouter);
 
-
 router.use("/occasions", OccasionsRouter);
 router.use("/fastCost", fastCostRouter);
 router.use("/notes", noteRouter);

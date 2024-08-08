@@ -21,7 +21,6 @@ import {
   getOneItemBySlug,
 } from "./factory.controller";
 
-
 // @desc     Get All Categories
 // @route    GET/api/v1/categories
 // @access   Public
@@ -36,7 +35,6 @@ export const getCategoryById = getOneItemById(Category, ["metaDataId"]);
 // @route    GET/api/v1/categories/Slug
 // @access   Public
 export const getCategoryBySlug = getOneItemBySlug(Category, ["metaDataId"]);
-
 
 // @desc     Get All Categories
 // @route    GET/api/v1/categories/getAllCategoriesWithProducts
@@ -54,11 +52,17 @@ export const getAllCategoriesWithProducts = expressAsyncHandler(
     }[] = [];
     await Promise.all(
       category.map(async (cat) => {
-        const mongoQuery = Product.find({ category: cat._id.toString() });
+        let city = req.body.city;
+        let temp = city
+          ? { city, category: cat._id.toString() }
+          : { category: cat._id.toString() };
+        const mongoQuery = Product.find(temp);
         const query = req.query as IQuery;
 
-
-        const { data,paginationResult } = await new ApiFeatures(mongoQuery, query)
+        const { data, paginationResult } = await new ApiFeatures(
+          mongoQuery,
+          query
+        )
           .populate()
           .filter()
           .limitFields()
@@ -66,10 +70,9 @@ export const getAllCategoriesWithProducts = expressAsyncHandler(
           .sort()
           .paginate();
 
-
         // 3- get features
         if (data.length === 0) {
-          return
+          return;
         }
         result.push({
           category: cat,
@@ -92,7 +95,6 @@ export const getAllCategoriesWithProducts = expressAsyncHandler(
   }
 );
 
-
 // @desc     Get All Categories
 // @route    GET/api/v1/categories/getAllCategoriesWithProducts
 // @access   Public
@@ -111,7 +113,6 @@ export const getAllCategoriesWithSubCategories = expressAsyncHandler(
         const mongoQuery = SubCategory.find({ category: cat._id.toString() });
         const query = req.query as IQuery;
 
-
         const { data } = await new ApiFeatures(mongoQuery, query)
           .populate()
           .filter()
@@ -120,7 +121,6 @@ export const getAllCategoriesWithSubCategories = expressAsyncHandler(
           .sort()
           .paginate();
 
-        
         // 3- get features
         result.push({
           category: cat,
@@ -145,59 +145,60 @@ export const getAllCategoriesWithSubCategories = expressAsyncHandler(
 // @desc     Get All Categories with Subcategories and SubSubCategory
 // @route    GET/api/v1/categories/getAllCategoriesWithSubCategoriesWithSubSubCategory
 // @access   Public
-export const getAllCategoriesWithSubCategoriesWithSubSubCategories = expressAsyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    let categories = await Category.find();
+export const getAllCategoriesWithSubCategoriesWithSubSubCategories =
+  expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      let categories = await Category.find();
 
-    let result: {
-      category: ICategory;
-      subCategories: {
-        subCategory: ISubCategory;
-        subSubCategory: ISubSubCategory[];
-      }[];
-    }[] = [];
+      let result: {
+        category: ICategory;
+        subCategories: {
+          subCategory: ISubCategory;
+          subSubCategory: ISubSubCategory[];
+        }[];
+      }[] = [];
 
-  
-    await Promise.all(
-      categories.map(async (cat) => {
-        const subCategories = await SubCategory.find({ category: cat._id });
+      await Promise.all(
+        categories.map(async (cat) => {
+          const subCategories = await SubCategory.find({ category: cat._id });
 
-        let subCategoriesWithSubSubCategories = await Promise.all(
-          subCategories.map(async (subCat) => {
-            const mongoQuery = SubSubCategory.find({ subCategory: subCat._id });
-            const query = req.query as IQuery;
+          let subCategoriesWithSubSubCategories = await Promise.all(
+            subCategories.map(async (subCat) => {
+              const mongoQuery = SubSubCategory.find({
+                subCategory: subCat._id,
+              });
+              const query = req.query as IQuery;
 
-            const { data } = await new ApiFeatures(mongoQuery, query)
-              .populate()
-              .filter()
-              .limitFields()
-              .search()
-              .sort()
-              .paginate();
+              const { data } = await new ApiFeatures(mongoQuery, query)
+                .populate()
+                .filter()
+                .limitFields()
+                .search()
+                .sort()
+                .paginate();
 
-            return {
-              subCategory: subCat,
-              subSubCategory: data,
-            };
-          })
-        );
+              return {
+                subCategory: subCat,
+                subSubCategory: data,
+              };
+            })
+          );
 
-        result.push({
-          category: cat,
-          subCategories: subCategoriesWithSubSubCategories,
-        });
-      })
-    );
+          result.push({
+            category: cat,
+            subCategories: subCategoriesWithSubSubCategories,
+          });
+        })
+      );
 
-   
-    res.status(200).json({
-      status: "success",
-      data: result,
-      success_en: "Successfully",
-      success_ar: "تم بنجاح",
-    });
-  }
-);
+      res.status(200).json({
+        status: "success",
+        data: result,
+        success_en: "Successfully",
+        success_ar: "تم بنجاح",
+      });
+    }
+  );
 
 // @desc     Create New Category
 // @route    POST/api/v1/categories
@@ -206,7 +207,6 @@ export const createCategory = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1- get data from body
     // const { name_en, name_ar, image } = req.body;
-
 
     // 3- check if category already exist
     // const exist = await Category.findOne({
@@ -226,8 +226,7 @@ export const createCategory = expressAsyncHandler(
     // }
 
     console.log(req.body);
-    
-    
+
     // 4- create category in mongooseDB
     const newCategory = await Category.create({
       name_en: req.body.name_en,
@@ -240,19 +239,19 @@ export const createCategory = expressAsyncHandler(
     });
 
     const reference = newCategory._id;
-    let dataRes ={
+    let dataRes = {
       newCategory,
-      MetaData:{}
+      MetaData: {},
     };
-    if(req.body.title_meta && req.body.desc_meta){
+    if (req.body.title_meta && req.body.desc_meta) {
       const MetaData = await createMetaData(req, reference);
       await newCategory.updateOne({ metaDataId: MetaData._id });
       dataRes = {
         newCategory,
-        MetaData
+        MetaData,
       };
     }
-    
+
     // 5- send response
     res.status(201).json({
       status: "success",
@@ -311,13 +310,13 @@ export const updateCategory = expressAsyncHandler(
         { metaDataId: newMeta._id, ...req.body },
         { new: true }
       );
-    } else if (exist && req.body.title_meta && req.body.desc_meta)  {
+    } else if (exist && req.body.title_meta && req.body.desc_meta) {
       await Meta.updateOne(
         { reference: id },
         { title_meta: req.body.title_meta, desc_meta: req.body.desc_meta }
       );
       await Category.findByIdAndUpdate(id, { ...req.body }, { new: true });
-    }else {
+    } else {
       await Category.findByIdAndUpdate(id, { ...req.body }, { new: true });
     }
 
@@ -393,4 +392,3 @@ export const deleteCategory = expressAsyncHandler(
     });
   }
 );
-

@@ -32,7 +32,6 @@ import { Offer } from "../models/offer.model";
 import { Repository } from "../models/repository.model";
 import { SubSubCategory } from "../models/subSubCategory.model";
 
-
 const populateDocument = async (query: any, populate: any) => {
   return populate?.length > 0 && populate[0] !== ""
     ? await query.populate(populate)
@@ -42,18 +41,48 @@ const populateDocument = async (query: any, populate: any) => {
 // @desc      Get all products
 // @route     GET /api/v1/products
 // @access    Public
-export const getAllProducts = getAllItems(
-  Product,
-  [
-    "attributes",
-    "category",
-    "subCategory",
-    "subSubCategory",
-    "metaDataId",
-    "offer",
-  ],
-  "-__v -directDownloadLink -link"
-);
+// export const getAllProducts = getAllItems(
+//   Product,
+//   [
+//     "attributes",
+//     "category",
+//     "subCategory",
+//     "subSubCategory",
+//     "metaDataId",
+//     "offer",
+//   ],
+//   "-__v -directDownloadLink -link"
+// );
+
+export const getAllProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Define the population options
+    const populateOptions = [
+      { path: "category", select: "name" },
+      { path: "subCategory", select: "name" },
+      { path: "subSubCategory", select: "name" },
+      { path: "metaDataId", select: "description" },
+      { path: "offer", select: "discount" },
+    ];
+
+    // Build and execute the query
+    let city = req.body.city;
+    let temp = city ? { city } : {};
+    const products = await Product.find(temp)
+      .populate(populateOptions) // Apply population options
+      .select("-__v -directDownloadLink -link") // Apply projection
+      .exec(); // Execute the query
+
+    // Send the response
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // @desc      Get product by id
 // @route     GET /api/v1/products/:id
@@ -161,7 +190,11 @@ export const getAllProductsByCategoryId = expressAsyncHandler(
     }
     // 2- get all products belong to specific category from MongooseDB
     const query = req.query as IQuery;
-    const mongoQuery = Product.find({ category: category.id });
+    let city = req.body.city;
+    let temp = city
+      ? { city, category: category.id }
+      : { category: category.id };
+    const mongoQuery = Product.find(temp);
 
     // 4- get features
     const { data, paginationResult } = await new ApiFeatures(mongoQuery, query)
@@ -228,8 +261,9 @@ export const createProduct = expressAsyncHandler(async (req, res, next) => {
   // send notification to all users
   const { title, message } = req.body;
   const sender = ((req.user as IUser)?._id).toString(); // add type guard to check if req.user exists
-  const link = `${process.env.APP_URL1}/products/${product._id
-    }/${product.title_en.replace(/\s/g, "-")}`;
+  const link = `${process.env.APP_URL1}/products/${
+    product._id
+  }/${product.title_en.replace(/\s/g, "-")}`;
 
   let notification = {};
   if (title && message && sender) {
@@ -355,7 +389,6 @@ export const updateProduct = expressAsyncHandler(async (req, res, next) => {
   // check if the prev general qualities equal or not equal to the current general quality coming from body
 
   //////////////////////////////////////
-
 
   /////////////////////////////////////
   ////////////////////////////////////////////////
@@ -660,9 +693,11 @@ export const getProductByName = expressAsyncHandler(
         .select(selectArgs)
         .populate(populateArgs)) as IProduct;
     } else {
-      product = (await Product.findOne({
-        $or: [{ title_en: name }, { title_ar: name }],
-      })
+      let city = req.body.city;
+      let temp = city
+        ? { city, $or: [{ title_en: name }, { title_ar: name }] }
+        : { $or: [{ title_en: name }, { title_ar: name }] };
+      product = (await Product.findOne(temp)
         .select(selectArgs)
         .populate(populateArgs)) as IProduct;
     }
