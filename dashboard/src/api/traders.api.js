@@ -48,7 +48,14 @@ export const traderApi = createApi({
       }),
       invalidatesTags: ["traderApi"],
     }),
-
+    assignOrdersToTrader: builder.mutation({
+      query: ({ body }) => ({
+        url: `${tradersUrl}/assignOrder`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["traderApi"],
+    }),
   }),
 });
 
@@ -58,4 +65,5 @@ export const {
   useUpdateTraderMutation,
   useGetTraderByIdQuery,
   useGetAllTradersQuery,
+  useAssignOrdersToTraderMutation,
 } = traderApi;

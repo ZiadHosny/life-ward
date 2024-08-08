@@ -15,9 +15,7 @@ import {
   IconButton,
   Collapse,
 } from "@mui/material";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import CircularProgress from "@mui/material/CircularProgress";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -30,6 +28,7 @@ import {
   useGetAllOrdersQuery,
 } from "../../api/order.api";
 import {
+  useAssignOrdersToTraderMutation,
   useGetAllTradersQuery
 } from "../../api/traders.api";
 import { toast } from "react-toastify";
@@ -37,6 +36,7 @@ import { ORDER_STATUS } from "../../helper/order-status";
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { DialogTraders } from "../../Components/traders/DialogTraders";
 
 const OrdersSales = () => {
 
@@ -261,7 +261,17 @@ const OrdersSales = () => {
                               fontWeight: "bold",
                             }}
                           >
-                            {lang === "en" ? " Date" : "التاريخ "}
+                            {lang === "en" ? " Date" : "التاريخ"}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography
+                            variant="subtitle1"
+                            sx={{
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {lang === "en" ? "Trader " : "التاجر"}
                           </Typography>
                         </TableCell>
 
@@ -344,15 +354,21 @@ export default OrdersSales;
 
 
 const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const [assignOrder,] = useAssignOrdersToTraderMutation();
+
+  const assignOrderFn = async (traderId) => {
+    await assignOrder({
+      body: {
+        orderId: item._id,
+        traderId: traderId
+      }
+    })
   };
 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const { customColors, colors } = useTheme();
   const [openDetails, setOpenDetails] = useState(false);
@@ -360,6 +376,10 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
   const [deleteOrderById, { isLoading: deleteOrderByIdLoading }] =
     useDeleteOrderByIdMutation();
   const [_, { language: lang }] = useTranslation();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const handleDelete = (order) => {
     setUsersDataOrder(UsersDataOrder.filter((item) => item._id !== order._id));
@@ -375,6 +395,7 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
   };
 
   const [changeOrderStatusById] = useChangeOrderStatusByIdMutation();
+
   function handleToggleOrderState(item) {
     changeOrderStatusById({
       payload: item.orderStatus,
@@ -477,69 +498,56 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
           }
         </TableCell>
 
-        <TableCell align="center" sx={{ display: 'flex' }}>
+        <TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
           <Button
             size="small"
-            onClick={() => {
-              handleDelete(item);
-            }}
-            disabled={deleteOrderByIdLoading}
+            onClick={handleClickOpen}
             sx={{
-              backgroundColor: "transparent !important",
-
-              color: colors.dangerous,
               fontWeight: "bold",
             }}
           >
-            <DeleteIcon />
+            {lang === "en" ? "Add Trader" : "اضف تاجر"}
           </Button>
-          <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={open ? 'long-menu' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpenDetails(!openDetails)}
-          >
-            {openDetails ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-          <Menu
-            id="long-menu"
-            MenuListProps={{
-              'aria-labelledby': 'long-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-                maxHeight: 48 * 4.5,
-                width: '20ch',
-              },
-            }}
-          >
-            {traders.map((option, i) => (
-              <MenuItem key={i} selected={i === 'Pyxis'} onClick={handleClose}>
-                {i}
-              </MenuItem>
-            ))}
-          </Menu>
         </TableCell>
-      </TableRow>
+
+        <TableCell align="center" sx={{ margin: 0 }}>
+          <Box sx={{ display: 'flex' }}>
+            <Button
+              size="small"
+              onClick={() => {
+                handleDelete(item);
+              }}
+              disabled={deleteOrderByIdLoading}
+              sx={{
+                backgroundColor: "transparent !important",
+
+                color: colors.dangerous,
+                fontWeight: "bold",
+              }}
+            >
+              <DeleteIcon />
+            </Button>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpenDetails(!openDetails)}
+            >
+              {openDetails ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </Box>
+        </TableCell>
+      </TableRow >
+      <DialogTraders
+        assignOrderFn={assignOrderFn}
+        open={open}
+        onClose={handleClose}
+        traders={traders} />
       <TableRow sx={{
         bgcolor: customColors.bg,
-        borderRadius: "10px",
       }}>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
+        <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Collapse in={openDetails} timeout="auto" unmountOnExit>
-            <TableRow sx={{ textAlign: 'center', display: 'flex', alignItems: 'center' }}>
+            <TableRow sx={{ padding: 1, textAlign: 'center', display: 'flex', alignItems: 'center' }}>
               {
                 item.city ?
                   <>
