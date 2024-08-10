@@ -79,7 +79,6 @@ interface addressInterface {
   postalCode: string;
 }
 
-
 // @desc    Create Order
 // @route   POST /api/v1/orders
 // @access  Private (User)
@@ -108,7 +107,13 @@ export const createOrder = expressAsyncHandler(
     } = req.body;
 
     // 2- add address in database for user
-    const newAddress = { city, neighborhood, area, address, postalCode } as addressInterface;
+    const newAddress = {
+      city,
+      neighborhood,
+      area,
+      address,
+      postalCode,
+    } as addressInterface;
     const addresses = await User.findById((req.user! as any).id).select(
       "addressesList"
     );
@@ -632,8 +637,8 @@ export const getOrderById = expressAsyncHandler(
     const { id } = req.params;
     const order = await Order.findById({ _id: id, active: true }).populate([
       { path: "user", model: "User", select: "name email phone image" },
-      'city',
-      'neighborhood',
+      "city",
+      "neighborhood",
       {
         path: "onlineItems.items.product",
         model: "Product",
@@ -751,8 +756,8 @@ export const getAllOrders = expressAsyncHandler(
     const query = req.query as IQuery;
     const mongoQuery = Order.find({ active: true });
     const orders = await Order.find({ active: true }).populate([
-      'city',
-      'neighborhood',
+      "city",
+      "neighborhood",
       {
         path: "onlineItems.items.product",
         model: "Product",
@@ -763,6 +768,7 @@ export const getAllOrders = expressAsyncHandler(
         model: "Product",
         select: "title_en title_ar images quantity ",
       },
+      { path: "assignedTrader", model: "Trader" },
     ]);
     const { data, paginationResult } = await new ApiFeatures(mongoQuery, query)
       .populate()
@@ -1221,14 +1227,14 @@ export const createShippingOrder = expressAsyncHandler(
     console.log(
       "length :::::: ",
       length ===
-      responseOrder.cashItems.items.length +
-      responseOrder.onlineItems.items.length
+        responseOrder.cashItems.items.length +
+          responseOrder.onlineItems.items.length
     );
 
     if (
       length ===
       responseOrder.cashItems.items.length +
-      responseOrder.onlineItems.items.length
+        responseOrder.onlineItems.items.length
     ) {
       responseOrder.sendToDelivery = true;
       await responseOrder.save();

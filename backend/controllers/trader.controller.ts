@@ -209,7 +209,7 @@ export const assignOrdersToTraders = async (req: Request, res: Response) => {
       // Update Order Status
       await Order.findByIdAndUpdate(
         order?._id,
-        { $set: { status: "Sent" } },
+        { $set: { status: "Sent", assignedTrader: trader } },
         { new: true }
       );
 

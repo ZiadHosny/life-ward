@@ -1,6 +1,7 @@
 import { Document, Schema, Types } from "mongoose";
 import { IProduct } from "../product/product.interface";
 import IUser from "../user/user.interface";
+import { ITrader } from "../../models/traders.model";
 
 export enum StatusOrder {
   initiated = "initiated",
@@ -22,7 +23,7 @@ export interface IOrder extends Document {
   totalPrice: number;
   totalQuantity: number;
   city: Schema;
-  neighborhood: Schema,
+  neighborhood: Schema;
   phone: string;
   active: boolean;
   tracking?: { path: string; orderNumberTracking: string }[];
@@ -67,24 +68,24 @@ export interface IOrder extends Document {
       transaction_url: string;
     } & (
       | ({
-        type: "creditcard";
-      } & {
-        company: string;
-        name: string;
-        number: string;
-        message?: string;
-        reference_number?: string;
-      })
+          type: "creditcard";
+        } & {
+          company: string;
+          name: string;
+          number: string;
+          message?: string;
+          reference_number?: string;
+        })
       | ({
-        type: "applepay";
-      } & {
-        transaction: {};
-      })
+          type: "applepay";
+        } & {
+          transaction: {};
+        })
       | ({
-        type: "stcpay";
-      } & {
-        transaction: {};
-      })
+          type: "stcpay";
+        } & {
+          transaction: {};
+        })
     );
   };
   onlineItems: {
@@ -140,6 +141,7 @@ export interface IOrder extends Document {
       status: StatusOrder;
     }
   ];
+  assignedTrader: ITrader | ITrader["_id"];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -269,6 +269,7 @@ const orderSchema = new Schema<IOrder>(
       type: Boolean,
       default: true,
     },
+    assignedTrader: { type: Types.ObjectId, ref: "Trader" },
     createdAt: {
       type: Date,
       default: Date.now(),
