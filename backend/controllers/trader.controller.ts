@@ -176,16 +176,16 @@ export const assignOrdersToTraders = async (req: Request, res: Response) => {
           select:
             "title_en title_ar priceBeforeDiscount priceAfterDiscount images quantity paymentType deliveryType sendToDelivery",
         },
-        {
-          path: "onlineItems.items.repositories.repository",
-          model: "Repository",
-          select: "name_en name_ar",
-        },
-        {
-          path: "cashItems.items.repositories.repository",
-          model: "Repository",
-          select: "name_en name_ar",
-        },
+        // {
+        //   path: "onlineItems.items.repositories.repository",
+        //   model: "Repository",
+        //   select: "name_en name_ar",
+        // },
+        // {
+        //   path: "cashItems.items.repositories.repository",
+        //   model: "Repository",
+        //   select: "name_en name_ar",
+        // },
       ]
     );
     const trader: ITrader | null = await Trader.findOne({
@@ -221,6 +221,8 @@ export const assignOrdersToTraders = async (req: Request, res: Response) => {
         (req?.user as IUser)?._id.toString(),
         trader._id
       );
+
+      // return res.status(204).send("success");
     }
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
