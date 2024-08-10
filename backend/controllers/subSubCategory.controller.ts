@@ -82,7 +82,7 @@ export const getAllSubSubCategoriesWithProducts = expressAsyncHandler(
     }[] = [];
     await Promise.all(
       subSubCategory.map(async (SubSub) => {
-        let city = req.body.city;
+        let city = req.query.city;
         let temp = city
           ? { city, subSubCategory: SubSub._id.toString() }
           : { subSubCategory: SubSub._id.toString() };

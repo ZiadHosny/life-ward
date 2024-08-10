@@ -91,7 +91,7 @@ export const getAllProducts = async (
     ];
 
     // Build and execute the query
-    let city = req.body.city;
+    let city = req.query.city;
     let temp = city ? { city } : {};
     const products = await Product.find(temp)
       .populate(populateOptions) // Apply population options
@@ -221,7 +221,7 @@ export const getAllProductsByCategoryId = expressAsyncHandler(
     }
     // 2- get all products belong to specific category from MongooseDB
     const query = req.query as IQuery;
-    let city = req.body.city;
+    let city = req.query.city;
     let temp = city
       ? { city, category: category.id }
       : { category: category.id };
@@ -724,7 +724,7 @@ export const getProductByName = expressAsyncHandler(
         .select(selectArgs)
         .populate(populateArgs)) as IProduct;
     } else {
-      let city = req.body.city;
+      let city = req.query.city;
       let temp = city
         ? { city, $or: [{ title_en: name }, { title_ar: name }] }
         : { $or: [{ title_en: name }, { title_ar: name }] };

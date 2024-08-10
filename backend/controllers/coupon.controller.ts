@@ -52,7 +52,7 @@ export const createCoupon = expressAsyncHandler(
         products = req.body.discountDepartment.value;
         break;
       case "categories":
-        let city = req.body.city;
+        let city = req.query.city;
         temp = city
           ? { city, category: [...req.body.discountDepartment.value] }
           : { category: [...req.body.discountDepartment.value] };
@@ -119,7 +119,7 @@ export const updateCoupon = expressAsyncHandler(
     }
     // 2- check if coupon with same code is exist
     let products: any = [];
-    let city = req.body.city;
+    let city = req.query.city;
     let temp;
     switch (req.body.discountDepartment.key) {
       case "allProducts":

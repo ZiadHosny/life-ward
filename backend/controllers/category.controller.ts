@@ -52,7 +52,7 @@ export const getAllCategoriesWithProducts = expressAsyncHandler(
     }[] = [];
     await Promise.all(
       category.map(async (cat) => {
-        let city = req.body.city;
+        let city = req.query.city;
         let temp = city
           ? { city, category: cat._id.toString() }
           : { category: cat._id.toString() };
