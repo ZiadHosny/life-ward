@@ -357,11 +357,17 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
   const [assignOrder,] = useAssignOrdersToTraderMutation();
 
   const assignOrderFn = async (traderId) => {
-    await assignOrder({
-      body: {
-        orderId: item._id,
-        traderId: traderId
-      }
+    toast.promise(async () => {
+      await assignOrder({
+        body: {
+          orderId: item._id,
+          traderId: traderId
+        }
+      });
+    }, {
+      pending: lang === 'ar' ? 'جاري توجيه الطلب' : 'Loading',
+      success: lang === 'ar' ? 'تم توجيه الطلب بنجاح' : 'Success',
+      error: 'Error when send request',
     })
   };
 
@@ -503,10 +509,14 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
             size="small"
             onClick={handleClickOpen}
             sx={{
+              color: item.assignedTrader ? 'yellow' : 'blue',
               fontWeight: "bold",
             }}
           >
-            {lang === "en" ? "Add Trader" : "اضف تاجر"}
+            {item.assignedTrader ?
+              lang === "en" ? "Add Trader" : "تعديل تاجر"
+              : lang === "en" ? "Add Trader" : "اضف تاجر"
+            }
           </Button>
         </TableCell>
 
@@ -541,6 +551,7 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
         assignOrderFn={assignOrderFn}
         open={open}
         onClose={handleClose}
+        assignedTrader={item.assignedTrader}
         traders={traders} />
       <TableRow sx={{
         bgcolor: customColors.bg,
@@ -548,6 +559,28 @@ const Row = ({ index, item, UsersDataOrder, setUsersDataOrder, data, traders }) 
         <TableCell sx={{ padding: 0 }} colSpan={12}>
           <Collapse in={openDetails} timeout="auto" unmountOnExit>
             <TableRow sx={{ padding: 1, textAlign: 'center', display: 'flex', alignItems: 'center' }}>
+              {
+                item.assignedTrader ?
+                  <>
+                    <TableCell sx={{ paddingBottom: '10px', paddingTop: '10px' }}>
+                      {lang === 'en' ? 'Trader Name' : 'اسم التاجر'} : {item.assignedTrader['name']}
+                    </TableCell>
+                    <Box sx={{ height: '30px', borderRight: 2 }}></Box>
+                  </>
+                  :
+                  <></>
+              }
+              {
+                item.assignedTrader ?
+                  <>
+                    <TableCell sx={{ paddingBottom: '10px', paddingTop: '10px' }}>
+                      {lang === 'en' ? 'Trader Email' : 'بريد التاجر'} : {item.assignedTrader['email']}
+                    </TableCell>
+                    <Box sx={{ height: '30px', borderRight: 2 }}></Box>
+                  </>
+                  :
+                  <></>
+              }
               {
                 item.city ?
                   <>

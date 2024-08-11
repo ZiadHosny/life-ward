@@ -222,7 +222,7 @@ export const assignOrdersToTraders = async (req: Request, res: Response) => {
         trader._id
       );
 
-      // return res.status(204).send("success");
+      return res.status(200).send({ message: "success" });
     }
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });

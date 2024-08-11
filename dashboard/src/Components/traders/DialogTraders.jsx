@@ -10,9 +10,10 @@ import TableRow from '@mui/material/TableRow';
 import { useState } from 'react';
 
 export const DialogTraders = (props) => {
-    const [selectedValue, setSelectedValue] = useState();
+    const { onClose, assignOrderFn, open, traders, assignedTrader } = props;
 
-    const { onClose, assignOrderFn, open, traders } = props;
+    const [selectedValue, setSelectedValue] = useState(assignedTrader ? assignedTrader._id : null);
+
     const [_, { language: lang }] = useTranslation();
 
     const handleClose = () => {
@@ -27,7 +28,15 @@ export const DialogTraders = (props) => {
 
 
     return (
-        <Dialog onClose={handleClose} open={open}>
+        <Dialog
+            PaperProps={{
+                style: {
+                    width: '700px',
+                    padding: '20px'
+                }
+            }}
+            onClose={handleClose}
+            open={open}>
             <DialogTitle>
                 {lang === "en" ? "Select Trader" : "اختار تاجر"}
             </DialogTitle>
@@ -40,7 +49,7 @@ export const DialogTraders = (props) => {
                             <TableCell>
                                 #
                             </TableCell>
-                            <TableCell>
+                            <TableCell >
                                 {lang === "en" ? "Trader Name" : "اسم التاجر"}
                             </TableCell>
                             <TableCell>
@@ -70,14 +79,14 @@ export const DialogTraders = (props) => {
                                         name="radio-buttons"
                                     />
                                 </TableCell>
-                                <TableCell align="center">{index + 1}</TableCell>
+                                <TableCell >{index + 1}</TableCell>
                                 <TableCell component="th" scope="row">
                                     {trader.name}
                                 </TableCell >
-                                <TableCell align="center" component="th" scope="row">
+                                <TableCell component="th" scope="row">
                                     {trader.city[`name_${lang}`]}
                                 </TableCell>
-                                <TableCell align="center" component="th" scope="row">
+                                <TableCell component="th" scope="row">
                                     {trader.country[`name_${lang}`]}
                                 </TableCell>
                             </TableRow>
